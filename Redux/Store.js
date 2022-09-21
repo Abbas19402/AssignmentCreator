@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import rootReducer from './index'
+import mode from './DarkMode/index'
+import authentication from './User'
 
 const Store = configureStore({
   reducer: {
-    root: rootReducer,
+    mode: mode,
+    auth: authentication
   }
 })
 

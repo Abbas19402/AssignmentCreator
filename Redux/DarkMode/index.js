@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const Redux = createSlice({
+export const darkMode = createSlice({
   name: 'redux',
   initialState: {
     value: 'light',
@@ -14,15 +14,12 @@ export const Redux = createSlice({
       } else if(action.payload == true) {
           state.value = 'dark'
       }
-    },
-    setHamState: (state, action) => {
-      state.hamStatus = action.payload
     }
   }
 })
 
 
 // Action creators are generated for each case reducer function
-export const { setDarkMode , setHamState} = Redux.actions
-const rootReducer = Redux.reducer
-export default rootReducer
+export const { setDarkMode , setHamState} = darkMode.actions
+const mode = darkMode.reducer
+export default mode

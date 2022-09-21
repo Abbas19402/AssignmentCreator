@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 import { useDispatch, useSelector } from 'react-redux'
-import { setDarkMode } from "../../Redux";
-import { setHamState } from "../../Redux";
+import { setDarkMode } from "../../Redux/DarkMode";
+import { setHamState } from "../../Redux/DarkMode";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Image from "next/future/image";
+import Logo from '../../public/Assets/Logos/Header2.png'
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 const Header = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const mode = useSelector(state => state.root.value)
-  const hamStatus = useSelector(state => state.root.hamStatus)
+  const mode = useSelector(state => state.mode.value)
   const [isOpen, setOpen] = useState(false)
   const [dark, setDark] = useState(false)
 
@@ -22,12 +24,7 @@ const Header = () => {
     } else {
       dispatch(setDarkMode(false))
     }
-    if (hamStatus) {
-      setOpen(true)
-    } else {
-      setOpen(false)  
-    }
-  }, [dark, hamStatus]);
+  }, [dark]);
 
   // Static Dropdowns
   const Services = ['Thesis', "Essay", "CV", 'Assignments']
@@ -88,7 +85,7 @@ const Header = () => {
         className="transition-all duration-500 w-full h-full dark:bg-primary-dark bg-primary flex flex-row justify-between md:justify-evenly items-center px-8 border-b-2 dark:border-b-0"
       >
         <div id="logo" className="rounded-md overflow-hidden">
-          {/* <img src={Logo} alt="Assignment Help" className="h-16" onClick={() => router.push('/')} /> */}
+          <Image src={Logo} alt="Assignment Help" className="scale-y-125 scale-x-125" width='300' height='460' onClick={() => router.push('/')} />
         </div>
         <div className="flex flex-row items-center justify-end">
           <div id="switch" className="md:hidden">
@@ -99,17 +96,10 @@ const Header = () => {
               onChange={() => setDark(!dark)}
             />
           </div>
+
           <div id="ham" className="md:hidden">
-            {/* <Hamburger duration={300} toggled={isOpen} toggle={setOpen} onToggle={toggled => {
-              if (toggled) {
-                // open a menu
-                dispatch(setHamState(true))
-              } else {
-                // close a menu
-                dispatch(setHamState(false))
-              }
-            }} /> */}
           </div>
+          
         </div>
         <nav className="w-full hidden md:block">
           <ul className="flex flex-row justify-end items-center">
@@ -162,19 +152,49 @@ const Header = () => {
                 <div className="mx-2 my-1 py-2 px-2 transition-all duration-500 hover:scale-110 hover:shadow-lg rounded  dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40  hover:cursor-pointer text-center">
                   <span className="text-white font-medium dark:text-white transition-all duration-300">
                     {/* <Trans i18nKey='OurWriters'></Trans> */}
-                    Our Writer
+                    Our Writers
                   </span>
                 </div>
               </li>
             </Link>
-            <li className="w-[8vw] md:w-[10vw] group hover:cursor-pointer">
-              <div className="mx-2 my-1 py-2 px-2 bg-white group-hover:bg-cyan-200 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded-md text-center scale-105  group-hover:shadow-white dark:group-hover:shadow-lg dark:group-hover:shadow-sky-500">
-                <span className="text-black  group-hover:text-black/60 font-medium w-full h-full transition-all duration-300 ">
-                  {/* <Trans i18nKey='Orders'></Trans> */}
-                  Orders
-                </span>
+            <Link href={'/order'}>
+              <li className="w-[8vw] md:w-[10vw] group hover:cursor-pointer">
+                <div className="mx-2 my-1 py-2 px-2 bg-white group-hover:bg-cyan-200 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded-md text-center scale-105  group-hover:shadow-white dark:group-hover:shadow-lg dark:group-hover:shadow-sky-500">
+                  <span className="text-black  group-hover:text-black/60 font-medium w-full h-full transition-all duration-300 ">
+                    {/* <Trans i18nKey='Orders'></Trans> */}
+                    Orders
+                  </span>
+                </div>
+              </li>
+            </Link>
+            <Link href={'/auth/login'}>
+              {/* <li className="group hover:cursor-pointer">
+                <div className="mx-2 my-1 p-1.5 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded-md text-center scale-105">
+                  <span className="text-white group-hover:text-gray-200 font-medium w-full h-full transition-all duration-300 ">
+                    
+                    
+                  </span>
+                  <div id="dropdownComponent" className="absolute transition-all h-0 group-hover:h-56 w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-black shadow-xl shadow-gray-300  overflow-hidden z-10 rounded-b">
+
+                  </div>
+                </div>
+              </li> */}
+              <li className="group md:mx-2 lg:mx-0 hover:cursor-pointer">
+              <div className="mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
+                <div id="dropdown" className="flex flex-row justify-center items-center">
+                  <span className="text-white font-medium dark:text-white  transition-all duration-300">
+                    {/* <Trans i18nKey='Company'></Trans> */}
+                    <AccountBoxIcon />
+                  </span>
+                </div>
+              </div>
+              <div id="dropdownComponent" className="absolute right-5 transition-all h-0 group-hover:h-fit w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded">
+                <ul className="flex flex-col justify-evenly items-center">
+                  
+                </ul>
               </div>
             </li>
+            </Link>
           </ul>
         </nav>
       </div>
