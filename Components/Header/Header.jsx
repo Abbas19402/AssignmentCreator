@@ -3,12 +3,12 @@ import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 import { useDispatch, useSelector } from 'react-redux'
 import { setDarkMode } from "../../Redux/DarkMode";
-import { setHamState } from "../../Redux/DarkMode";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/future/image";
 import Logo from '../../public/Assets/Logos/Header2.png'
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import Avatar from '@mui/material/Avatar';
 
 const Header = () => {
   const router = useRouter()
@@ -16,7 +16,7 @@ const Header = () => {
   const mode = useSelector(state => state.mode.value)
   const [isOpen, setOpen] = useState(false)
   const [dark, setDark] = useState(false)
-
+  
   useEffect(() => {
     console.log(mode)
     if (dark) {
@@ -24,13 +24,14 @@ const Header = () => {
     } else {
       dispatch(setDarkMode(false))
     }
+    var user = localStorage.getItem('user')
   }, [dark]);
 
   // Static Dropdowns
   const Services = ['Thesis', "Essay", "CV", 'Assignments']
   const Company = ['About', 'Samples']
 
-  // <---- Lignt / Dark mode Switch ---->
+  // <---- Light / Dark mode Switch ---->
   const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     width: 62,
     height: 34,
@@ -91,7 +92,6 @@ const Header = () => {
           <div id="switch" className="md:hidden">
             <MaterialUISwitch
               sx={{ m: 1 }}
-              defaultChecked
               checked={dark}
               onChange={() => setDark(!dark)}
             />
@@ -106,7 +106,6 @@ const Header = () => {
             <li>
               <MaterialUISwitch
                 sx={{ m: 1 }}
-                defaultChecked
                 checked={dark}
                 onChange={() => setDark(!dark)}
               />
@@ -125,7 +124,7 @@ const Header = () => {
               </div>
               <div id="dropdownComponent" className="absolute transition-all h-0 group-hover:h-fit w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded-b">
                 <ul className="flex flex-col justify-evenly items-center">
-                  {Services.map(item => <li className="py-2 px-4 hover:bg-sky-200 w-full" onClick={() => router.push(`/${`services`}/${item}`)}><span className="text-gray-600 text-sm text-center">{item}</span></li>)}
+                  {Services.map((item , key)=> <li key={key} className="py-2 px-4 hover:bg-sky-200 w-full" onClick={() => router.push(`/${`services`}/${item}`)}><span className="text-gray-600 text-sm text-center">{item}</span></li>)}
                 </ul>
               </div>
             </li>
@@ -143,7 +142,7 @@ const Header = () => {
               </div>
               <div id="dropdownComponent" className="absolute transition-all h-0 group-hover:h-fit w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded-b">
                 <ul className="flex flex-col justify-evenly items-center">
-                  {Company.map(item => <li className="py-2 px-4 hover:bg-sky-200 w-full" onClick={() => router.push(`/${`company`}/${item}`)}><span className="text-gray-600 text-sm text-center">{item}</span></li>)}
+                  {Company.map((item , key) => <li key={key} className="py-2 px-4 hover:bg-sky-200 w-full" onClick={() => router.push(`/${`company`}/${item}`)}><span className="text-gray-600 text-sm text-center">{item}</span></li>)}
                 </ul>
               </div>
             </li>
@@ -190,7 +189,13 @@ const Header = () => {
               </div>
               <div id="dropdownComponent" className="absolute right-5 transition-all h-0 group-hover:h-fit w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded">
                 <ul className="flex flex-col justify-evenly items-center">
-                  
+                  <li className="py-2 px-4 hover:bg-sky-200 w-full">
+                  {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
+                  <div className="flex flex-row justify-start items-center gap-2">
+                    <Avatar />
+                    <span></span>
+                  </div>
+                  </li>
                 </ul>
               </div>
             </li>

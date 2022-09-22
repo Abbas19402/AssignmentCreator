@@ -1,10 +1,14 @@
-import React from "react";
+import React , { useState } from "react";
 import { useSelector } from "react-redux";
 import Link from "next/link"; 
-import axios from "axios";
+import useFetch from "../../hooks/useFetch";
 
 const SignupForm = () => {
   const mode = useSelector((state) => state.mode.value);
+
+  const [ user,setUser ] = useState(null)
+  const [ loading , setLoading ] = useState(false)
+
   const handleSignup = async e => {
     e.preventDefault()
     const form = new FormData(e.currentTarget)
@@ -12,8 +16,9 @@ const SignupForm = () => {
     for(var entry of form.entries()) {
         values[entry[0]] = entry[1]
     }
-    let { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/customer/signup`,values)
-    console.log(data);
+    const { response , isLoading } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/customer/signup`,values)
+    setUser(response.data)
+    setLoading(isLoading)
   }
   return (
     <div className={`${mode == "dark" && "dark"} h-full`}>
@@ -101,7 +106,7 @@ const SignupForm = () => {
             </div>
             <div className="flex flex-col w-full gap-1 m-1">
                 <label
-                htmlFor="confirmPassword"
+                htmlFor="password_confirmation"
                 className="text-sm font-medium text-gray-600 my-1"
                 >
                 Confirm Password
@@ -109,7 +114,7 @@ const SignupForm = () => {
                 <input
                 className="bg-gray-100 w-full h-9 rounded-3xl focus:outline-4 transition-all duration-500 focus:outline-teal-200 focus:bg-white px-4 font-light text-sm text-gray-400 placeholder:text-gray-400"
                 placeholder="Re-enter your password"
-                name="confirmPassword"
+                name="password_confirmation"
                 type="password"
                 id="confirmPassword"
                 />

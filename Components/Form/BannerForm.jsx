@@ -1,9 +1,5 @@
-import React , {useState} from "react";
-import form from "../../Apis/BannerForm";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
+import React , {useState , useEffect} from "react";
+import Select from "react-select";
 
 const handleCalculate = (e) => {
   e.preventDefault();
@@ -17,63 +13,70 @@ const handleCalculate = (e) => {
 };
 
 const BannerForm = () => {
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+]
+const optionsServices = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
+  { value: 'powerpoint', label: 'Powerpoint' }
+]
+const optionsSlides = [
+  { value: '10', label: '10' },
+  { value: '20', label: '20' },
+  { value: '30', label: '30' },
+  { value: '40', label: '40' }
+]
+
+const [ selectedService , setSeletedService ] = useState({})
+useEffect( () => {},[selectedService])
+
   return (
     <div>
-      <div id="CostCalculator" className="w-fit h-fit ">
-        <div className="transition-all duration-500 w-full lg:w-[80%] h-fit flex flex-col items-center justify-evenly p-8 scale-100 shadow-xl rounded-lg bg-white dark:bg-white/20">
+      <div id="CostCalculator" className="w-[100vw] lg:w-fit flex justify-center h-fit">
+        <div className="transition-all duration-500 w-[80%`] md:w-[60%] lg:w-[100%] h-fit flex flex-col items-center justify-evenly p-8 shadow-xl rounded-lg bg-white dark:bg-white/20">
           <div id="heading" className="w-full text-center">
             <span className="text-2xl tracking-wide text-gray-600 dark:text-white">
               {/* <Trans i18nKey='CalculateOrder'></Trans> */}
               Calculate your Order
             </span>
           </div>
-          <form
-            onSubmit={handleCalculate}
-            className="h-[90%] md:h-[50%] w-full">
-            <ul
-              id="form"
-              className="grid grid-cols-2 gap-8 justify-between items-center w-full p-4">
-              {form.map((item, key) => (
-                <li key={key} className="flex justify-center items-center">
-                  <FormControl sx={{ width: 240 }} size="small">
-                    <InputLabel id="demo-select-small">
-                      {item.placeholder}
-                    </InputLabel>
-                    <Select
-                      labelId="demo-select-small"
-                      id="demo-select-small"
-                      name={key === 0? "assignment": key === 1? "subject": key === 2? "pages": key === 3 && "urgency"}
-                      style={{ backgroundColor: "white" }}
-                      size="small"
-                      label={item.placeholder}>
-                      <MenuItem value={"Lorem ipsum dolor sit amet."}>
-                        Lorem ipsum dolor sit amet.
-                      </MenuItem>
-                      <MenuItem value={"Lorem ipsum dolor sit amet consectetur."}>
-                        Lorem ipsum dolor sit amet consectetur.
-                      </MenuItem>
-                      <MenuItem value={"Lorem ipsum dolor sit."}>
-                        Lorem ipsum dolor sit.
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </li>
-              ))}
-            </ul>
-            <div id="Button/Cost" className="w-full pt-5 flex">
-              <div
-                id="wrapper"
-                className="flex flex-row justify-around items-end h-full w-full relative">
-                <div className="relative bottom-0 w-[40%]">
-                <button type='submit' className='h-9 px-3.5 w-full rounded bg-black text-white text-center transition-all duration-500 lg:hover:bg-neutral-700'>
+          <form onSubmit={handleCalculate} className="h-[90%] md:h-[50%] w-full p-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-3 mb-7">
+                <div id="Type" className='flex flex-col gap-1 '>
+                  <label htmlFor="services" className='text-gray-600 text-sm font-medium'>Select Service</label>
+                  <Select options={optionsServices} name='services' onChange={(e,action)=>setSeletedService(e)} placeholder="Services"/>
+                </div>
+                <div id="Subject" className='flex flex-col gap-1'>
+                  <label htmlFor="subject" className='text-gray-600 text-sm font-medium'>Choose Subject</label>
+                  <Select options={options} name='subject' placeholder="Subject"/>
+                </div>
+                <div id="Pages/Slides" className='flex flex-col gap-1'>
+               <label htmlFor="pages" className='text-gray-600 text-sm font-medium'>{selectedService.value == 'powerpoint' ? 'Select No. of Slides' : 'Choose No. of Pages'}</label>
+                  <Select options={selectedService.value == 'powerpoint' ? optionsSlides : options} name='pages' placeholder={selectedService.value == 'powerpoint' ? 'Select Slides' : 'Select Pages'}/>
+                </div>
+                <div id="Deadline" className='flex flex-col gap-1'>
+                  <label htmlFor="urgency" className='text-gray-600 text-sm font-medium'>Choose your Deadline</label>
+                  <Select options={options} name='urgency' placeholder="Deadline" />
+                </div>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              <div className="w-[50%]">
+                <button
+                  type="submit"
+                  className="bg-black hover:bg-neutral-700 w-full rounded transition-all duration-300 p-2">
+                  <span className="text-white tracking-wider text-base ">
                     Calculate
-                </button>
-                </div>
-                <div id="Cost" className="w-[40%] text-center">
-                  <span className="text-4xl font-light dark:text-white">
-                    $2000
                   </span>
-                </div>
+                </button>
+              </div>
+              <div className="w-[50%] text-center">
+                <span className="text-black text-2xl">
+                  $2000
+                </span>
               </div>
             </div>
           </form>

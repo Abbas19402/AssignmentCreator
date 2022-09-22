@@ -1,14 +1,15 @@
-import React from 'react'
-import { useSelector , useDispatch } from 'react-redux'
+import React, { useEffect , useState } from 'react'
+import { useSelector } from 'react-redux'
 import Link from 'next/link'
-import { LOGIN } from '../../Redux/User'
+import { useRouter } from 'next/router'
+import useFetch from '../../hooks/useFetch'
 
 const LoginForm = () => {
-    const dispatch = useDispatch()
+    const router = useRouter()
     const mode = useSelector( state => state.mode.value )
-    const isLoading = useSelector( state => state.auth.isLoading )
 
-    console.log(isLoading);
+    const [ user,setUser ] = useState(null)
+    const [ loading , setLoading ] = useState(false)
 
     const handleLogin = async e => {
         e.preventDefault()
@@ -17,8 +18,15 @@ const LoginForm = () => {
         for(var entry of form.entries()) {
             values[entry[0]] = entry[1]
         }
-        dispatch(LOGIN(values))
+        const { response , isLoading } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/login`,values)
+        if(response.status == 200) router.push('/')
+        setUser(response.data)
+        setLoading(isLoading)
     }
+
+    useEffect(()=> {
+        localStorage.setItem('user',user)
+    }, [user])
   return (
     <div className={`${ mode == 'dark' && 'dark' } h-full`}>
         <div className="flex justify-center items-center h-full">
@@ -32,6 +40,7 @@ const LoginForm = () => {
                         id="email"
                         name="email"
                         autoComplete='off'
+
                     />
                 </div>
                 <div className="flex flex-col gap-1 m-1 w-[60%]">
@@ -48,7 +57,7 @@ const LoginForm = () => {
                     <Link href={`/auth/${'signup'}`}><span className='hover:cursor-pointer text-sm font-medium text-gray-600'>Don&apos;t have on Account? Signup <span className="underline">here</span></span></Link>
                 </div>
                 <button type='submit' className='h-9 px-3.5 my-8 rounded bg-black text-white text-center transition-all duration-500 lg:hover:bg-neutral-700'>
-                    {isLoading ? 'Loading...' : 'Login'}
+                    {loading ? 'Loading...' : 'Login'}
                 </button>
             </form>
         </div>

@@ -1,7 +1,4 @@
 import Head from 'next/head'
-import Store from '../Redux/Store'
-import { Provider } from 'react-redux'
-import Header from '../Components/Header/Header'
 import Landing from '../Landing/Landing'
 
 export default function Home() {

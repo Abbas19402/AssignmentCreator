@@ -12,12 +12,14 @@ const Banner = () => {
     <div
       id="banner"
       className={`${mode === "dark" && "dark"} overflow-hidden`}>
-      <div className="h-[100vh] lg:h-[60vh]  w-full bg-slate-50 dark:bg-dark/80  transition-all duration-500">
-        <div className="flex flex-col lg:flex-row justify-around items-center h-full ">
+      <div className="h-fit lg:h-[100vh]  w-full bg-slate-50 dark:bg-dark/80  transition-all duration-500 lg:pt-20">
+        <div className="flex flex-col lg:flex-row justify-center lg:justify-around items-center lg:items-start h-full ">
           <div id="Animation" className="w-auto lg:w-[30%] p-16">
             <Lottie animationData={Animation} loop={true} autoPlay />
           </div>
-          <Form.BannerForm />
+          <div className="w-full lg:w-fit flex justify-center items-center z-10">
+            <Form.BannerForm />
+          </div>
         </div>
       </div>
     </div>

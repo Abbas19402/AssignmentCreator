@@ -5,7 +5,6 @@ export const darkMode = createSlice({
   initialState: {
     value: 'light',
     url: '',
-    hamStatus: false
   },
   reducers: {
     setDarkMode: (state, action) => {
