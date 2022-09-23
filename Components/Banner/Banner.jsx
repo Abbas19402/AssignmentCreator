@@ -17,7 +17,7 @@ const Banner = () => {
           <div id="Animation" className="w-auto lg:w-[30%] p-16">
             <Lottie animationData={Animation} loop={true} autoPlay />
           </div>
-          <div className="w-full lg:w-fit flex justify-center items-center z-10">
+          <div className="w-full lg:w-fit flex justify-center items-center">
             <Form.BannerForm />
           </div>
         </div>

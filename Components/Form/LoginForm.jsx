@@ -1,10 +1,13 @@
 import React, { useEffect , useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { SAVE_USER } from '../../Redux/User'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useFetch from '../../hooks/useFetch'
 
 const LoginForm = () => {
+    const dispatch = useDispatch()
     const router = useRouter()
     const mode = useSelector( state => state.mode.value )
 
@@ -19,7 +22,10 @@ const LoginForm = () => {
             values[entry[0]] = entry[1]
         }
         const { response , isLoading } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/login`,values)
-        if(response.status == 200) router.push('/')
+        if(response.status == 200) {
+            router.push('/')
+            dispatch(SAVE_USER(response.data.data))
+        }
         setUser(response.data)
         setLoading(isLoading)
     }

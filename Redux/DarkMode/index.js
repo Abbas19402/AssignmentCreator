@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export const darkMode = createSlice({
-  name: 'redux',
+  name: 'theme',
   initialState: {
-    value: 'light',
-    url: '',
+    // value: 'light',
+    // url: '',
   },
   reducers: {
     setDarkMode: (state, action) => {

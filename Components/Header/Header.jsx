@@ -9,11 +9,14 @@ import Image from "next/future/image";
 import Logo from '../../public/Assets/Logos/Header2.png'
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import Avatar from '@mui/material/Avatar';
+import { DELETE_USER } from "../../Redux/User";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const mode = useSelector(state => state.mode.value)
+  const { user } = useSelector(state => state.auth.user)
   const [isOpen, setOpen] = useState(false)
   const [dark, setDark] = useState(false)
   
@@ -24,8 +27,7 @@ const Header = () => {
     } else {
       dispatch(setDarkMode(false))
     }
-    var user = localStorage.getItem('user')
-  }, [dark]);
+  }, [dark,user]);
 
   // Static Dropdowns
   const Services = ['Thesis', "Essay", "CV", 'Assignments']
@@ -86,7 +88,7 @@ const Header = () => {
         className="transition-all duration-500 w-full h-full dark:bg-primary-dark bg-primary flex flex-row justify-between md:justify-evenly items-center px-8 border-b-2 dark:border-b-0"
       >
         <div id="logo" className="rounded-md overflow-hidden">
-          <Image src={Logo} alt="Assignment Help" className="scale-y-125 scale-x-125" width='300' height='460' onClick={() => router.push('/')} />
+          <Image src={Logo} priority alt="Assignment Help" className="scale-y-125 scale-x-125" width='300' height='460' onClick={() => router.push('/')} />
         </div>
         <div className="flex flex-row items-center justify-end">
           <div id="switch" className="md:hidden">
@@ -166,18 +168,6 @@ const Header = () => {
                 </div>
               </li>
             </Link>
-            <Link href={'/auth/login'}>
-              {/* <li className="group hover:cursor-pointer">
-                <div className="mx-2 my-1 p-1.5 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded-md text-center scale-105">
-                  <span className="text-white group-hover:text-gray-200 font-medium w-full h-full transition-all duration-300 ">
-                    
-                    
-                  </span>
-                  <div id="dropdownComponent" className="absolute transition-all h-0 group-hover:h-56 w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-black shadow-xl shadow-gray-300  overflow-hidden z-10 rounded-b">
-
-                  </div>
-                </div>
-              </li> */}
               <li className="group md:mx-2 lg:mx-0 hover:cursor-pointer">
               <div className="mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
                 <div id="dropdown" className="flex flex-row justify-center items-center">
@@ -187,19 +177,30 @@ const Header = () => {
                   </span>
                 </div>
               </div>
-              <div id="dropdownComponent" className="absolute right-5 transition-all h-0 group-hover:h-fit w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded">
+              <div id="dropdownComponent" className="absolute right-5 transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded">
                 <ul className="flex flex-col justify-evenly items-center">
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
                   {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
-                  <div className="flex flex-row justify-start items-center gap-2">
+                  {user ? <div className="flex flex-row justify-start items-center gap-2">
                     <Avatar />
-                    <span></span>
-                  </div>
+                    <span className="text-gray-600 text-sm text-center">{user.name}</span>
+                  </div> : <Link href={'/auth/login'}><div className="flex flex-row justify-start items-center gap-2">
+                  <span className="text-gray-600 text-sm text-center">Login</span>
+                  </div></Link>}
+                  </li>
+                  <li className="py-2 px-4 hover:bg-sky-200 w-full">
+                  {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
+                  {user && <div onClick={()=>{
+                    dispatch(DELETE_USER())
+                    toast.success("Logged Out Succesfully!!")
+                  }} 
+                  className="flex flex-row justify-start items-center gap-2">
+                  <span className="text-gray-600 text-sm text-center">Logout</span>
+                  </div>}
                   </li>
                 </ul>
               </div>
             </li>
-            </Link>
           </ul>
         </nav>
       </div>

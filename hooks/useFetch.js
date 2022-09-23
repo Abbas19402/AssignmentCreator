@@ -8,7 +8,8 @@ const useFetch = async(method , url , options) => {
         url: `${url}`,
         data: options
     })
-    if(response.status == 200) { toast.success('Login Successfull')
+    if(response.status == 200) { 
+        toast.success('Login Successfull')
         isLoading = false
     } else { 
         toast.error('login Failed') 
