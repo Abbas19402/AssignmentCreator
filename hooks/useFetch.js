@@ -6,13 +6,12 @@ const useFetch = async(method , url , options) => {
     const response = await axios({
         method: `${method}`,
         url: `${url}`,
-        data: options
+        data: options.data,
+        headers: options.headers ? options.headers : null
     })
-    if(response.status == 200) { 
-        toast.success('Login Successfull')
+    if(response.status == 200) {
         isLoading = false
     } else { 
-        toast.error('login Failed') 
         isLoading = false
     }
     return {

@@ -5,14 +5,15 @@ import { createSlice } from '@reduxjs/toolkit'
 export const User = createSlice({
   name: 'userAuthentication',
   initialState: {
-    user:'Websenor'
+    user:''
   },
   reducers: {
     SAVE_USER: (state, action) => {
       state.user = action.payload
     },
     DELETE_USER: ( state , action ) => {
-      state.user = {}
+      console.log('DELETE_USER called');
+      state.user = 'loggedOut'
     }
   }
 })

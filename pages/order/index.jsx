@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import Order from '../../PageComponents/Order/Order'
 
-const index = ({props}) => {
+const OrderPage = ({props}) => {
   const mode = useSelector( state => state.mode.value )
 
   useEffect(()=> {},[mode])
@@ -16,4 +16,4 @@ const index = ({props}) => {
   )
 }
 
-export default index
+export default OrderPage

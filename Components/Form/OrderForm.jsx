@@ -3,9 +3,13 @@ import { useEffect } from 'react'
 import Select from 'react-select'
 import { FilePond, File, registerPlugin } from 'react-filepond'
 import 'filepond/dist/filepond.min.css'
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 const OrderForm = () => {
-  const [ files , setFiles ] = useState([])
+  registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+  const [ files , setFiles ] = useState(null)
     const options = [
         { value: 'chocolate', label: 'Chocolate' },
         { value: 'strawberry', label: 'Strawberry' },
@@ -23,17 +27,23 @@ const OrderForm = () => {
       { value: '30', label: '30' },
       { value: '40', label: '40' }
     ]
-
+    const setUploads = (files) => {
+      setFiles(files)
+    }
     const handleSubmit = (e) => {
       e.preventDefault()
       const form = new FormData(e.currentTarget);
       let values = {};
       for (var pair of form.entries()) {
-        values[pair[0]] = pair[1];
+        if(pair[0] == 'upload') {
+          pair[0] = files
+        } else {
+          values[pair[0]] = pair[1];
+        }
       }
       console.log(values)
       e.target.reset();
-      console.log(form);
+      console.log(values);
     }
 
     const [ selectedService , setSeletedService ] = useState({})
@@ -67,13 +77,15 @@ const OrderForm = () => {
             <div id="upload" className='w-full my-2 flex flex-col gap-1'>
               <label htmlFor="upload" className='text-gray-600 text-sm font-medium'>Upload Additional Files</label>
               <FilePond
+                id='upload'
                 type='file'
                 files={files}
                 onupdatefiles={setFiles}
                 allowMultiple={true}
                 maxFiles={3}
                 acceptedFileTypes={['png', 'jpg', 'jpeg', 'pdf', 'docx', 'xlsx', 'ppt', 'jfif']}
-                name="files" 
+                name="upload" 
+                storeAsFile={true}
                 labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
               />
             </div>

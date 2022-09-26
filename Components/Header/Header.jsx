@@ -1,96 +1,140 @@
 import React, { useState, useEffect } from "react";
-import { styled } from '@mui/material/styles';
-import Switch from '@mui/material/Switch';
-import { useDispatch, useSelector } from 'react-redux'
+import { styled } from "@mui/material/styles";
+import Switch from "@mui/material/Switch";
+import { useDispatch, useSelector } from "react-redux";
 import { setDarkMode } from "../../Redux/DarkMode";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/future/image";
-import Logo from '../../public/Assets/Logos/Header2.png'
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import Avatar from '@mui/material/Avatar';
+import Logo from "../../public/Assets/Logos/Header2.png";
+import Avatar from "@mui/material/Avatar";
 import { DELETE_USER } from "../../Redux/User";
 import { toast } from "react-toastify";
 
 const Header = () => {
-  const router = useRouter()
-  const dispatch = useDispatch()
-  const mode = useSelector(state => state.mode.value)
-  const { user } = useSelector(state => state.auth.user)
-  const [isOpen, setOpen] = useState(false)
-  const [dark, setDark] = useState(false)
-  
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const mode = useSelector((state) => state.mode.value);
+  const  user  = useSelector((state) => state.auth.user);
+  const [isOpen, setOpen] = useState(false);
+  const [dark, setDark] = useState(false);
+  console.log(user);
+
   useEffect(() => {
-    console.log(mode)
+    console.log(mode);
     if (dark) {
-      dispatch(setDarkMode(true))
+      dispatch(setDarkMode(true));
     } else {
-      dispatch(setDarkMode(false))
+      dispatch(setDarkMode(false));
     }
-  }, [dark,user]);
+  }, [dark, user]);
 
   // Static Dropdowns
-  const Services = ['Thesis', "Essay", "CV", 'Assignments']
-  const Company = ['About', 'Samples']
+  const Services = ["Thesis", "Essay", "CV", "Assignments"];
+  const Company = ["About", "Samples"];
 
   // <---- Light / Dark mode Switch ---->
   const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     width: 62,
     height: 34,
     padding: 7,
-    '& .MuiSwitch-switchBase': {
+    "& .MuiSwitch-switchBase": {
       margin: 1,
       padding: 0,
-      transform: 'translateX(6px)',
-      '&.Mui-checked': {
-        color: '#fff',
-        transform: 'translateX(22px)',
-        '& .MuiSwitch-thumb:before': {
+      transform: "translateX(6px)",
+      "&.Mui-checked": {
+        color: "#fff",
+        transform: "translateX(22px)",
+        "& .MuiSwitch-thumb:before": {
           backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
-            '#fff',
+            "#fff"
           )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`,
         },
-        '& + .MuiSwitch-track': {
+        "& + .MuiSwitch-track": {
           opacity: 1,
-          backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+          backgroundColor:
+            theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
         },
       },
     },
-    '& .MuiSwitch-thumb': {
-      backgroundColor: theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
+    "& .MuiSwitch-thumb": {
+      backgroundColor: theme.palette.mode === "dark" ? "#003892" : "#001e3c",
       width: 32,
       height: 32,
-      '&:before': {
+      "&:before": {
         content: "''",
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
+        position: "absolute",
+        width: "100%",
+        height: "100%",
         left: 0,
         top: 0,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
         backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
-          '#fff',
+          "#fff"
         )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
       },
     },
-    '& .MuiSwitch-track': {
+    "& .MuiSwitch-track": {
       opacity: 1,
-      backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+      backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
       borderRadius: 20 / 2,
     },
   }));
 
   return (
-    <div id="Navbar" className={`overflow-hidden h-20 ${dark ? 'dark' : 'light'}`}>
+    <div
+      id="Navbar"
+      className={`overflow-hidden h-20 ${dark ? "dark" : "light"}`}
+    >
       <div
         id="wrapper"
-        className="transition-all duration-500 w-full h-full dark:bg-primary-dark bg-primary flex flex-row justify-between md:justify-evenly items-center px-8 border-b-2 dark:border-b-0"
+        className="transition-all duration-500 w-full h-full dark:bg-primary-dark bg-primary flex flex-row justify-between md:justify-evenly items-center px-8 border-b-0"
       >
-        <div id="logo" className="rounded-md overflow-hidden">
-          <Image src={Logo} priority alt="Assignment Help" className="scale-y-125 scale-x-125" width='300' height='460' onClick={() => router.push('/')} />
+
+        {/*  <---- Drawer ----> */}
+        <div className={`${isOpen ? 'translate-x-0' : '-translate-x-[100rem]'} transition-all duration-700 fixed w-screen h-screen top-20 left-0 z-50 overflow-x-hidden`}>
+          <div className={`w-full h-full transition-all duration-300  ${isOpen && 'bg-primary-dark dark:bg-gray-700'}`}>
+            <ul className="flex flex-col justify-start items-center px-4 py-2">
+              <li className="w-full group">
+                <div className="flex flex-row justify-between items-center px-2 py-2">
+                  <span className = "text-white tracking-wide text-lg">Services</span>
+                  <div
+                    id="dropdownIndicator"
+                    className="mx-2 rotate-90 justify-center items-end  group-focus:-rotate-90  transition-all duration-300 text-white dark:text-white "
+                  >
+                    <span>&#10095;</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="flex flex-row items-center justify-end">
+        {/*  <---- / of Drawer ----> */}
+
+        <div id="logo" className="rounded-md overflow-hidden hidden md:block">
+          <Image
+            src={Logo}
+            priority
+            alt="Assignment Help"
+            className="scale-y-125 scale-x-125"
+            width="300"
+            height="460"
+            onClick={() => router.push("/")}
+          />
+        </div>
+        <div id="logo" className="rounded-md overflow-hidden md:hidden block">
+          <Image
+            src={Logo}
+            priority
+            alt="Assignment Help"
+            className="scale-y-125 scale-x-125"
+            width="200"
+            height="360"
+            onClick={() => router.push("/")}
+          />
+        </div>
+        <div className="flex flex-row items-center justify-end gap-2">
           <div id="switch" className="md:hidden">
             <MaterialUISwitch
               sx={{ m: 1 }}
@@ -98,10 +142,35 @@ const Header = () => {
               onChange={() => setDark(!dark)}
             />
           </div>
-
-          <div id="ham" className="md:hidden">
+          <div id="ham" className="md:hidden z-50" onClick={()=>setOpen(!isOpen)}>
+            {isOpen ? (
+              <svg
+                fill="#000000"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 50 50"
+                width="32px"
+                height="32px"
+              >
+                <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z" />
+              </svg>
+            ) : (
+              <svg
+                fill="#000000"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 50 50"
+                width="32px"
+                height="32px"
+              >
+                <path
+                  fill="none"
+                  stroke="#000000"
+                  stroke-miterlimit="10"
+                  stroke-width="2"
+                  d="M50 25L0 25M50 10L0 10M0 40L50 40"
+                />
+              </svg>
+            )}
           </div>
-          
         </div>
         <nav className="w-full hidden md:block">
           <ul className="flex flex-row justify-end items-center">
@@ -114,41 +183,79 @@ const Header = () => {
             </li>
             <li className="group w-[8vw] md:w-[12vw] lg:w-[10vw] mx-2 hover:cursor-pointer">
               <div className="sticky mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
-                <div id="dropdown" className="flex flex-row justify-center items-center">
+                <div
+                  id="dropdown"
+                  className="flex flex-row justify-center items-center"
+                >
                   <span className="text-white font-medium  dark:text-white transition-all duration-300">
                     {/* <Trans i18nKey='Services'></Trans> */}
                     Services
                   </span>
-                  <div id="dropdownIndicator" className="mx-2 rotate-90 justify-center items-end group-hover:-rotate-90 transition-all duration-300 text-white dark:text-white ">
+                  <div
+                    id="dropdownIndicator"
+                    className="mx-2 rotate-90 justify-center items-end group-hover:-rotate-90 transition-all duration-300 text-white dark:text-white "
+                  >
                     <span>&#10095;</span>
                   </div>
                 </div>
               </div>
-              <div id="dropdownComponent" className="absolute transition-all h-0 group-hover:h-fit w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded-b">
+              <div
+                id="dropdownComponent"
+                className="absolute transition-all h-0 group-hover:h-fit w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded-b"
+              >
                 <ul className="flex flex-col justify-evenly items-center">
-                  {Services.map((item , key)=> <li key={key} className="py-2 px-4 hover:bg-sky-200 w-full" onClick={() => router.push(`/${`services`}/${item}`)}><span className="text-gray-600 text-sm text-center">{item}</span></li>)}
+                  {Services.map((item, key) => (
+                    <li
+                      key={key}
+                      className="py-2 px-4 hover:bg-sky-200 w-full"
+                      onClick={() => router.push(`/${`services`}/${item}`)}
+                    >
+                      <span className="text-gray-600 text-sm text-center">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </li>
             <li className="group md:w-[15.5vw] lg:w-[10vw] md:mx-2 lg:mx-0 hover:cursor-pointer">
               <div className="mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
-                <div id="dropdown" className="flex flex-row justify-center items-center">
+                <div
+                  id="dropdown"
+                  className="flex flex-row justify-center items-center"
+                >
                   <span className="text-white font-medium dark:text-white  transition-all duration-300">
                     {/* <Trans i18nKey='Company'></Trans> */}
                     Company
                   </span>
-                  <div id="dropdownIndicator" className="mx-2 rotate-90 justify-center items-end group-hover:-rotate-90 transition-all duration-300 text-white dark:text-white">
+                  <div
+                    id="dropdownIndicator"
+                    className="mx-2 rotate-90 justify-center items-end group-hover:-rotate-90 transition-all duration-300 text-white dark:text-white"
+                  >
                     <span>&#10095;</span>
                   </div>
                 </div>
               </div>
-              <div id="dropdownComponent" className="absolute transition-all h-0 group-hover:h-fit w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded-b">
+              <div
+                id="dropdownComponent"
+                className="absolute transition-all h-0 group-hover:h-fit w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded-b"
+              >
                 <ul className="flex flex-col justify-evenly items-center">
-                  {Company.map((item , key) => <li key={key} className="py-2 px-4 hover:bg-sky-200 w-full" onClick={() => router.push(`/${`company`}/${item}`)}><span className="text-gray-600 text-sm text-center">{item}</span></li>)}
+                  {Company.map((item, key) => (
+                    <li
+                      key={key}
+                      className="py-2 px-4 hover:bg-sky-200 w-full"
+                      onClick={() => router.push(`/${`company`}/${item}`)}
+                    >
+                      <span className="text-gray-600 text-sm text-center">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </li>
-            <Link href={'/writers'}>
+            <Link href={"/writers"}>
               <li className="group w-[8vw] md:w-[15vw] lg:w-[10vw]">
                 <div className="mx-2 my-1 py-2 px-2 transition-all duration-500 hover:scale-110 hover:shadow-lg rounded  dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40  hover:cursor-pointer text-center">
                   <span className="text-white font-medium dark:text-white transition-all duration-300">
@@ -158,7 +265,7 @@ const Header = () => {
                 </div>
               </li>
             </Link>
-            <Link href={'/order'}>
+            <Link href={"/order"}>
               <li className="w-[8vw] md:w-[10vw] group hover:cursor-pointer">
                 <div className="mx-2 my-1 py-2 px-2 bg-white group-hover:bg-cyan-200 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded-md text-center scale-105  group-hover:shadow-white dark:group-hover:shadow-lg dark:group-hover:shadow-sky-500">
                   <span className="text-black  group-hover:text-black/60 font-medium w-full h-full transition-all duration-300 ">
@@ -168,35 +275,71 @@ const Header = () => {
                 </div>
               </li>
             </Link>
-              <li className="group md:mx-2 lg:mx-0 hover:cursor-pointer">
+            <li className="group md:mx-2 lg:mx-0 hover:cursor-pointer">
               <div className="mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
-                <div id="dropdown" className="flex flex-row justify-center items-center">
-                  <span className="text-white font-medium dark:text-white  transition-all duration-300">
-                    {/* <Trans i18nKey='Company'></Trans> */}
-                    <AccountBoxIcon />
-                  </span>
+                <div
+                  id="dropdown"
+                  className="flex flex-row justify-center items-center"
+                >
+                  <div className="scale-90">
+                    {user !== 'loggedOut' ? <Avatar>
+                      <span className="text-sm font-bold tracking-widest ">
+                        {user.user.name.match(/\b(\w)/g).join("")}
+                      </span>
+                    </Avatar> : <Link href={"/auth/login"}>
+                        <div className="flex flex-row justify-start items-center gap-2 border-2 border-white p-1  ">
+                          <span className="text-md font-medium tracking-widest text-center text-white">
+                            Login
+                          </span>
+                        </div>
+                      </Link>}
+                  </div>
                 </div>
               </div>
-              <div id="dropdownComponent" className="absolute right-5 transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded">
+              <div
+                id="dropdownComponent"
+                className="absolute right-5 transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded"
+              >
                 <ul className="flex flex-col justify-evenly items-center">
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
-                  {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
-                  {user ? <div className="flex flex-row justify-start items-center gap-2">
-                    <Avatar />
-                    <span className="text-gray-600 text-sm text-center">{user.name}</span>
-                  </div> : <Link href={'/auth/login'}><div className="flex flex-row justify-start items-center gap-2">
-                  <span className="text-gray-600 text-sm text-center">Login</span>
-                  </div></Link>}
+                    {user !== 'loggedOut' ? (
+                      <div className="flex flex-row justify-start items-center gap-2">
+                        <div className="scale-90">
+                          <Avatar>
+                            <span className="text-sm font-bold tracking-widest ">
+                              {user.user.name.match(/\b(\w)/g).join("")}
+                            </span>
+                          </Avatar>
+                        </div>
+                        <span className="text-gray-600 text-sm text-center tracking-tighter">
+                          {user.user.name}
+                        </span>
+                      </div>
+                    ) : (
+                      <Link href={"/auth/login"}>
+                        <div className="flex flex-row justify-start items-center gap-2">
+                          <span className="text-gray-600 text-sm text-center">
+                            Login
+                          </span>
+                        </div>
+                      </Link>
+                    )}
                   </li>
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
-                  {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
-                  {user && <div onClick={()=>{
-                    dispatch(DELETE_USER())
-                    toast.success("Logged Out Succesfully!!")
-                  }} 
-                  className="flex flex-row justify-start items-center gap-2">
-                  <span className="text-gray-600 text-sm text-center">Logout</span>
-                  </div>}
+                    {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
+                    {user !== 'loggedOut' && (
+                      <div
+                        onClick={() => {
+                          dispatch(DELETE_USER());
+                          toast.success("Logged Out Succesfully!!");
+                        }}
+                        className="flex flex-row justify-start items-center gap-2"
+                      >
+                        <span className="text-gray-600 text-sm text-center">
+                          Logout
+                        </span>
+                      </div>
+                    )}
                   </li>
                 </ul>
               </div>
