@@ -11,14 +11,26 @@ import Avatar from "@mui/material/Avatar";
 import { DELETE_USER } from "../../Redux/User";
 import { toast } from "react-toastify";
 
-const Header = () => {
+const Header = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
+
   const mode = useSelector((state) => state.mode.value);
   const  user  = useSelector((state) => state.auth.user);
+  const SSR = useSelector((state) => state.ssr.ssrData);
+
+  const { cat , subWithCat } = SSR
+  console.log(subWithCat);
+
   const [isOpen, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
-  console.log(user);
+  const [ focusedItem , setFocusedItem ] = useState(null)
+  const [ focus , setFocus ] = useState(false)
+  const [ hoveredItem , setHoveredItem ] = useState(null)
+  const [ isHovered , setHovered ] = useState(false)
+  const [ subject , setSubjects ] = useState(null)
+  const [ showSubjects , setShowSubjects ] = useState(false)
+
 
   useEffect(() => {
     console.log(mode);
@@ -28,6 +40,8 @@ const Header = () => {
       dispatch(setDarkMode(false));
     }
   }, [dark, user]);
+
+  console.log('Hellloooo',SSR.cat.data);
 
   // Static Dropdowns
   const Services = ["Thesis", "Essay", "CV", "Assignments"];
@@ -90,21 +104,91 @@ const Header = () => {
       <div
         id="wrapper"
         className="transition-all duration-500 w-full h-full dark:bg-primary-dark bg-primary flex flex-row justify-between md:justify-evenly items-center px-8 border-b-0"
-      >
+        onMouseEnter={()=> {
+          setHoveredItem('')
+          setHovered(false)
+        }}>
 
         {/*  <---- Drawer ----> */}
         <div className={`${isOpen ? 'translate-x-0' : '-translate-x-[100rem]'} transition-all duration-700 fixed w-screen h-screen top-20 left-0 z-50 overflow-x-hidden`}>
-          <div className={`w-full h-full transition-all duration-300  ${isOpen && 'bg-primary-dark dark:bg-gray-700'}`}>
-            <ul className="flex flex-col justify-start items-center px-4 py-2">
-              <li className="w-full group">
-                <div className="flex flex-row justify-between items-center px-2 py-2">
+          <div className={`w-full h-full transition-all duration-300  ${isOpen && 'bg-primary-dark dark:bg-gray-700'} z-0`} onClick={()=>{
+            focus && setFocus(false)
+          }}>
+            <ul className="flex flex-col justify-start items-center px-4 py-2 gap-4 z-10">
+              <li className="w-full group rounded-lg overflow-hidden" onClick={()=>{setFocusedItem('services'); setFocus(!focus)}}>
+                <div className={`${focusedItem == 'services' && focus ? 'bg-primary' : 'bg-inherit'} flex flex-row justify-between items-center px-2 py-2`}>
                   <span className = "text-white tracking-wide text-lg">Services</span>
                   <div
                     id="dropdownIndicator"
-                    className="mx-2 rotate-90 justify-center items-end  group-focus:-rotate-90  transition-all duration-300 text-white dark:text-white "
+                    className={`mx-2 ${focusedItem == 'services' && focus ? 'rotate-90' : 'rotate-0'} justify-center items-end transition-all duration-300 text-white dark:text-white`} 
                   >
                     <span>&#10095;</span>
                   </div>
+                </div>
+                <div className={`w-full ${focusedItem == 'services' && focus ? 'h-fit' : 'h-0'} transition-all duration-300 bg-primary/20`}>
+                <ul className="flex flex-col justify-evenly items-center">
+                  {Services.map((item, key) => (
+                    <li
+                      key={key}
+                      className="py-2 px-4 hover:bg-sky-200 w-full"
+                      onClick={() => {
+                        router.push(`/${`services`}/${item}`)
+                        setOpen(false)
+                      }}
+                    >
+                      <span className="text-gray-200 text-lg tracking-wider  text-center">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                </div>
+              </li>
+              <li className="w-full group rounded-lg overflow-hidden" onClick={()=>{setFocusedItem('company'); setFocus(!focus)}}>
+                <div className={`${focusedItem == 'company' && focus  ? 'bg-primary' : 'bg-inherit'} flex flex-row justify-between items-center px-2 py-2`}>
+                  <span className = "text-white tracking-wide text-lg">Company</span>
+                  <div
+                    id="dropdownIndicator"
+                    className={`mx-2 ${focusedItem == 'company' && focus  ? 'rotate-90' : 'rotate-0'} justify-center items-end transition-all duration-300 text-white dark:text-white`} 
+                  >
+                    <span>&#10095;</span>
+                  </div>
+                </div>
+                <div className={`w-full transition-all duration-300 ${focusedItem == 'company' && focus ? 'h-fit' : 'h-0' }  overflow-hidden bg-primary/20`}>
+                <ul className="flex flex-col justify-evenly items-center">
+                  {Company.map((item, key) => (
+                    <li
+                      key={key}
+                      className="py-2 px-4 hover:bg-sky-200 w-full"
+                      onClick={() => {
+                        router.push(`/${`company`}/${item}`)
+                        setOpen(false)
+                      }}
+                    >
+                      <span className="text-gray-200 text-lg tracking-wider  text-center">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                </div>
+              </li>
+              <li className="w-full group rounded-lg" onClick={()=>{
+                  setFocusedItem('writers'); 
+                  router.push('/writers')
+                  setOpen(!isOpen)
+                }}>
+                <div className={`${focusedItem == 'writers' ? 'bg-primary' : 'bg-inherit'} flex flex-row justify-between items-center px-2 py-2`}>
+                  <span className = "text-white tracking-wide text-lg">Our Writers</span>
+                </div>
+              </li>
+              <li className="w-full group rounded-lg"onClick={()=>{
+                  setFocusedItem('order'); 
+                  router.push('/order')
+                  setOpen(!isOpen)
+                }}>
+                <div className={`${focusedItem == 'order' ? 'bg-primary' : 'bg-inherit'} flex flex-row justify-between items-center px-2 py-2`}>
+                  <span className = "text-white tracking-wide text-lg">Order</span>
                 </div>
               </li>
             </ul>
@@ -181,7 +265,10 @@ const Header = () => {
                 onChange={() => setDark(!dark)}
               />
             </li>
-            <li className="group w-[8vw] md:w-[12vw] lg:w-[10vw] mx-2 hover:cursor-pointer">
+            <li className="group w-[8vw] md:w-[12vw] lg:w-[10vw] mx-2 hover:cursor-pointer" onMouseEnter={()=> {
+              setHoveredItem('services')
+              setHovered(true)
+            }}>
               <div className="sticky mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
                 <div
                   id="dropdown"
@@ -199,26 +286,29 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-              <div
+              {/* <div
                 id="dropdownComponent"
                 className="absolute transition-all h-0 group-hover:h-fit w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded-b"
               >
                 <ul className="flex flex-col justify-evenly items-center">
-                  {Services.map((item, key) => (
+                  {cat.data.map((item, key) => (
                     <li
                       key={key}
                       className="py-2 px-4 hover:bg-sky-200 w-full"
-                      onClick={() => router.push(`/${`services`}/${item}`)}
+                      onClick={() => router.push(`/${`services`}/${item.slug}`)}
                     >
                       <span className="text-gray-600 text-sm text-center">
-                        {item}
+                        {item.name}
                       </span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
             </li>
-            <li className="group md:w-[15.5vw] lg:w-[10vw] md:mx-2 lg:mx-0 hover:cursor-pointer">
+            <li className="group md:w-[15.5vw] lg:w-[10vw] md:mx-2 lg:mx-0 hover:cursor-pointer" onMouseEnter={()=> {
+              setHoveredItem('company')
+              setHovered(true)
+            }}>
               <div className="mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
                 <div
                   id="dropdown"
@@ -236,7 +326,7 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-              <div
+              {/* <div
                 id="dropdownComponent"
                 className="absolute transition-all h-0 group-hover:h-fit w-[8vw] md:w-[12vw] lg:w-[10vw] dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded-b"
               >
@@ -253,7 +343,7 @@ const Header = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
             </li>
             <Link href={"/writers"}>
               <li className="group w-[8vw] md:w-[15vw] lg:w-[10vw]">
@@ -282,7 +372,7 @@ const Header = () => {
                   className="flex flex-row justify-center items-center"
                 >
                   <div className="scale-90">
-                    {user !== 'loggedOut' ? <Avatar>
+                    {(user !== 'loggedOut') ? <Avatar>
                       <span className="text-sm font-bold tracking-widest ">
                         {user.user.name.match(/\b(\w)/g).join("")}
                       </span>
@@ -302,7 +392,7 @@ const Header = () => {
               >
                 <ul className="flex flex-col justify-evenly items-center">
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
-                    {user !== 'loggedOut' ? (
+                    {(user !== 'loggedOut') ? (
                       <div className="flex flex-row justify-start items-center gap-2">
                         <div className="scale-90">
                           <Avatar>
@@ -345,6 +435,76 @@ const Header = () => {
               </div>
             </li>
           </ul>
+                      
+          <div id="modal" className={`absolute h-[60vh] w-[60vw] transition-all duration-300 bg-white rounded-md shadow-xl p-7 ${(hoveredItem == 'services' || 'company') && isHovered ? 'opacity-100 z-10' : 'opacity-0 -z-10' }`}  onMouseLeave={()=> {
+              setHoveredItem('')
+              setHovered(false)
+              setShowSubjects(false)
+            }}>
+            <div className="w-full h-full flex flex-row divide-x-2 divide-black">
+                <div className="w-[30%] h-full flex justify-center items-center p-3">
+                  {hoveredItem == 'services'? (
+                    <div className="text-center w-full">
+                      <ul className="flex flex-col justify-center items-center w-full">
+                        {cat.data.map((item, key) => (
+                          <li
+                            key={key}
+                            className="py-2 px-4 hover:bg-sky-200 w-full"
+                            onMouseEnter={()=>{
+                              setShowSubjects(true)
+                              setSubjects(item.id)
+                            }}
+                          >
+                            <span className="text-gray-600 text-sm text-center">
+                              {item.name}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <ul className="flex flex-col justify-center items-center">
+                        {cat.data.map((item, key) => (
+                          <li
+                            key={key}
+                            className="py-2 px-4 hover:bg-sky-200 w-full"
+                            onMouseEnter={()=>{
+                              setShowSubjects(true)
+                              setSubjects(item.id)
+                            }}
+                          >
+                            <span className="text-gray-600 text-sm text-center">
+                              {item.name}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>  
+                <div className="w-[50%] h-full">
+                {showSubjects && (
+                    <div className="text-center w-full">
+                      <ul className="flex flex-col justify-center items-center w-full">
+                        {subWithCat.data.map((item, key) => (
+                          subject == item.category_id && <li
+                            key={key}
+                            className="py-2 px-4 hover:bg-sky-200 w-full"
+                            onClick={()=>router.push(`/${hoveredItem}/${item.slug}`)}
+                          >
+                            <span className="text-gray-600 text-sm text-center">
+                              {item.name}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>  
+            </div>
+          </div>
+
         </nav>
       </div>
     </div>

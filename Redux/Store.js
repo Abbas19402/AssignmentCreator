@@ -1,9 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import mode from './DarkMode/index'
-import authentication from './User'
+
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 import { combineReducers } from '@reduxjs/toolkit'
+
+import mode from './DarkMode/index'
+import authentication from './User'
+import GetSSRProps from './StateManager/SSR'
 
 const persistConfig = {
   key: 'root',  
@@ -12,7 +15,8 @@ const persistConfig = {
 };
 const reducer = combineReducers({
   mode: mode,
-  auth: authentication
+  auth: authentication,
+  ssr: GetSSRProps
 })
 const persistedReducer = persistReducer(persistConfig , reducer)
 

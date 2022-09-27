@@ -5,6 +5,7 @@ import Store from '../Redux/Store'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 import { ToastContainer} from 'react-toastify';
+import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }) {
@@ -13,7 +14,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Provider store={Store}>
         <PersistGate persistor={persistor}>
-          <Header />
+          <Header {...pageProps}/>
           <ToastContainer />
           <Component {...pageProps} />
         </PersistGate>
@@ -23,3 +24,6 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp
+
+
+

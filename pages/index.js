@@ -1,7 +1,11 @@
 import Head from 'next/head'
 import Landing from '../Landing/Landing'
+import { useDispatch } from 'react-redux'
+import { getSSR } from '../Redux/StateManager/SSR'
 
-export default function Home() {
+export default function Home(props) {
+  const dispatch = useDispatch()
+  dispatch(getSSR(props))
   return (
     <>
       <Head>
@@ -12,4 +16,26 @@ export default function Home() {
       <Landing />
     </>
   )
+}
+export async function getServerSideProps(context) {
+  const cat = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/Get-All-Category`,{
+    headers: {
+      "Accept" : "application/json",
+      "Authorization" : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
+    }
+  })
+  const category = await cat.json()
+
+  const sub = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/SubjectWithCategory`,{headers: {
+    Accept : "application/json",
+    Authorization : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
+  }}
+)
+  const subWithCatagory = await sub.json()
+  return {
+    props: {
+      cat: category,
+      subWithCat: subWithCatagory
+    }, // will be passed to the page component as props
+  }
 }

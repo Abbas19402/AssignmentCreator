@@ -50,6 +50,9 @@ const LoginForm = () => {
     <div className={`${ mode == 'dark' && 'dark' } h-full`}>
         <div className="flex justify-center items-center h-full">
             <form onSubmit={HandleLogin} className='w-[80%] h-[80%] flex flex-col justify-center items-center p-5'>
+                <div id="heading" className='text-center py-3'>
+                    <span className="text-start text-4xl tracking-tighter">Login</span>
+                </div>
                 <div className="flex flex-col gap-1 m-1 w-[60%]">
                     <label htmlFor="email" className='text-sm font-medium text-gray-600 my-1'>Email</label>
                     <input 

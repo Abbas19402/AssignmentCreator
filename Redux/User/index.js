@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-
-
 export const User = createSlice({
   name: 'userAuthentication',
   initialState: {
@@ -17,8 +15,6 @@ export const User = createSlice({
     }
   }
 })
-// console.log(User.reducer);
-
 // Action creators are generated for each case reducer function
 export const { SAVE_USER , DELETE_USER } = User.actions
 const authentication = User.reducer

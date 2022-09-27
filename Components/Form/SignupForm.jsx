@@ -72,6 +72,9 @@ const SignupForm = () => {
       <div className="flex justify-center items-center h-full">
         <form onSubmit={HandleSignup} className="w-[100%] h-[80%] flex flex-col justify-center items-center p-5 ">
           <div className="flex flex-col w-[80%] px-4">
+            <div id="heading" className='text-center py-3'>
+              <span className="text-start text-4xl tracking-tighter">Sign Up</span>
+            </div>
             <div className="flex flex-col gap-1 m-1">
                 <label
                 htmlFor="name"
