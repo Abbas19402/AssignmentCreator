@@ -1,4 +1,4 @@
-.container {
+/* .container {
   padding: 0 2rem;
 }
 
@@ -126,4 +126,23 @@
   .logo img {
     filter: invert(1);
   }
+} */
+
+.noScroll::-webkit-scrollbar{
+  width: 0px;
+  background-color: black;
+}
+.customScroll::-webkit-scrollbar{
+  width: 5px;
+  background-color: transparent;
+  border-top: 1px solid #989db9;
+  border-bottom-color: 1px solid #989db9;
+}
+.customScroll::-webkit-scrollbar-track{
+  border-top: 1px solid #989db9;
+  border-bottom: 1px solid #989db9;
+}
+.customScroll::-webkit-scrollbar-thumb{
+  background-color: #989db9;
+  border-radius: 10px;
 }

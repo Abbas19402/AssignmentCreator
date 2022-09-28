@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import TalkExpert from './Childs/TalkExpert'
 import { useDispatch } from 'react-redux'
-import Banner from '../Components/Banner/Banner'
+import Banner from './Childs/Banner'
+import {useSelector} from 'react-redux'
 
 const Landing = () => {
+  const mode = useSelector((state) => state.mode.value);
   const dispatch = useDispatch()
   const [ isOpen , setOpen ] = useState(false)
   return (
     <div className='overflow-x-hidden scroll-smooth'>
-      <Banner />
+      <div className={`${mode == 'dark' && 'dark'}`}>
+        <div className='bg-slate-50 dark:bg-dark/80'>
+          <Banner />
+          <TalkExpert />
+        </div>
+      </div>
     </div>
   )
 }

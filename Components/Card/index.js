@@ -1,7 +1,9 @@
 import Writers from "./Writers"
+import CMS from './CMS'
 
 const Card = {
-    Writers
+    Writers,
+    CMS
 }
 
 export default Card

@@ -14,7 +14,9 @@ function MyApp({ Component, pageProps }) {
     <>
       <Provider store={Store}>
         <PersistGate persistor={persistor}>
-          <Header {...pageProps}/>
+          <div className='sticky top-0 left-0 z-10'>
+            <Header {...pageProps}/>
+          </div>
           <ToastContainer />
           <Component {...pageProps} />
         </PersistGate>
