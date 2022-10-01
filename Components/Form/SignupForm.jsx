@@ -15,27 +15,38 @@ const SignupForm = () => {
   const [ otpStatus , setOtpStatus ] = useState(false)
   const [ otp , setOtp ] = useState(null)
 
-  useEffect(()=>{},[otpStatus , loading])
+  useEffect(()=>{
+    console.log("User = ", user);
+  },[otpStatus , loading , user])
 
-  const HandleSignup = async e => {
+  const CheckValidation = (e) => {
     e.preventDefault()
-    setLoading(true)
     const form = new FormData(e.currentTarget)
-    let values = {}
+    const values = {}
     for(var entry of form.entries()) {
         values[entry[0]] = entry[1]
     }
-    const isFormValid = useValid(values)
-    let options ={
-      data: values
+    setLoading(true)
+    const { emptyKeys , validationStatus } = useValid(values)
+    if(validationStatus) {
+        HandleSignup(values)
+    } else {
+        toast.error(`${emptyKeys} required!!`)
+        setLoading(false)
     }
-    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/customer/signup`,options)
-    if(isFormValid.validationStatus) {
-      setUser(response.data)
-      setUser(response.data.data.user)
+}
+
+  const HandleSignup = async values => {
+    const header = {
+      "Accept" : "application/json",
+      "Authorization" : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
+    }
+    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/customer/signup`,values, header)
+    console.log(response);
+    if(response.status == 200 || response.status == 201) {
       CreateOtp(values , response.data.data.access_token)
     } else {
-      alert(`${isFormValid.emptyKeys} required!!`)
+      toast.error("Signup Failed!!")
       setLoading(false)
     }
   }
@@ -44,15 +55,13 @@ const SignupForm = () => {
     const form = new FormData();
     form.append('dialing_code',val.dialing_code)
     form.append('phone',val.phone)
-    let options = {
-      headers: {
-        'Authorization' : `Bearer ${at}` 
-      },
-      data: form
+    let headers = {
+      'Authorization' : `Bearer ${at}` 
     }
-    console.log(options);
-    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/create/otp`,options)
+    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/create/otp`,form , headers)
     if(response.data.success) {
+      console.log(response)
+      setUser(response.data.data.user_id)
       setOtpStatus(true)
       setLoading(false)
     } else {
@@ -64,14 +73,10 @@ const SignupForm = () => {
   const OtpVerification = async() => {
     setLoading(true)
     const form = new FormData();
-    form.append('user_id',user.id)
+    form.append('user_id',user)
     form.append('otp',otp)
-    let options = {
-      data: form
-    }
-    console.log(options);
-    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/otp/login`,options)
-    if(response.data.code == 200 ) {
+    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/otp/login`,form)
+    if(response.data.success ) {
       toast.success('Signup Successfull!!')
       router.push('/auth/login')
       setLoading(false)
@@ -83,7 +88,7 @@ const SignupForm = () => {
   return (
     <div className={`${mode == "dark" && "dark"} h-full`}>
       <div className="flex justify-center items-center h-full">
-        <form onSubmit={HandleSignup} className="w-[100%] h-[80%] flex flex-col justify-center items-center p-5 ">
+        <form onSubmit={CheckValidation} className="w-[100%] h-[80%] flex flex-col justify-center items-center p-5 ">
           <div className="flex flex-col w-[80%] px-4">
             <div id="heading" className='text-center py-3'>
               <span className="text-start text-4xl tracking-tighter">Sign Up</span>
