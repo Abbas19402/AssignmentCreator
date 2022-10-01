@@ -11,7 +11,7 @@ const SubjectDetails = ( props , query ) => {
     const { ImageSrc , category , short_desc , name } = props.props.content.data
   return (
     <div className={`${mode == 'dark' && 'dark'}`}>
-        <div className="relative lg:p-5">
+        <div className="relative lg:p-5 h-full">
             <div className="flex flex-col md:flex-row gap-4 justify-around items-center">
                 <div className="w-full h-full md:w-[60%]">
                     <div className="flex flex-col justify-start items-center">
@@ -24,8 +24,8 @@ const SubjectDetails = ( props , query ) => {
                         {short_desc}
                     </div>
                 </div>
-                <div className="w-full h-96 md:w-[40%]">
-                    <Form.BannerForm />
+                <div className="w-full h-fit flex justify-center md:w-[40%]">
+                    <Form.ServiceForm />
                 </div>
             </div>
         </div>

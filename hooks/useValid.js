@@ -10,13 +10,11 @@ const useValid = (form) => {
             }
         })
     if(isFormValid == false) {
-        console.log('Function called if');
         return {
             emptyKeys: EmptyFields,
             validationStatus: false
         }
     } else {
-        console.log('Function called else ');
         return {
             emptyKeys: EmptyFields,
             validationStatus: true

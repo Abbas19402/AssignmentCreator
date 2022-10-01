@@ -1,10 +1,8 @@
 import axios from "axios";
 
 const useFetch = async(method , url ,values ,header ) => {
-    console.log(values);
     let response
     if(header) {
-        console.log('if');
         await axios(`${url}`,{
             method: `${method}`.toUpperCase(),
             data: values,
@@ -18,12 +16,14 @@ const useFetch = async(method , url ,values ,header ) => {
             response
         }
     } else {
-        console.log("else");
-        const res = await fetch(`${url}`,{
+        await axios(`${url}`,{
             method: `${method}`.toUpperCase(),
-            body: values
+            data: values
+        }) .then( res => {
+            response = res
+        } ) .catch( err => {
+            response = err
         })
-        const response = await res.json()   
         return {
             response
         }

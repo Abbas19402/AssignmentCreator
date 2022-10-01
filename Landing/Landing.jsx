@@ -5,6 +5,7 @@ import Banner from './Childs/Banner'
 import {useSelector} from 'react-redux'
 import ServiceOffered from './Childs/ServiceOffered'
 import WorkProcess from './Childs/WorkProcess'
+import Testimonials from './Childs/Testimonials'
 
 const Landing = () => {
   const mode = useSelector((state) => state.mode.value);
@@ -18,6 +19,7 @@ const Landing = () => {
           <TalkExpert />
           <ServiceOffered />
           <WorkProcess />
+          <Testimonials />
         </div>
       </div>
     </div>

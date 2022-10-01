@@ -4,7 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useSelector } from "react-redux";
 import useFetch from "../../hooks/useFetch";
 
-const BannerForm = () => {
+const ServiceForm = () => {
   let optionsServices = []
   let optionsSubjects = []
 
@@ -75,16 +75,16 @@ useEffect( () => {
 
   return (
     <div className="">
-      <div id="CostCalculator" className="w-[100vw] lg:w-full flex justify-center h-full">
-        <div className="transition-all duration-500 w-[90%] md:w-[60%] lg:w-[100%] h-fit flex flex-col items-center justify-evenly p-8 shadow-xl rounded-lg bg-white dark:bg-white/20">
+      <div id="CostCalculator" className="w-[100vw] lg:w-fit flex justify-center h-full">
+        <div className="transition-all duration-500 w-[90%] md:w-[60%] lg:w-[100%] h-fit flex flex-col gap-3 items-center justify-evenly p-8 shadow-xl rounded-lg bg-white dark:bg-white/20">
           <div id="heading" className="w-full text-center">
             <span className="text-2xl tracking-wide text-gray-600 dark:text-white">
               Calculate your Order
             </span>
           </div>
           <form onSubmit={HandleCalculate} className="h-[90%] md:h-[50%] w-full p-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-3 mb-7">
-                <div id="Type" className='flex flex-col gap-1 lg:w-[15vw]'>
+            <div className="grid grid-cols-1 gap-5">
+                <div id="Type" className='flex flex-col gap-1 lg:w-[20vw]'>
                   <label htmlFor="services" className='text-gray-600 dark:font-gray-200 text-sm font-medium'>Select Service</label>
                   <Select options={services} name='services' onChange={(e,action)=>{
                     setSeletedService(e)
@@ -96,20 +96,20 @@ useEffect( () => {
                     })
                   }} placeholder="Services"/>
                 </div>
-                <div id="Subject" className='flex flex-col gap-1 lg:w-[15vw]'>
+                <div id="Subject" className='flex flex-col gap-1 lg:w-[20vw]'>
                   <label htmlFor="subject" className='text-gray-600 dark:font-gray-200 text-sm font-medium'>Choose Subject</label>
                   <Select options={subjects} name='subject' placeholder="Subject"/>
                 </div>
-                <div id="Pages/Slides" className='flex flex-col gap-1 lg:w-[15vw]'>
+                <div id="Pages/Slides" className='flex flex-col gap-1 lg:w-[20vw]'>
                <label htmlFor="pages" className='text-gray-600 dark:font-gray-200 text-sm font-medium'>{selectedService.value == 'powerpoint' ? 'Select No. of Slides' : 'Choose No. of Pages'}</label>
                   <Select options={selectedService.value == 'powerpoint' ? optionsSlides : optionsPages} name='pages' placeholder={selectedService.value == 'powerpoint' ? 'Select Slides' : 'Select Pages'}/>
                 </div>
-                <div id="Deadline" className='flex flex-col gap-1 lg:w-[15vw]'>
+                <div id="Deadline" className='flex flex-col gap-1 lg:w-[20vw]'>
                   <label htmlFor="urgency" className='text-gray-600 dark:font-gray-200 text-sm font-medium'>Choose your Deadline</label>
                   <Select options={optionsDeadline} name='urgency' placeholder="Deadline" />
                 </div>
             </div>
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col md:flex-row my-5 items-center">
               <div className="w-[50%] ">
                 <button
                   type="submit"
@@ -132,4 +132,4 @@ useEffect( () => {
   );
 };
 
-export default BannerForm;
+export default ServiceForm;

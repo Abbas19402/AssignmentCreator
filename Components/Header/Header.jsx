@@ -439,8 +439,8 @@ const Header = (props) => {
                             className="py-2 px-3 transition-all ease-linear hover:shadow-xl rounded hover:scale-105 hover:bg-sky-200 w-full hover:cursor-pointer"
                             onClick={()=>{
                               router.push({
-                                pathname:`/${hoveredItem}/${item.slug}/${item.id}`
-                              },`/${hoveredItem}/${item.slug}/${item.id}`)
+                                pathname:`/services/${item.slug}/${item.id}`
+                              },`/services/${item.slug}/${item.id}`)
                               setHoveredItem('')
                               setHovered(false)
                             }}
