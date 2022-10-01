@@ -11,7 +11,7 @@ export const User = createSlice({
     },
     DELETE_USER: ( state , action ) => {
       console.log('DELETE_USER called');
-      state.user = 'loggedOut'
+      state.user = ''
     }
   }
 })

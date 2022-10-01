@@ -337,7 +337,7 @@ const Header = (props) => {
                   className="flex flex-row justify-center items-center"
                 >
                   <div className="scale-90">
-                    {(user !== 'loggedOut') ? <Avatar>
+                    {(user !== '') ? <Avatar>
                       <span className="text-sm font-bold tracking-widest ">
                         {user.user.name.match(/\b(\w)/g).join("")}
                       </span>
@@ -357,7 +357,7 @@ const Header = (props) => {
               >
                 <ul className="flex flex-col justify-evenly items-center">
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
-                    {(user !== 'loggedOut') ? (
+                    {(user !== '') ? (
                       <div className="flex flex-row justify-start items-center gap-2">
                         <div className="scale-90">
                           <Avatar>
@@ -382,7 +382,7 @@ const Header = (props) => {
                   </li>
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
                     {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
-                    {user !== 'loggedOut' && (
+                    {user !== '' && (
                       <div
                         onClick={() => {
                           dispatch(DELETE_USER());

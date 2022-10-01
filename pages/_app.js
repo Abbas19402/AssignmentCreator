@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import Header from '../Components/Header/Header'
+import Footer from '../Components/Footer/Footer'
 import { Provider } from 'react-redux'
 import Store from '../Redux/Store'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -19,6 +20,9 @@ function MyApp({ Component, pageProps }) {
           </div>
           <ToastContainer />
           <Component {...pageProps} />
+          <div className='relative bottom-0 left-0 z-10'>
+            <Footer/>
+          </div>
         </PersistGate>
       </Provider>
     </>
