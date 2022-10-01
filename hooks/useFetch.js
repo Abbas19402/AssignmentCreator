@@ -1,22 +1,32 @@
-import axios from "axios"
-import { toast } from "react-toastify"
+import axios from "axios";
 
-const useFetch = async(method , url , options) => {
-    let isLoading = true
-    const response = await axios({
-        method: `${method}`,
-        url: `${url}`,
-        data: options.data,
-        headers: options.headers ? options.headers : null
-    })
-    if(response.status == 200) {
-        isLoading = false
-    } else { 
-        isLoading = false
-    }
-    return {
-        response,
-        isLoading
+const useFetch = async(method , url ,values ,header ) => {
+    console.log(values);
+    let response
+    if(header) {
+        console.log('if');
+        await axios(`${url}`,{
+            method: `${method}`.toUpperCase(),
+            data: values,
+            headers: header
+        }) .then( res => {
+            response = res
+        } ) .catch( err => {
+            response = err
+        })
+        return {
+            response
+        }
+    } else {
+        console.log("else");
+        const res = await fetch(`${url}`,{
+            method: `${method}`.toUpperCase(),
+            body: values
+        })
+        const response = await res.json()   
+        return {
+            response
+        }
     }
 }
 

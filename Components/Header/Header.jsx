@@ -23,15 +23,6 @@ const Header = (props) => {
   const SSR = useSelector((state) => state.ssr.ssrData);
 
   const { cat , subWithCat , cms } = SSR
-  const company = cms.data.map( item => {
-    if(item.title == 'company') {
-      return item
-    } else {
-      console.log('Hello');
-    }
-  })
-
-  console.log(company);
 
   const [isOpen, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
@@ -49,7 +40,6 @@ const Header = (props) => {
       dispatch(setDarkMode(false));
     }
   }, [dark, user]);
-
 
   // <---- Light / Dark mode Switch ---->
   const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -160,20 +150,19 @@ const Header = (props) => {
                 </div>
                 <div className={`w-full transition-all duration-300 ${focusedItem == 'company' && focus ? 'h-fit' : 'h-0' }  overflow-hidden bg-primary/20`}>
                 <ul className="flex flex-col justify-evenly items-center">
-                  {/* {company.map((item, key) => (
-                    <li
-                      key={key}
-                      className="py-2 px-4 hover:bg-sky-200 w-full"
-                      onClick={() => {
-                        router.push(`/${`company`}/${item.title}`)
-                        setOpen(false)
-                      }}
-                    >
-                      <span className="text-gray-200 text-lg tracking-wider  text-center">
-                        {item.title}
-                      </span>
-                    </li>
-                  ))} */}
+                  {cms.data.map((value, key) => (
+                    value.title == 'Company' && value.children.map((item) => (
+                      <li
+                        key={key}
+                        className="py-2 px-4 hover:bg-sky-200 w-full"
+                        onClick={() => router.push(`/${`company`}/${item.title}`)}
+                      >
+                        <span className="text-gray-600 text-sm text-center">
+                          {item.title}
+                        </span>
+                      </li>
+                    ))
+                  ))}
                 </ul>
                 </div>
               </li>
@@ -282,15 +271,8 @@ const Header = (props) => {
                   className="flex flex-row justify-center items-center"
                 >
                   <span className="text-white font-medium  dark:text-white transition-all duration-300">
-                    {/* <Trans i18nKey='Services'></Trans> */}
                     Services
                   </span>
-                  <div
-                    id="dropdownIndicator"
-                    className="mx-2 rotate-90 justify-center items-end group-hover:-rotate-90 transition-all duration-300 text-white dark:text-white "
-                  >
-                    <span>&#10095;</span>
-                  </div>
                 </div>
               </div>
             </li>
@@ -305,15 +287,8 @@ const Header = (props) => {
                   className="flex flex-row justify-center items-center"
                 >
                   <span className="text-white font-medium dark:text-white  transition-all duration-300">
-                    {/* <Trans i18nKey='Company'></Trans> */}
                     Company
                   </span>
-                  <div
-                    id="dropdownIndicator"
-                    className="mx-2 rotate-90 justify-center items-end group-hover:-rotate-90 transition-all duration-300 text-white dark:text-white"
-                  >
-                    <span>&#10095;</span>
-                  </div>
                 </div>
               </div>
               <div
@@ -321,16 +296,18 @@ const Header = (props) => {
                 className="absolute transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded-b"
               >
                 <ul className="flex flex-col justify-evenly items-center">
-                  {company.map((item, key) => (
-                    <li
-                      key={key}
-                      className="py-2 px-4 hover:bg-sky-200 w-full"
-                      // onClick={() => router.push(`/${`company`}/${item.title}`)}
-                    >
-                      <span className="text-gray-600 text-sm text-center">
-                        {/* {item.title} */}
-                      </span>
-                    </li>
+                  {cms.data.map((value, key) => (
+                    value.title == 'Company' && value.children.map((item) => (
+                      <li
+                        key={key}
+                        className="py-2 px-4 hover:bg-sky-200 w-full"
+                        onClick={() => router.push(`/${`company`}/${item.title}`)}
+                      >
+                        <span className="text-gray-600 text-sm text-center">
+                          {item.title}
+                        </span>
+                      </li>
+                    ))
                   ))}
                 </ul>
               </div>
@@ -339,7 +316,6 @@ const Header = (props) => {
               <li className="group w-[8vw] md:w-[15vw] lg:w-[10vw]">
                 <div className="mx-2 my-1 py-2 px-2 transition-all duration-500 hover:scale-110 hover:shadow-lg rounded  dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40  hover:cursor-pointer text-center">
                   <span className="text-white font-medium dark:text-white transition-all duration-300">
-                    {/* <Trans i18nKey='OurWriters'></Trans> */}
                     Our Writers
                   </span>
                 </div>
@@ -349,7 +325,6 @@ const Header = (props) => {
               <li className="w-[8vw] md:w-[10vw] group hover:cursor-pointer">
                 <div className="mx-2 my-1 py-2 px-2 bg-white group-hover:bg-cyan-200 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded-md text-center scale-105  group-hover:shadow-white dark:group-hover:shadow-lg dark:group-hover:shadow-sky-500">
                   <span className="text-black  group-hover:text-black/60 font-medium w-full h-full transition-all duration-300 ">
-                    {/* <Trans i18nKey='Orders'></Trans> */}
                     Orders
                   </span>
                 </div>
@@ -426,13 +401,13 @@ const Header = (props) => {
             </li>
           </ul>
                       
-          <div id="modal" className={`absolute h-[60vh] w-[60vw] transition-all duration-300 bg-gray-50 rounded-md shadow-xl overflow-hidden ${(hoveredItem == 'services') && isHovered ? 'opacity-100 z-10' : 'opacity-0 -z-10' }`}  onMouseLeave={()=> {
+          <div id="modal" className={`absolute left-0 h-[70vh] w-[100vw] flex justify-center  transition-all origin-center duration-300 overflow-hidden ${(hoveredItem == 'services') && isHovered ? 'scale-100 z-10' : 'scale-0 -z-10' }`}>
+            <div className="h-full bg-gray-50 rounded-md overflow-hidden shadow-xl flex flex-row divide-x-2 w-[80vw] divide-gray-300" onMouseLeave={()=> {
               setHoveredItem('')
               setHovered(false)
               setShowSubjects(false)
             }}>
-            <div className="w-full h-full flex flex-row divide-x-2 divide-gray-300" >
-                <div className={`w-[30%] h-full flex justify-center items-center bg-primary/10 pt-10 overflow-y-scroll ${styles.noScroll} scroll-smooth`}>
+                <div className={`w-[20%] h-full flex justify-center items-center bg-primary/10 pt-5 overflow-y-scroll ${styles.noScroll} scroll-smooth`}>
                   {hoveredItem == 'services' && (
                     <div className="text-center w-full overflow-hidden">
                       <ul className="flex flex-col justify-center items-center w-full pt-5">
@@ -457,7 +432,7 @@ const Header = (props) => {
                 <div className="w-[80%] h-full p-5">
                 {showSubjects && (
                     <div className="w-full">
-                      <ul className="grid grid-cols-2 gap-x-4 gap-y-1 justify-center items-center w-full">
+                      <ul className="grid grid-cols-3 gap-x-4 gap-y-1 justify-center items-center w-full">
                         {subWithCat.data.map((item, key) => (
                           subject == item.category_id && <li
                             key={key}

@@ -13,43 +13,49 @@ const LoginForm = () => {
     const router = useRouter()
     const mode = useSelector( state => state.mode.value )
 
-    const [ user,setUser ] = useState(null)
     const [ loading , setLoading ] = useState(false)
-    const [ emptyFields , setEmptyFields ] = useState(null)
 
-    const HandleLogin = async e => {
+    const CheckValidation = (e) => {
         e.preventDefault()
         const form = new FormData(e.currentTarget)
-        // const { nullKeys , validStatus } = await useValid(form)
-        // if(validStatus == false) {
-        //     setEmptyFields(nullKeys)
-        // }
-        let values = {}
+        const values = {}
         for(var entry of form.entries()) {
             values[entry[0]] = entry[1]
         }
-        let options = {
-            data: values
+        setLoading(true)
+        const { emptyKeys , validationStatus } = useValid(values)
+        if(validationStatus) {
+            HandleLogin(values)
+        } else {
+            toast.error(`${emptyKeys} required!!`)
+            setLoading(false)
         }
-        const { response , isLoading } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/login`,options)
-        if(response.data.code == 200) {
+    }
+
+    const HandleLogin = async values => {
+        console.log(values);
+        const header = {
+            "Accept" : "application/json",
+            "Authorization" : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
+        }
+        const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/login`,values, header)
+        console.log(response);
+        if(response.status == 200) {
             toast.success("Login Successfull!!")
             router.push('/')
             dispatch(SAVE_USER(response.data.data))
-        } else {
-            toast.success("Login Failed!!")
+            setLoading(false)
+        } else if(response.response.status != 200 ) {
+            toast.error("Login Failed!!")
+            setLoading(false)
         }
-        setUser(response.data)
-        setLoading(isLoading)
     }
 
-    useEffect(()=> {
-        localStorage.setItem('user',user)
-    }, [user , emptyFields])
+    useEffect(()=> {}, [loading])
   return (
     <div className={`${ mode == 'dark' && 'dark' } h-full`}>
         <div className="flex justify-center items-center h-full">
-            <form onSubmit={HandleLogin} className='w-[80%] h-[80%] flex flex-col justify-center items-center p-5'>
+            <form onSubmit={CheckValidation} className='w-[80%] h-[80%] flex flex-col justify-center items-center p-5'>
                 <div id="heading" className='text-center py-3'>
                     <span className="text-start text-4xl tracking-tighter">Login</span>
                 </div>
@@ -77,7 +83,7 @@ const LoginForm = () => {
                 <div id="switchAuth">
                     <Link href={`/auth/${'signup'}`}><span className='hover:cursor-pointer text-sm font-medium text-gray-600'>Don&apos;t have on Account? Signup <span className="underline">here</span></span></Link>
                 </div>
-                <button type='submit' className='h-9 px-3.5 my-8 rounded bg-black text-white text-center transition-all duration-500 lg:hover:bg-neutral-700'>
+                <button type='submit' className='h-9 px-3.5 py-1 my-8 rounded bg-black text-white text-center transition-all duration-500 lg:hover:bg-neutral-700'>
                     {loading ? 'Loading...' : 'Login'}
                 </button>
             </form>

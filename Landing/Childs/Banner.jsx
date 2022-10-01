@@ -14,11 +14,11 @@ const Banner = () => {
       id="banner"
       className={`${mode === "dark" && "dark"} overflow-hidden`}>
       <div className="h-fit lg:h-fit w-full  transition-all duration-500 lg:py-10">
-        <div className="flex flex-col lg:flex-row justify-center lg:justify-around items-center lg:items-start h-full ">
-          <div id="Animation" className="w-auto lg:w-[30%] p-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 justify-center lg:justify-around items-center lg:items-start h-full ">
+          <div id="Animation" className="w-full h-full p-16">
             <Lottie animationData={Animation} loop={true} autoPlay />
           </div>
-          <div className="w-full lg:w-fit flex justify-center items-center scale-90 md:scale-100 mb-10">
+          <div className="col-span-2 w-full h-full flex justify-center items-center scale-90 md:scale-100 mb-10">
             <Form.BannerForm />
           </div>
         </div>

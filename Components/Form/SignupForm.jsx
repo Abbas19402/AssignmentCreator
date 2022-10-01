@@ -4,6 +4,7 @@ import Link from "next/link";
 import useFetch from "../../hooks/useFetch";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import useValid from "../../hooks/useValid";
 
 const SignupForm = () => {
   const router = useRouter()
@@ -14,25 +15,31 @@ const SignupForm = () => {
   const [ otpStatus , setOtpStatus ] = useState(false)
   const [ otp , setOtp ] = useState(null)
 
-  useEffect(()=>{},[otpStatus])
+  useEffect(()=>{},[otpStatus , loading])
 
   const HandleSignup = async e => {
     e.preventDefault()
+    setLoading(true)
     const form = new FormData(e.currentTarget)
     let values = {}
     for(var entry of form.entries()) {
         values[entry[0]] = entry[1]
     }
-    console.log(values);
+    const isFormValid = useValid(values)
     let options ={
       data: values
     }
-    const { response , isLoading } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/customer/signup`,options)
-    setUser(response.data)
-    setLoading(isLoading)
-    setUser(response.data.data.user)
-    CreateOtp(values , response.data.data.access_token)
+    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/customer/signup`,options)
+    if(isFormValid.validationStatus) {
+      setUser(response.data)
+      setUser(response.data.data.user)
+      CreateOtp(values , response.data.data.access_token)
+    } else {
+      alert(`${isFormValid.emptyKeys} required!!`)
+      setLoading(false)
+    }
   }
+
   const CreateOtp = async( val , at) => {
     const form = new FormData();
     form.append('dialing_code',val.dialing_code)
@@ -44,14 +51,18 @@ const SignupForm = () => {
       data: form
     }
     console.log(options);
-    const { response , isLoading } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/create/otp`,options)
+    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/create/otp`,options)
     if(response.data.success) {
       setOtpStatus(true)
+      setLoading(false)
     } else {
       alert('Request Failed!!')
+      setLoading(false)
     }
   }
+
   const OtpVerification = async() => {
+    setLoading(true)
     const form = new FormData();
     form.append('user_id',user.id)
     form.append('otp',otp)
@@ -59,12 +70,14 @@ const SignupForm = () => {
       data: form
     }
     console.log(options);
-    const { response , isLoading } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/otp/login`,options)
+    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/otp/login`,options)
     if(response.data.code == 200 ) {
       toast.success('Signup Successfull!!')
       router.push('/auth/login')
+      setLoading(false)
     } else {
       toast.error('Incorrect Otp!!')
+      setLoading(false)
     }
   }
   return (
@@ -202,12 +215,12 @@ const SignupForm = () => {
                 type="submit"
                 className="h-9 px-3.5 my-8 rounded bg-black text-white text-center transition-all duration-500 lg:hover:bg-neutral-700"
             >
-                Sign Up
+                {loading ? 'Loading...' : 'Sign Up'}
             </button> : <button
                 onClick={()=>OtpVerification()}
                 className="h-9 px-3.5 my-8 rounded bg-black text-white text-center transition-all duration-500 lg:hover:bg-neutral-700"
             >
-                Verify
+                {loading ? 'Loading...' : 'Verify'}
             </button>}
           </div>
         </form>

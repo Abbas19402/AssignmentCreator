@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import Landing from '../Landing/Landing'
 import { useDispatch } from 'react-redux'
+import { DELETE_USER } from '../Redux/User'
 import { getSSR } from '../Redux/StateManager/SSR'
 
 export default function Home(props) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() 
   dispatch(getSSR(props))
   return (
     <>
@@ -30,8 +31,9 @@ export async function getServerSideProps(context) {
     Accept : "application/json",
     Authorization : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
   }}
-  
   )
+  const subWithCatagory = await sub.json()
+
   const company = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms`,{
     headers: {
       "Accept" : "application/json",
@@ -39,8 +41,6 @@ export async function getServerSideProps(context) {
     }
   })
   const cms = await company.json()
-
-  const subWithCatagory = await sub.json()
   return {
     props: {
       cat: category,

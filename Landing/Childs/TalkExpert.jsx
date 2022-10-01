@@ -5,9 +5,8 @@ const TalkExpert = () => {
   return (
     <div className='relative p-5 my-7 bg-white'>
       <div id="Head" className='mt-7'>
-        <div className="flex flex-row justify-start items-center gap-5 md:pl-16 my-4 lg:my-0 lg:pl-10">
+        <div className="flex flex-row justify-center items-center gap-5 md:pl-16 my-4 lg:my-0 lg:pl-10">
           <span className='text-2xl lg:text-4xl tracking-tight leading-relaxed font-thin whitespace-nowrap'>Why you need Assignment Creator?</span>
-          <div className="w-[20%] h-[1px] bg-black hidden md:block"></div>
         </div>
       </div>
       <div className="flex flex-col lg:flex-row items-center justify-center md:px-16 lg:p-5 gap-4">

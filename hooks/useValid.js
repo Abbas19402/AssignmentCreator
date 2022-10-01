@@ -1,36 +1,26 @@
-import React, { useEffect } from 'react'
-
-const useValid = async( formData ) => {
-    const formValues = Object.values(formData)
-    var validationStatus
-    let nulls = []
-    const isValid = () => {
-        let EmptyKeys = []    
-        formValues.map((item ,key) => {
+const useValid = (form) => {
+    console.log('Function called');
+    let formValues = Object.values(form)
+    let formKeys = Object.keys(form)
+    let EmptyFields = []
+    let isFormValid = formValues.every( item => item !== '' )
+        formValues.map( ( item , index ) => {
             if(item == '') {
-                EmptyKeys.push(key)
+                EmptyFields.push((formKeys[index]))   
             }
         })
-        if(EmptyKeys.length !== 0)  {
-            validationStatus = false
-            Object.keys(formData).map((keys ,index) => {
-                EmptyKeys.map((item) => {
-                    if(item == index) {
-                        nulls.push(keys)
-                    }
-                })
-            })
-        } else {
-            validationStatus = true
+    if(isFormValid == false) {
+        console.log('Function called if');
+        return {
+            emptyKeys: EmptyFields,
+            validationStatus: false
+        }
+    } else {
+        console.log('Function called else ');
+        return {
+            emptyKeys: EmptyFields,
+            validationStatus: true
         }
     }
-    useEffect(()=> {
-        isValid()
-    })
-    return {
-        validStatus: validationStatus,
-        nullKeys: {}
-    }
 }
-
 export default useValid
