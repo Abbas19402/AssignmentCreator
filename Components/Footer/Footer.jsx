@@ -118,7 +118,7 @@ const Footer = () => {
                 <div className="flex flex-row justify-start items-center divide-x">
                     {
                         [...Array(6)].map((_,key) => (
-                            <div className={`flex justify-center ${key == 0 ? "pr-2" : key == 5 ? 'pl-2' : 'px-2'} w-full`}>
+                            <div key={key} className={`flex justify-center ${key == 0 ? "pr-2" : key == 5 ? 'pl-2' : 'px-2'} w-full`}>
                                 <span className='tracking-wider text-sm  text-gray-400'>Hello</span>
                             </div>
                         ))
@@ -127,7 +127,7 @@ const Footer = () => {
                 <div className="flex flex-row justify-start items-center divide-x">
                     {
                         [...Array(6)].map((_,key) => (
-                            <div className={`flex justify-center ${key == 0 ? "pr-2" : key == 5 ? 'pl-2' : 'px-2'} w-full`}>
+                            <div key={key} className={`flex justify-center ${key == 0 ? "pr-2" : key == 5 ? 'pl-2' : 'px-2'} w-full`}>
                                 <span className='tracking-wider text-sm  text-gray-400'>Hello</span>
                             </div>
                         ))

@@ -53,7 +53,7 @@ const OrderForm = () => {
     const setUploads = (files) => {
       setFiles(files)
     }
-    const handleSubmit = async(e) => {
+    const HandleSubmit = async(e) => {
       e.preventDefault()
       const form = new FormData(e.currentTarget);
       let values = {};
@@ -88,7 +88,7 @@ const OrderForm = () => {
   return (
     <div className=''>
         <div id="form" className='p-5 py-8 shadow-xl rounded bg-white'>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={HandleSubmit}>
             <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-y-6 lg:gap-x-3 gap-3">
                 <div id="Type" className='flex flex-col gap-1'>
                   <label htmlFor="services" className='text-gray-600 text-sm font-medium'>Select Service</label>
