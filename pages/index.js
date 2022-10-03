@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Landing from '../Landing/Landing'
 import { useDispatch } from 'react-redux'
-import { DELETE_USER } from '../Redux/User'
 import { getSSR } from '../Redux/StateManager/SSR'
 
 export default function Home(props) {
@@ -41,6 +40,7 @@ export async function getServerSideProps(context) {
     }
   })
   const cms = await company.json()
+  
   return {
     props: {
       cat: category,

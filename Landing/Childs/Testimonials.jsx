@@ -18,8 +18,8 @@ const Testimonials = () => {
             slidesToShow={3} 
             indicators={true} 
             transitionDuration={600} 
-            prevArrow={<div><span className='relative -left-10 bg-white rounded-full p-2'><KeyboardArrowLeftIcon/></span></div>} 
-            nextArrow={<div><span className='relative -right-10 bg-white rounded-full p-2'><KeyboardArrowRightIcon /></span></div>}
+            prevArrow={<div><span className='relative -left-10 bg-white rounded-full p-2 -z-10'><KeyboardArrowLeftIcon/></span></div>} 
+            nextArrow={<div><span className='relative -right-10 bg-white rounded-full p-2 -z-10'><KeyboardArrowRightIcon /></span></div>}
             >
               { [...Array(10)].map((_,key) => (
                 <div key={key} className='h-64 rounded-md px-5 flex justify-center items-center'>

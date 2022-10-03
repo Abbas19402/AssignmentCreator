@@ -24,6 +24,8 @@ const Header = (props) => {
 
   const { cat , subWithCat , cms } = SSR
 
+  console.log(cms);
+
   const [isOpen, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
   const [ focusedItem , setFocusedItem ] = useState(null)
@@ -190,26 +192,29 @@ const Header = (props) => {
         {/*  <---- / of Drawer ----> */}
 
         <div id="logo" className="rounded-md overflow-hidden hidden md:block">
-          <Image
-            src={Logo}
-            priority
-            alt="Assignment Help"
-            className="scale-y-125 scale-x-125"
-            width="300"
-            height="460"
-            onClick={() => router.push("/")}
-          />
+          <Link href={'/'}>
+            <Image
+              src={Logo}
+              priority
+              alt="Assignment Help"
+              className="scale-y-125 scale-x-125"
+              width="300"
+              height="460"
+              onClick={() => router.push("/")}
+            />
+          </Link>
         </div>
         <div id="logo" className="rounded-md overflow-hidden md:hidden block">
-          <Image
-            src={Logo}
-            priority
-            alt="Assignment Help"
-            className="scale-y-125 scale-x-125"
-            width="200"
-            height="360"
-            onClick={() => router.push("/")}
-          />
+          <Link href={'/'}>
+            <Image
+              src={Logo}
+              priority
+              alt="Assignment Help"
+              className="scale-y-125 scale-x-125"
+              width="200"
+              height="360"
+            />
+          </Link>
         </div>
         <div className="flex flex-row items-center justify-end gap-2 ">
           <div id="switch" className="lg:hidden">
@@ -297,15 +302,16 @@ const Header = (props) => {
               >
                 <ul className="flex flex-col justify-evenly items-center">
                   {cms.data.map((value, key) => (
-                    value.title == 'Company' && value.children.map((item) => (
+                    value.title !== 'services' && value.children.map((item) => (
                       <li
                         key={key}
                         className="py-2 px-4 hover:bg-sky-200 w-full"
-                        onClick={() => router.push(`/${`company`}/${item.title}`)}
                       >
-                        <span className="text-gray-600 text-sm text-center">
-                          {item.title}
-                        </span>
+                        <Link href={`/${`company`}/${item.slug}`}>
+                          <span className="text-gray-600 text-sm text-center">
+                            {item.title}
+                          </span>
+                        </Link>
                       </li>
                     ))
                   ))}
@@ -337,7 +343,7 @@ const Header = (props) => {
                   className="flex flex-row justify-center items-center"
                 >
                   <div className="scale-90">
-                    {(user !== '') ? <Avatar>
+                    {(user != '') ? <Avatar>
                       <span className="text-sm font-bold tracking-widest ">
                         {user.user.name.match(/\b(\w)/g).join("")}
                       </span>
@@ -357,7 +363,7 @@ const Header = (props) => {
               >
                 <ul className="flex flex-col justify-evenly items-center">
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
-                    {(user !== '') ? (
+                    {(user != '') ? (
                       <div className="flex flex-row justify-start items-center gap-2">
                         <div className="scale-90">
                           <Avatar>
@@ -382,7 +388,7 @@ const Header = (props) => {
                   </li>
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
                     {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
-                    {user !== '' && (
+                    {(user != '') && (
                       <div
                         onClick={() => {
                           dispatch(DELETE_USER());
