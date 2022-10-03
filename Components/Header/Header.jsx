@@ -20,6 +20,7 @@ const Header = (props) => {
 
   const mode = useSelector((state) => state.mode.value);
   const  user  = useSelector((state) => state.auth.user);
+  const  userStatus  = useSelector((state) => state.auth.loginStatus);
   const SSR = useSelector((state) => state.ssr.ssrData);
 
   const { cat , subWithCat , cms } = SSR
@@ -343,7 +344,7 @@ const Header = (props) => {
                   className="flex flex-row justify-center items-center"
                 >
                   <div className="scale-90">
-                    {(user != '') ? <Avatar>
+                    {userStatus ? <Avatar>
                       <span className="text-sm font-bold tracking-widest ">
                         {user.user.name.match(/\b(\w)/g).join("")}
                       </span>
@@ -357,13 +358,13 @@ const Header = (props) => {
                   </div>
                 </div>
               </div>
-              <div
+              {userStatus && <div
                 id="dropdownComponent"
                 className="absolute right-5 transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded"
               >
                 <ul className="flex flex-col justify-evenly items-center">
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
-                    {(user != '') ? (
+                    {userStatus && (
                       <div className="flex flex-row justify-start items-center gap-2">
                         <div className="scale-90">
                           <Avatar>
@@ -376,19 +377,11 @@ const Header = (props) => {
                           {user.user.name}
                         </span>
                       </div>
-                    ) : (
-                      <Link href={"/auth/login"}>
-                        <div className="flex flex-row justify-start items-center gap-2">
-                          <span className="text-gray-600 text-sm text-center">
-                            Login
-                          </span>
-                        </div>
-                      </Link>
                     )}
                   </li>
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
                     {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
-                    {(user != '') && (
+                    {userStatus && (
                       <div
                         onClick={() => {
                           dispatch(DELETE_USER());
@@ -403,7 +396,7 @@ const Header = (props) => {
                     )}
                   </li>
                 </ul>
-              </div>
+              </div>}
             </li>
           </ul>
                       

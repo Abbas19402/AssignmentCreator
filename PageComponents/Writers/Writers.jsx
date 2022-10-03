@@ -7,7 +7,7 @@ const Writers = () => {
   const mode = useSelector(state => state.mode.value)
   console.log(mode);
   return (
-    <div className={`w-screen h-screen ${mode == 'dark' ? 'dark' : 'light'}`}>
+    <div className={`w-screen h-auto ${mode == 'dark' ? 'dark' : 'light'}`}>
         <div id="wrapper" className='w-full p-8 dark:bg-dark/80 bg-white'>
             <ul className='grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full md:p-4 lg:p-10'>
                 {[...Array(20)].map((_,index) => (

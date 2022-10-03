@@ -8,7 +8,13 @@ import Form from '../../Components/Form'
 const SubjectDetails = ( props , query ) => {
     const mode = useSelector( state => state.mode.value )
     console.log(props.props.content);
-    const { ImageSrc , category , short_desc , name } = props.props.content.data
+    const { ImageSrc , category , short_desc , name , slug } = props.props.content.data
+    const prefillData = {
+        category: category,
+        subjectSlug: slug,
+        subjectName: name
+    }
+    console.log(prefillData);
   return (
     <div className={`${mode == 'dark' && 'dark'}`}>
         <div className="relative lg:p-5 h-full">
@@ -25,7 +31,7 @@ const SubjectDetails = ( props , query ) => {
                     </div>
                 </div>
                 <div className="w-full h-fit flex justify-center md:w-[40%]">
-                    <Form.ServiceForm />
+                    <Form.ServiceForm prefill={prefillData}/>
                 </div>
             </div>
         </div>
