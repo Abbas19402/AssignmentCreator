@@ -17,10 +17,13 @@ const Header = (props) => {
   const dispatch = useDispatch();
 
   const mode = useSelector((state) => state.mode.value);
-  const user = useSelector((state) => state.auth.user);
+  const  user  = useSelector((state) => state.auth.user);
+  const  userStatus  = useSelector((state) => state.auth.loginStatus);
   const SSR = useSelector((state) => state.ssr.ssrData);
 
   const { cat, subWithCat, cms } = SSR;
+
+  console.log(cms);
 
   const [isOpen, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
@@ -310,26 +313,29 @@ const Header = (props) => {
         {/*  <---- / of Drawer ----> */}
 
         <div id="logo" className="rounded-md overflow-hidden hidden md:block">
-          <Image
-            src={Logo}
-            priority
-            alt="Assignment Help"
-            className="scale-y-125 scale-x-125"
-            width="300"
-            height="460"
-            onClick={() => router.push("/")}
-          />
+          <Link href={'/'}>
+            <Image
+              src={Logo}
+              priority
+              alt="Assignment Help"
+              className="scale-y-125 scale-x-125"
+              width="300"
+              height="460"
+              onClick={() => router.push("/")}
+            />
+          </Link>
         </div>
         <div id="logo" className="rounded-md overflow-hidden md:hidden block">
-          <Image
-            src={Logo}
-            priority
-            alt="Assignment Help"
-            className="scale-y-125 scale-x-125"
-            width="200"
-            height="360"
-            onClick={() => router.push("/")}
-          />
+          <Link href={'/'}>
+            <Image
+              src={Logo}
+              priority
+              alt="Assignment Help"
+              className="scale-y-125 scale-x-125"
+              width="200"
+              height="360"
+            />
+          </Link>
         </div>
         <div className="flex flex-row items-center justify-end gap-2 ">
           <div id="switch" className="lg:hidden">
@@ -482,31 +488,28 @@ const Header = (props) => {
                   className="flex flex-row justify-center items-center"
                 >
                   <div className="scale-90">
-                    {user !== "" ? (
-                      <Avatar>
-                        <span className="text-sm font-bold tracking-widest ">
-                          {user.user.name.match(/\b(\w)/g).join("")}
-                        </span>
-                      </Avatar>
-                    ) : (
-                      <Link href={"/auth/login"}>
+                    {userStatus ? <Avatar>
+                      <span className="text-sm font-bold tracking-widest ">
+                        {user.user.name.match(/\b(\w)/g).join("")}
+                      </span>
+                    </Avatar> : <Link href={"/auth/login"}>
                         <div className="flex flex-row justify-start items-center gap-2 border-2 border-white p-1  ">
                           <span className="text-md font-medium tracking-widest text-center text-white">
                             Login
                           </span>
                         </div>
                       </Link>
-                    )}
+}
                   </div>
                 </div>
               </div>
-              <div
+              {userStatus && <div
                 id="dropdownComponent"
                 className="absolute right-5 transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded"
               >
                 <ul className="flex flex-col justify-evenly items-center">
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
-                    {user !== "" ? (
+                    {userStatus && (
                       <div className="flex flex-row justify-start items-center gap-2">
                         <div className="scale-90">
                           <Avatar>
@@ -519,19 +522,11 @@ const Header = (props) => {
                           {user.user.name}
                         </span>
                       </div>
-                    ) : (
-                      <Link href={"/auth/login"}>
-                        <div className="flex flex-row justify-start items-center gap-2">
-                          <span className="text-gray-600 text-sm text-center">
-                            Login
-                          </span>
-                        </div>
-                      </Link>
                     )}
                   </li>
                   <li className="py-2 px-4 hover:bg-sky-200 w-full">
                     {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
-                    {user !== "" && (
+                    {userStatus && (
                       <div
                         onClick={() => {
                           dispatch(DELETE_USER());
@@ -546,7 +541,7 @@ const Header = (props) => {
                     )}
                   </li>
                 </ul>
-              </div>
+              </div>}
             </li>
           </ul>
 

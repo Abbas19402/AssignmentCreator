@@ -10,7 +10,7 @@ const ServiceOffered = () => {
       <div className="p-5 flex flex-row justify-center items-center gap-5 md:pl-16 my-4 lg:my-0 lg:pl-10">
           <span className='text-2xl lg:text-4xl tracking-tight leading-relaxed font-thin whitespace-nowrap'>What services do Assignment Creator offer?</span>
       </div>
-      <div className="grid grid-cols-3 gap-8 px-3 py-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-3 py-10">
         <div className="bg-white shadow-xl rounded-lg overflow-hidden">
           <div>
             <Image src={StaticImage} width={480} height={250} layout='responsive'/>

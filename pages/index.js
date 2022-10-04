@@ -1,13 +1,11 @@
-import Head from "next/head";
-import Landing from "../Landing/Landing";
-import { useDispatch } from "react-redux";
-import { DELETE_USER } from "../Redux/User";
-import { getSSR } from "../Redux/StateManager/SSR";
+import Head from 'next/head'
+import Landing from '../Landing/Landing'
+import { useDispatch } from 'react-redux'
+import { getSSR } from '../Redux/StateManager/SSR'
 
 export default function Home(props) {
   const dispatch = useDispatch();
   dispatch(getSSR(props));
-  dispatch(DELETE_USER());
   return (
     <>
       <Head>
@@ -51,6 +49,7 @@ export async function getServerSideProps(context) {
   });
   const cms = await company.json();
 
+  
   return {
     props: {
       cat: category,

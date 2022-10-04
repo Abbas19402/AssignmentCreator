@@ -15,12 +15,12 @@ function MyApp({ Component, pageProps }) {
     <>
       <Provider store={Store}>
         <PersistGate persistor={persistor}>
-          <div className='sticky top-0 left-0 z-10'>
+          <div className='sticky top-0 left-0 z-50'>
             <Header {...pageProps}/>
           </div>
           <ToastContainer />
           <Component {...pageProps} />
-          <div className='relative bottom-0 left-0 z-10'>
+          <div className='sticky -bottom-[100%] left-0 z-10'>
             <Footer/>
           </div>
         </PersistGate>

@@ -15,7 +15,7 @@ const Landing = () => {
     <div className='overflow-x-hidden scroll-smooth'>
       <div className={`${mode == 'dark' && 'dark'}`}>
         <div className='bg-slate-50 dark:bg-dark/80'>
-          <Banner />
+          <Banner />  
           <TalkExpert />
           <ServiceOffered />
           <WorkProcess />
