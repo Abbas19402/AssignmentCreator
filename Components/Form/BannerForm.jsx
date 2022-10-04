@@ -14,7 +14,7 @@ const BannerForm = () => {
   const [ selectedService , setSeletedService ] = useState({})
   const [ subjects , setSubjects ] = useState([{
     value: 'Select any service',
-    name: 'Select any service'
+    label: 'Select any service'
   }])
   const [ services , setServices ] = useState(null)
   const [ price , setprice ] = useState(0)
@@ -71,7 +71,7 @@ useEffect( () => {
     optionsServices.push({value: item.slug , label: item.name , id: item.id})
   }) 
   setServices(optionsServices)
-},[selectedService])
+},[selectedService , cat])
 
   return (
     <div className="">

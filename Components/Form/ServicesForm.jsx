@@ -5,21 +5,7 @@ import { useSelector } from "react-redux";
 import useFetch from "../../hooks/useFetch";
 
 const ServiceForm = ({ prefill }) => {
-  let optionsServices = [];
-  let optionsSubjects = [];
-  console.log(prefill);
-
-  const SSR = useSelector((state) => state.ssr.ssrData);
-  const { cat, subWithCat } = SSR;
-
   const [selectedService, setSeletedService] = useState({});
-  const [subjects, setSubjects] = useState([
-    {
-      value: `${prefill.slug}`,
-      name: `${prefill.name}`,
-    },
-  ]);
-  const [services, setServices] = useState(null);
   const [price, setprice] = useState(0);
   const [loading, setloading] = useState(false);
 
@@ -66,13 +52,6 @@ const ServiceForm = ({ prefill }) => {
       setloading(false);
     }
   };
-
-  useEffect(() => {
-    cat.data.map((item) => {
-      optionsServices.push({ value: item.slug, label: item.name, id: item.id });
-    });
-    setServices(optionsServices);
-  }, [selectedService]);
 
   return (
     <div className="">
