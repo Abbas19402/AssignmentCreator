@@ -1,12 +1,13 @@
-import Head from 'next/head'
-import Landing from '../Landing/Landing'
-import { useDispatch } from 'react-redux'
-import { DELETE_USER } from '../Redux/User'
-import { getSSR } from '../Redux/StateManager/SSR'
+import Head from "next/head";
+import Landing from "../Landing/Landing";
+import { useDispatch } from "react-redux";
+import { DELETE_USER } from "../Redux/User";
+import { getSSR } from "../Redux/StateManager/SSR";
 
 export default function Home(props) {
-  const dispatch = useDispatch() 
-  dispatch(getSSR(props))
+  const dispatch = useDispatch();
+  dispatch(getSSR(props));
+  dispatch(DELETE_USER());
   return (
     <>
       <Head>
@@ -16,36 +17,46 @@ export default function Home(props) {
       </Head>
       <Landing />
     </>
-  )
+  );
 }
+
 export async function getServerSideProps(context) {
-  const cat = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/Get-All-Category`,{
-    headers: {
-      "Accept" : "application/json",
-      "Authorization" : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
+  const cat = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/customer/Get-All-Category`,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
+      },
     }
-  })
-  const category = await cat.json()
+  );
+  const category = await cat.json();
 
-  const sub = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/SubjectWithCategory`,{headers: {
-    Accept : "application/json",
-    Authorization : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
-  }}
-  )
-  const subWithCatagory = await sub.json()
-
-  const company = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms`,{
-    headers: {
-      "Accept" : "application/json",
-      "Authorization" : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
+  const sub = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/customer/SubjectWithCategory`,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
+      },
     }
-  })
-  const cms = await company.json()
+  );
+  const subWithCatagory = await sub.json();
+
+  const company = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
+    },
+  });
+  const cms = await company.json();
+
   return {
     props: {
       cat: category,
       subWithCat: subWithCatagory,
-      cms: cms
+      cms: cms,
     }, // will be passed to the page component as props
-  }
+  };
+  
 }
