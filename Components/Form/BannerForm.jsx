@@ -11,16 +11,14 @@ const BannerForm = () => {
   const SSR = useSelector((state) => state.ssr.ssrData);
   const { cat, subWithCat } = SSR;
 
-  const [selectedService, setSeletedService] = useState({});
-  const [subjects, setSubjects] = useState([
-    {
-      value: "Select any service",
-      name: "Select any service",
-    },
-  ]);
-  const [services, setServices] = useState(null);
-  const [price, setprice] = useState(0);
-  const [loading, setloading] = useState(false);
+  const [ selectedService , setSeletedService ] = useState({})
+  const [ subjects , setSubjects ] = useState([{
+    value: 'Select any service',
+    label: 'Select any service'
+  }])
+  const [ services , setServices ] = useState(null)
+  const [ price , setprice ] = useState(0)
+  const [ loading , setloading ] = useState(false)
 
   const optionsPages = [
     { value: 10, label: 10 },
@@ -73,12 +71,12 @@ const BannerForm = () => {
     }
   };
 
-  useEffect(() => {
-    cat.data.map((item) => {
-      optionsServices.push({ value: item.slug, label: item.name, id: item.id });
-    });
-    setServices(optionsServices);
-  }, [selectedService]);
+useEffect( () => {
+  cat.data.map(item => {
+    optionsServices.push({value: item.slug , label: item.name , id: item.id})
+  }) 
+  setServices(optionsServices)
+},[selectedService , cat])
 
   return (
     <div className="">

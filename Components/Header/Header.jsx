@@ -110,18 +110,11 @@ const Header = (props) => {
         }}
       >
         {/*  <---- Drawer ----> */}
-        <div
-          className={`${
-            isOpen ? "translate-x-0" : "-translate-x-[100rem]"
-          } transition-all duration-700 fixed w-screen h-screen top-20 left-0 z-50 overflow-x-hidden lg:hidden`}
-        >
-          <div
-            className={`w-full h-full transition-all duration-300  ${
-              isOpen && "bg-primary-dark dark:bg-gray-700"
-            } z-0`}
-          >
+        <div className={`${ isOpen ? "translate-x-0" : "-translate-x-[100rem]" } transition-all duration-700 fixed w-screen h-screen top-20 left-0 z-50 overflow-x-hidden lg:hidden xl:hidden`}>
+          <div className={`w-full h-full transition-all duration-300 ${isOpen && "bg-primary-dark dark:bg-gray-700" } z-0`}>
             <ul className="flex flex-col justify-start items-center px-4 py-2 gap-4 z-10">
               <li className="w-full group rounded-lg overflow-hidden">
+
                 {/* Sevices > */}
                 <div
                   className={`${
@@ -339,17 +332,9 @@ const Header = (props) => {
         </div>
         <div className="flex flex-row items-center justify-end gap-2 ">
           <div id="switch" className="lg:hidden">
-            <MaterialUISwitch
-              sx={{ m: 1 }}
-              checked={dark}
-              onChange={() => setDark(!dark)}
-            />
+            <MaterialUISwitch sx={{ m: 1 }} checked={dark} onChange={() => setDark(!dark)} />
           </div>
-          <div
-            id="ham"
-            className="lg:hidden z-50"
-            onClick={() => setOpen(!isOpen)}
-          >
+          <div id="ham" className="lg:hidden z-50" onClick={() => setOpen(!isOpen)} >
             {isOpen ? (
               <svg
                 fill="#000000"
@@ -379,8 +364,7 @@ const Header = (props) => {
             )}
           </div>
         </div>
-        <nav
-          className="w-full hidden lg:block"
+        <nav className="w-full hidden lg:block"
           onMouseLeave={() => {
             setHoveredItem("");
             setHovered(false);
@@ -388,42 +372,30 @@ const Header = (props) => {
         >
           <ul className="flex flex-row justify-end items-center">
             <li>
-              <MaterialUISwitch
-                sx={{ m: 1 }}
-                checked={dark}
-                onChange={() => setDark(!dark)}
-              />
+              <MaterialUISwitch sx={{ m: 1 }} checked={dark} onChange={() => setDark(!dark)} />
             </li>
-            <li
-              className="group w-[8vw] md:w-[12vw] lg:w-[10vw] mx-2 hover:cursor-pointer"
+            <li className="group w-[8vw] md:w-[12vw] lg:w-[10vw] mx-2 hover:cursor-pointer"
               onMouseEnter={() => {
                 setHoveredItem("services");
                 setHovered(true);
               }}
             >
               <div className="sticky mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
-                <div
-                  id="dropdown"
-                  className="flex flex-row justify-center items-center"
-                >
+                <div id="dropdown" className="flex flex-row justify-center items-center" >
                   <span className="text-white font-medium  dark:text-white transition-all duration-300">
                     Services
                   </span>
                 </div>
               </div>
             </li>
-            <li
-              className="group md:w-[15.5vw] lg:w-[10vw] md:mx-2 lg:mx-0 hover:cursor-pointer"
+            <li className="group md:w-[15.5vw] lg:w-[10vw] md:mx-2 lg:mx-0 hover:cursor-pointer"
               onMouseEnter={() => {
                 setHoveredItem("");
                 setHovered(false);
               }}
             >
               <div className="mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
-                <div
-                  id="dropdown"
-                  className="flex flex-row justify-center items-center"
-                >
+                <div id="dropdown" className="flex flex-row justify-center items-center">
                   <span className="text-white font-medium dark:text-white  transition-all duration-300">
                     Company
                   </span>
@@ -562,11 +534,11 @@ const Header = (props) => {
               }}
             >
               <div
-                className={`w-[20%] h-full flex justify-center items-center bg-primary/10 overflow-y-scroll ${styles.noScroll} scroll-smooth`}
+                className={`w-[20%] h-full flex justify-center items-start bg-primary/10 overflow-y-scroll ${styles.noScroll} scroll-smooth`}
               >
                 {hoveredItem == "services" && (
-                  <div className="text-center w-full overflow-hidden mt-10">
-                    <ul className="flex flex-col justify-center items-center w-full pt-5">
+                  <div className="text-center w-full overflow-hidden">
+                    <ul className="flex flex-col justify-center items-center w-full">
                       {cat.data.map((item, key) => (
                         <li
                           key={key}
@@ -588,10 +560,12 @@ const Header = (props) => {
               <div className="w-[80%] h-full p-5">
                 {showSubjects && (
                   <div className="w-full">
-                    <ul className="grid grid-cols-3 gap-x-4 gap-y-1 justify-center items-center w-full">
+                    <ul className="grid grid-cols-3 gap-x-4 gap-y-1 justify-center items-center w-full ">
                       {subWithCat.data.map(
                         (item, key) =>
                           subject == item.category_id && (
+
+                            // <Link href={path}></Link>
                             <li
                               key={key}
                               className="py-2 px-3 transition-all ease-linear hover:shadow-xl rounded hover:scale-105 hover:bg-sky-200 w-full hover:cursor-pointer"
@@ -599,6 +573,7 @@ const Header = (props) => {
                                 router.push(
                                   {
                                     pathname: `/services/${item.slug}/${item.id}`,
+                                    search: 'name: Abbas'
                                   },
                                   `/services/${item.slug}/${item.id}`
                                 );

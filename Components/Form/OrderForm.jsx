@@ -84,7 +84,7 @@ const OrderForm = () => {
         optionsServices.push({value: item.slug , label: item.name , id: item.id})
       }) 
       setServices(optionsServices)
-    },[selectedService])
+    },[selectedService , cat])
   return (
     <div className=''>
         <div id="form" className='p-5 py-8 shadow-xl rounded bg-white'>

@@ -7,7 +7,7 @@ const SampleDetails = () => {
         {/* content */}
         <div className="w-[70%]">
           <h1 className="font-medium text-slate-700 text-xl">
-            THL124 Impact of Digital Technology Level 5 Rose Mont College
+            THL124 Impact of DATBBwreTPmDpWWQpF4TGe8WscxC7DF269EC4igital Technology Level 5 Rose Mont College
           </h1>
           <h3 className="uppercase mt-2 font-medium"> Introduction </h3>
           <p className="text-justify mt-2 text-gray-700">
