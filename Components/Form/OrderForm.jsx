@@ -1,48 +1,46 @@
-import React, { useState , useEffect } from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import Select from "react-select";
 import { useRouter } from "next/router";
 import { useSelector , useDispatch } from "react-redux";
-import { FilePond, registerPlugin } from "react-filepond";
-import { CircularProgress } from "@mui/material";
-
-import Select from "react-select";
+import useFetch from "../../hooks/useFetch";
 import toast from 'react-toastify'
+import useValid from "../../hooks/useValid";
+import { SAVE_ORDER } from "../../Redux/Order";
+import { FilePond, File, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-import "filepond/dist/filepond.min.css";
-
-import useValid from "../../hooks/useValid";
-import useFetch from "../../hooks/useFetch";
-import { SAVE_ORDER } from "../../Redux/Order";
 
 const OrderForm = () => {
+  const { push } = useRouter()
+  const dispatch = useDispatch()
+   
   registerPlugin(
     FilePondPluginImageExifOrientation,
     FilePondPluginImagePreview
   );
-  const SSR = useSelector((state) => state.ssr.ssrData);
-
   let optionsServices = [];
   let optionsSubjects = [];
 
-  const { push } = useRouter()
-  const { cat , subWithCat } = SSR;
-  const dispatch = useDispatch()
-
+  const SSR = useSelector((state) => state.ssr.ssrData);
+  const { cat, subWithCat } = SSR;
   const [files, setFiles] = useState(null);
   const [deadline, setDeadline] = useState(new Date());
-  const [selectedService, setSeletedService] = useState({});
-  const [services, setServices] = useState(null);
-  const [price, setprice] = useState(0);
-  const [loading, setloading] = useState(false);
-  const [showOrder, setShowOrder] = useState(false);
   const [subjects, setSubjects] = useState([
     {
       value: "Select any service",
       name: "Select any service",
     },
   ]);
-  
+  const [ formData , setFormData ] = useState({})
+  const [selectedService, setSeletedService] = useState({});
+  const [services, setServices] = useState(null);
+  const [price, setprice] = useState(0);
+  const [loading, setloading] = useState(false);
+  const [showOrder, setShowOrder] = useState(false);
+
   const optionsPages = [
     { value: 10, label: 10 },
     { value: 20, label: 20 },
@@ -123,7 +121,6 @@ const OrderForm = () => {
   };
 
   const CreateOrder = async(e) => {
-    setloading(true)
     e.preventDefault()
     let uploads = [];
     files.map((fileItem) => {
@@ -134,7 +131,7 @@ const OrderForm = () => {
     form.append('total', price)
     form.append('payment_method' , 'Online')
     for (var pair of form.entries()) {
-      if (pair[0] == "files") {
+      if (pair[0] == "file") {
         values[pair[0]] = uploads;
       } else if (pair[0] == "deadline") {
         values[pair[0]] = deadline;
@@ -147,9 +144,9 @@ const OrderForm = () => {
       Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
     };
     const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/Order-Create`,values,header)
+    console.log(response);
     if(response.data.success) {
       dispatch(SAVE_ORDER(response.data))
-      setloading(false)
       push('/order/checkout')
     } else {
       toast.error('Error')
@@ -296,7 +293,7 @@ const OrderForm = () => {
                 className="bg-black hover:bg-neutral-700 w-[60%] rounded transition-all duration-300 p-2"
               >
                 <span className="text-white tracking-wider text-base ">
-                  {loading ? <CircularProgress size={20} color="inherit" /> : "Create Order"}
+                  Create Order
                 </span>
               </button>
             ) : (
@@ -305,7 +302,7 @@ const OrderForm = () => {
                 className="bg-black hover:bg-neutral-700 w-[60%] rounded transition-all duration-300 p-2"
               >
                 <span className="text-white tracking-wider text-base ">
-                  {loading ? <CircularProgress size={20} color="inherit" /> : "Submit"}
+                  Submit
                 </span>
               </button>
             )}

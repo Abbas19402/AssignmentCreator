@@ -9,7 +9,7 @@ const Form = {
     OrderForm,
     LoginForm,
     SignupForm,
-    ServiceForm
+    ServiceForm,
 }
 
 export default Form

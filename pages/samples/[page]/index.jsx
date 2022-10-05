@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 function SampleList() {
   const { query } = useRouter();
@@ -39,7 +40,7 @@ function SampleList() {
                 sighting agencies, tax collection entities, and ...
                 <div>
                   <button className=" mt-3 font-semibold text-slate-600 hover:text-slate-400 ">
-                    View or download...
+                    View or download <ArrowRightAltIcon/>
                   </button>
                 </div>
               </div>
