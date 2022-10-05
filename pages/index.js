@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import Landing from '../Landing/Landing'
-import { useDispatch } from 'react-redux'
-import { getSSR } from '../Redux/StateManager/SSR'
+import Head from "next/head";
+import Landing from "../Landing/Landing";
+import { useDispatch } from "react-redux";
+import { getSSR } from "../Redux/StateManager/SSR";
 
 export default function Home(props) {
   const dispatch = useDispatch();
@@ -49,7 +49,6 @@ export async function getServerSideProps(context) {
   });
   const cms = await company.json();
 
-  
   return {
     props: {
       cat: category,
@@ -57,5 +56,4 @@ export async function getServerSideProps(context) {
       cms: cms,
     }, // will be passed to the page component as props
   };
-  
 }

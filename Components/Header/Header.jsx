@@ -17,13 +17,11 @@ const Header = (props) => {
   const dispatch = useDispatch();
 
   const mode = useSelector((state) => state.mode.value);
-  const  user  = useSelector((state) => state.auth.user);
-  const  userStatus  = useSelector((state) => state.auth.loginStatus);
+  const user = useSelector((state) => state.auth.user);
+  const userStatus = useSelector((state) => state.auth.loginStatus);
   const SSR = useSelector((state) => state.ssr.ssrData);
 
-  const { cat, subWithCat, cms } = SSR;
-
-  console.log(cms);
+  const { cat, subWithCat, company } = SSR;
 
   const [isOpen, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
@@ -99,7 +97,7 @@ const Header = (props) => {
   return (
     <div
       id="Navbar"
-      className={`overflow-hidden mb-4 h-20 ${dark ? "dark" : "light"}`}
+      className={`overflow-hidden h-20 ${dark ? "dark" : "light"}`}
     >
       <div
         id="wrapper"
@@ -110,11 +108,18 @@ const Header = (props) => {
         }}
       >
         {/*  <---- Drawer ----> */}
-        <div className={`${ isOpen ? "translate-x-0" : "-translate-x-[100rem]" } transition-all duration-700 fixed w-screen h-screen top-20 left-0 z-50 overflow-x-hidden lg:hidden xl:hidden`}>
-          <div className={`w-full h-full transition-all duration-300 ${isOpen && "bg-primary-dark dark:bg-gray-700" } z-0`}>
+        <div
+          className={`${
+            isOpen ? "translate-x-0" : "-translate-x-[100rem]"
+          } transition-all duration-700 fixed w-screen h-screen top-20 left-0 z-50 overflow-x-hidden lg:hidden xl:hidden`}
+        >
+          <div
+            className={`w-full h-full transition-all duration-300 ${
+              isOpen && "bg-primary-dark dark:bg-gray-700"
+            } z-0`}
+          >
             <ul className="flex flex-col justify-start items-center px-4 py-2 gap-4 z-10">
               <li className="w-full group rounded-lg overflow-hidden">
-
                 {/* Sevices > */}
                 <div
                   className={`${
@@ -153,7 +158,7 @@ const Header = (props) => {
                   }}
                 >
                   <ul className="flex flex-col justify-evenly items-center">
-                    {cat.data.map((item, key) => (
+                    {cat?.data.map((item, key) => (
                       <li key={key} className="py-2 px-4  w-full">
                         <div
                           className="flex justify-between"
@@ -179,7 +184,7 @@ const Header = (props) => {
 
                         {subOpen && subject == item.id && (
                           <div>
-                            {subWithCat.data.map(
+                            {subWithCat?.data.map(
                               (item, key) =>
                                 subject == item.category_id && (
                                   <li
@@ -244,23 +249,19 @@ const Header = (props) => {
                   }  overflow-hidden bg-primary/20`}
                 >
                   <ul className="flex flex-col justify-evenly items-center">
-                    {cms.data.map(
-                      (value, key) =>
-                        value.title == "Company" &&
-                        value.children.map((item) => (
-                          <li
-                            key={key}
-                            className="py-2 px-4 hover:bg-sky-200 w-full"
-                            onClick={() =>
-                              router.push(`/${`company`}/${item.title}`)
-                            }
-                          >
-                            <span className="text-gray-600 text-sm text-center">
-                              {item.title}
-                            </span>
-                          </li>
-                        ))
-                    )}
+                    {company?.data.children.map((item, key) => (
+                      <li
+                        key={key}
+                        className="py-2 px-4 hover:bg-sky-200 w-full"
+                        onClick={() =>
+                          router.push(`/${`company`}/${item.title}`)
+                        }
+                      >
+                        <span className="text-gray-600 text-sm text-center">
+                          {item.title}
+                        </span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </li>
@@ -306,7 +307,7 @@ const Header = (props) => {
         {/*  <---- / of Drawer ----> */}
 
         <div id="logo" className="rounded-md overflow-hidden hidden md:block">
-          <Link href={'/'}>
+          <Link href={"/"}>
             <Image
               src={Logo}
               priority
@@ -319,7 +320,7 @@ const Header = (props) => {
           </Link>
         </div>
         <div id="logo" className="rounded-md overflow-hidden md:hidden block">
-          <Link href={'/'}>
+          <Link href={"/"}>
             <Image
               src={Logo}
               priority
@@ -332,9 +333,17 @@ const Header = (props) => {
         </div>
         <div className="flex flex-row items-center justify-end gap-2 ">
           <div id="switch" className="lg:hidden">
-            <MaterialUISwitch sx={{ m: 1 }} checked={dark} onChange={() => setDark(!dark)} />
+            <MaterialUISwitch
+              sx={{ m: 1 }}
+              checked={dark}
+              onChange={() => setDark(!dark)}
+            />
           </div>
-          <div id="ham" className="lg:hidden z-50" onClick={() => setOpen(!isOpen)} >
+          <div
+            id="ham"
+            className="lg:hidden z-50"
+            onClick={() => setOpen(!isOpen)}
+          >
             {isOpen ? (
               <svg
                 fill="#000000"
@@ -364,7 +373,8 @@ const Header = (props) => {
             )}
           </div>
         </div>
-        <nav className="w-full hidden lg:block"
+        <nav
+          className="w-full hidden lg:block"
           onMouseLeave={() => {
             setHoveredItem("");
             setHovered(false);
@@ -372,30 +382,42 @@ const Header = (props) => {
         >
           <ul className="flex flex-row justify-end items-center">
             <li>
-              <MaterialUISwitch sx={{ m: 1 }} checked={dark} onChange={() => setDark(!dark)} />
+              <MaterialUISwitch
+                sx={{ m: 1 }}
+                checked={dark}
+                onChange={() => setDark(!dark)}
+              />
             </li>
-            <li className="group w-[8vw] md:w-[12vw] lg:w-[10vw] mx-2 hover:cursor-pointer"
+            <li
+              className="group w-[8vw] md:w-[12vw] lg:w-[10vw] mx-2 hover:cursor-pointer"
               onMouseEnter={() => {
                 setHoveredItem("services");
                 setHovered(true);
               }}
             >
               <div className="sticky mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
-                <div id="dropdown" className="flex flex-row justify-center items-center" >
+                <div
+                  id="dropdown"
+                  className="flex flex-row justify-center items-center"
+                >
                   <span className="text-white font-medium  dark:text-white transition-all duration-300">
                     Services
                   </span>
                 </div>
               </div>
             </li>
-            <li className="group md:w-[15.5vw] lg:w-[10vw] md:mx-2 lg:mx-0 hover:cursor-pointer"
+            <li
+              className="group md:w-[15.5vw] lg:w-[10vw] md:mx-2 lg:mx-0 hover:cursor-pointer"
               onMouseEnter={() => {
                 setHoveredItem("");
                 setHovered(false);
               }}
             >
               <div className="mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
-                <div id="dropdown" className="flex flex-row justify-center items-center">
+                <div
+                  id="dropdown"
+                  className="flex flex-row justify-center items-center"
+                >
                   <span className="text-white font-medium dark:text-white  transition-all duration-300">
                     Company
                   </span>
@@ -406,23 +428,17 @@ const Header = (props) => {
                 className="absolute transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded-b"
               >
                 <ul className="flex flex-col justify-evenly  items-center">
-                  {cms.data.map(
-                    (value, key) =>
-                      value.title !== "Company" &&
-                      value.children.map((item) => (
-                        <li
-                          key={key}
-                          className="py-2 px-4 hover:bg-sky-200 w-52"
-                          onClick={() =>
-                            router.push(`/${`company`}/${item.title}`)
-                          }
-                        >
-                          <span className="text-gray-600 text-sm text-center capitalize">
-                            {item.title}
-                          </span>
-                        </li>
-                      ))
-                  )}
+                  {company?.data.children.map((item, key) => (
+                    <li
+                      key={key}
+                      className="py-2 px-4 hover:bg-sky-200 w-52"
+                      onClick={() => router.push(`/${`company`}/${item.title}`)}
+                    >
+                      <span className="text-gray-600 text-sm text-center capitalize">
+                        {item.title}
+                      </span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </li>
@@ -460,60 +476,65 @@ const Header = (props) => {
                   className="flex flex-row justify-center items-center"
                 >
                   <div className="scale-90">
-                    {userStatus ? <Avatar>
-                      <span className="text-sm font-bold tracking-widest ">
-                        {user.user.name.match(/\b(\w)/g).join("")}
-                      </span>
-                    </Avatar> : <Link href={"/auth/login"}>
+                    {userStatus ? (
+                      <Avatar>
+                        <span className="text-sm font-bold tracking-widest ">
+                          {user.user.name.match(/\b(\w)/g).join("")}
+                        </span>
+                      </Avatar>
+                    ) : (
+                      <Link href={"/auth/login"}>
                         <div className="flex flex-row justify-start items-center gap-2 border-2 border-white p-1  ">
                           <span className="text-md font-medium tracking-widest text-center text-white">
                             Login
                           </span>
                         </div>
                       </Link>
-}
+                    )}
                   </div>
                 </div>
               </div>
-              {userStatus && <div
-                id="dropdownComponent"
-                className="absolute right-5 transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded"
-              >
-                <ul className="flex flex-col justify-evenly items-center">
-                  <li className="py-2 px-4 hover:bg-sky-200 w-full">
-                    {userStatus && (
-                      <div className="flex flex-row justify-start items-center gap-2">
-                        <div className="scale-90">
-                          <Avatar>
-                            <span className="text-sm font-bold tracking-widest ">
-                              {user.user.name.match(/\b(\w)/g).join("")}
-                            </span>
-                          </Avatar>
+              {userStatus && (
+                <div
+                  id="dropdownComponent"
+                  className="absolute right-5 transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded"
+                >
+                  <ul className="flex flex-col justify-evenly items-center">
+                    <li className="py-2 px-4 hover:bg-sky-200 w-full">
+                      {userStatus && (
+                        <div className="flex flex-row justify-start items-center gap-2">
+                          <div className="scale-90">
+                            <Avatar>
+                              <span className="text-sm font-bold tracking-widest ">
+                                {user.user.name.match(/\b(\w)/g).join("")}
+                              </span>
+                            </Avatar>
+                          </div>
+                          <span className="text-gray-600 text-sm text-center tracking-tighter">
+                            {user.user.name}
+                          </span>
                         </div>
-                        <span className="text-gray-600 text-sm text-center tracking-tighter">
-                          {user.user.name}
-                        </span>
-                      </div>
-                    )}
-                  </li>
-                  <li className="py-2 px-4 hover:bg-sky-200 w-full">
-                    {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
-                    {userStatus && (
-                      <div
-                        onClick={() => {
-                          dispatch(DELETE_USER());
-                          toast.success("Logged Out Succesfully!!");
-                        }}
-                        className="flex flex-row justify-start items-center gap-2"
-                      >
-                        <span className="text-gray-600 text-sm text-center">
-                          Logout
-                        </span>
-                      </div>
-                    )}
-                  </li>
-                </ul>
-              </div>}
+                      )}
+                    </li>
+                    <li className="py-2 px-4 hover:bg-sky-200 w-full">
+                      {/* <span className="text-gray-600 text-sm text-center">{item}</span> */}
+                      {userStatus && (
+                        <div
+                          onClick={() => {
+                            dispatch(DELETE_USER());
+                            toast.success("Logged Out Succesfully!!");
+                          }}
+                          className="flex flex-row justify-start items-center gap-2"
+                        >
+                          <span className="text-gray-600 text-sm text-center">
+                            Logout
+                          </span>
+                        </div>
+                      )}
+                    </li>
+                  </ul>
+                </div>
+              )}
             </li>
           </ul>
 
@@ -539,7 +560,7 @@ const Header = (props) => {
                 {hoveredItem == "services" && (
                   <div className="text-center w-full overflow-hidden">
                     <ul className="flex flex-col justify-center items-center w-full">
-                      {cat.data.map((item, key) => (
+                      {cat?.data.map((item, key) => (
                         <li
                           key={key}
                           className="py-2 px-4 hover:bg-sky-200 w-full text-start mt-2 hover:cursor-pointer"
@@ -561,10 +582,9 @@ const Header = (props) => {
                 {showSubjects && (
                   <div className="w-full">
                     <ul className="grid grid-cols-3 gap-x-4 gap-y-1 justify-center items-center w-full ">
-                      {subWithCat.data.map(
+                      {subWithCat?.data.map(
                         (item, key) =>
                           subject == item.category_id && (
-
                             // <Link href={path}></Link>
                             <li
                               key={key}
@@ -573,7 +593,6 @@ const Header = (props) => {
                                 router.push(
                                   {
                                     pathname: `/services/${item.slug}/${item.id}`,
-                                    search: 'name: Abbas'
                                   },
                                   `/services/${item.slug}/${item.id}`
                                 );
