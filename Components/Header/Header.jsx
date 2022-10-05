@@ -113,7 +113,7 @@ const Header = (props) => {
         <div
           className={`${
             isOpen ? "translate-x-0" : "-translate-x-[100rem]"
-          } transition-all duration-700 fixed w-screen h-screen top-20 left-0 z-50 overflow-x-hidden`}
+          } transition-all duration-700 fixed w-screen h-screen top-20 left-0 z-50 overflow-x-hidden lg:hidden`}
         >
           <div
             className={`w-full h-full transition-all duration-300  ${
