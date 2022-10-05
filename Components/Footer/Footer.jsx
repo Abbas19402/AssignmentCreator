@@ -5,7 +5,7 @@ import Icon from '../Icons';
 
 const Footer = () => {
     const SSR = useSelector((state) => state.ssr.ssrData);
-    const { cat , subWithCat , cms } = SSR
+    const { cat , subWithCat , company } = SSR
   return (
     <div className='relative bg-gray-800 w-full flex justify-center items-center py-3'>
         <div className="flex flex-col justify-start items-center w-[90%] h-fit divide-y divide-gray-400">
@@ -78,18 +78,16 @@ const Footer = () => {
                             <span className="text-xl font-medium tracking-wide text-white">Our Company</span>
                         </div>
                         <ul className='w-full text-start px-2'>
-                        {cms.data.map((value, key) => (
-                            value.title != 'services' && value.children.map((item) => (
-                            <li
-                                key={key}
-                                onClick={() => router.push(`/${`company`}/${item.title}`)}
-                            >
-                                <span className="text-sm text-center hover:text-primary hover:cursor-pointer tracking-wider leading-6 capitalize">
-                                {item.title}
-                                </span>
-                            </li>
-                            ))
-                        ))}
+                            {company?.data.children.map((item, key) => (   
+                                <li
+                                    key={key}
+                                    onClick={() => router.push(`/${`company`}/${item.title}`)}
+                                >
+                                    <span className="text-sm text-center hover:text-primary hover:cursor-pointer tracking-wider leading-6 capitalize">
+                                    {item.title}
+                                    </span>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                     <div className='flex flex-col justify-start gap-4'>
@@ -98,7 +96,7 @@ const Footer = () => {
                         </div>
                         <div className="flex flex-row justify-start items-center gap-2">
                             <IconButton sx={{color: 'gray'}}>
-                                <Icon.Instagram/>
+                                <Icon.Instagram />
                             </IconButton>
                             <IconButton sx={{color: 'gray'}}>
                                 <Icon.Facebook />

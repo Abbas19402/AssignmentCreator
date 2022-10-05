@@ -41,7 +41,7 @@ export async function getServerSideProps(context) {
   );
   const subWithCatagory = await sub.json();
 
-  const company = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms`, {
+  const company = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms/Company`, {
     headers: {
       Accept: "application/json",
       Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
@@ -49,12 +49,13 @@ export async function getServerSideProps(context) {
   });
   const cms = await company.json();
 
-  
+  console.log(cms);
+
   return {
     props: {
       cat: category,
       subWithCat: subWithCatagory,
-      cms: cms,
+      company: cms,
     }, // will be passed to the page component as props
   };
   

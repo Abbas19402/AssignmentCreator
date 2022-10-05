@@ -7,6 +7,7 @@ import { combineReducers } from '@reduxjs/toolkit'
 import mode from './DarkMode/index'
 import authentication from './User'
 import GetSSRProps from './StateManager/SSR'
+import OrderData from './Order'
 
 const persistConfig = {
   key: 'root',  
@@ -16,7 +17,8 @@ const persistConfig = {
 const reducer = combineReducers({
   mode: mode,
   auth: authentication,
-  ssr: GetSSRProps
+  ssr: GetSSRProps,
+  order: OrderData
 })
 const persistedReducer = persistReducer(persistConfig , reducer)
 

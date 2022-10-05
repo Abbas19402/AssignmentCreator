@@ -21,9 +21,7 @@ const Header = (props) => {
   const  userStatus  = useSelector((state) => state.auth.loginStatus);
   const SSR = useSelector((state) => state.ssr.ssrData);
 
-  const { cat, subWithCat, cms } = SSR;
-
-  console.log(cms);
+  const { cat, subWithCat, company } = SSR;
 
   const [isOpen, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
@@ -99,7 +97,7 @@ const Header = (props) => {
   return (
     <div
       id="Navbar"
-      className={`overflow-hidden mb-4 h-20 ${dark ? "dark" : "light"}`}
+      className={`overflow-hidden h-20 ${dark ? "dark" : "light"}`}
     >
       <div
         id="wrapper"
@@ -153,7 +151,7 @@ const Header = (props) => {
                   }}
                 >
                   <ul className="flex flex-col justify-evenly items-center">
-                    {cat.data.map((item, key) => (
+                    {cat?.data.map((item, key) => (
                       <li key={key} className="py-2 px-4  w-full">
                         <div
                           className="flex justify-between"
@@ -179,7 +177,7 @@ const Header = (props) => {
 
                         {subOpen && subject == item.id && (
                           <div>
-                            {subWithCat.data.map(
+                            {subWithCat?.data.map(
                               (item, key) =>
                                 subject == item.category_id && (
                                   <li
@@ -244,22 +242,18 @@ const Header = (props) => {
                   }  overflow-hidden bg-primary/20`}
                 >
                   <ul className="flex flex-col justify-evenly items-center">
-                    {cms.data.map(
-                      (value, key) =>
-                        value.title == "Company" &&
-                        value.children.map((item) => (
-                          <li
-                            key={key}
-                            className="py-2 px-4 hover:bg-sky-200 w-full"
-                            onClick={() =>
-                              router.push(`/${`company`}/${item.title}`)
-                            }
-                          >
-                            <span className="text-gray-600 text-sm text-center">
-                              {item.title}
-                            </span>
-                          </li>
-                        ))
+                    {company?.data.children.map((item, key) =>  
+                      <li
+                        key={key}
+                        className="py-2 px-4 hover:bg-sky-200 w-full"
+                        onClick={() =>
+                          router.push(`/${`company`}/${item.title}`)
+                        }
+                      >
+                        <span className="text-gray-600 text-sm text-center">
+                          {item.title}
+                        </span>
+                      </li>
                     )}
                   </ul>
                 </div>
@@ -406,22 +400,18 @@ const Header = (props) => {
                 className="absolute transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded-b"
               >
                 <ul className="flex flex-col justify-evenly  items-center">
-                  {cms.data.map(
-                    (value, key) =>
-                      value.title !== "Company" &&
-                      value.children.map((item) => (
-                        <li
-                          key={key}
-                          className="py-2 px-4 hover:bg-sky-200 w-52"
-                          onClick={() =>
-                            router.push(`/${`company`}/${item.title}`)
-                          }
-                        >
-                          <span className="text-gray-600 text-sm text-center capitalize">
-                            {item.title}
-                          </span>
-                        </li>
-                      ))
+                  {company?.data.children.map((item, key) =>
+                    <li
+                      key={key}
+                      className="py-2 px-4 hover:bg-sky-200 w-52"
+                      onClick={() =>
+                        router.push(`/${`company`}/${item.title}`)
+                      }
+                    >
+                      <span className="text-gray-600 text-sm text-center capitalize">
+                        {item.title}
+                      </span>
+                    </li>
                   )}
                 </ul>
               </div>
@@ -539,7 +529,7 @@ const Header = (props) => {
                 {hoveredItem == "services" && (
                   <div className="text-center w-full overflow-hidden">
                     <ul className="flex flex-col justify-center items-center w-full">
-                      {cat.data.map((item, key) => (
+                      {cat?.data.map((item, key) => (
                         <li
                           key={key}
                           className="py-2 px-4 hover:bg-sky-200 w-full text-start mt-2 hover:cursor-pointer"
@@ -561,7 +551,7 @@ const Header = (props) => {
                 {showSubjects && (
                   <div className="w-full">
                     <ul className="grid grid-cols-3 gap-x-4 gap-y-1 justify-center items-center w-full ">
-                      {subWithCat.data.map(
+                      {subWithCat?.data.map(
                         (item, key) =>
                           subject == item.category_id && (
 
@@ -573,7 +563,6 @@ const Header = (props) => {
                                 router.push(
                                   {
                                     pathname: `/services/${item.slug}/${item.id}`,
-                                    search: 'name: Abbas'
                                   },
                                   `/services/${item.slug}/${item.id}`
                                 );

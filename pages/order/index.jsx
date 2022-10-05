@@ -9,7 +9,7 @@ const OrderPage = ({props}) => {
   useEffect(()=> {},[mode])
   return (
     <div className={`${mode == 'dark' && 'dark'}`}>
-      <div className="w-full">
+      <div className="w-full h-full">
         <Order />
       </div>
     </div>
