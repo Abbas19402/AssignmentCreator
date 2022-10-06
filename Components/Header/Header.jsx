@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { styled } from "@mui/material/styles";
-import Switch from "@mui/material/Switch";
 import { useDispatch, useSelector } from "react-redux";
-import { setDarkMode } from "../../Redux/DarkMode";
+import { toast } from "react-toastify";
+import { styled } from "@mui/material/styles";
 import { useRouter } from "next/router";
+
+import Switch from "@mui/material/Switch";
 import Link from "next/link";
 import Image from "next/future/image";
-import Logo from "../../public/Assets/Logos/Header2.png";
 import Avatar from "@mui/material/Avatar";
+
 import { DELETE_USER } from "../../Redux/User";
-import { toast } from "react-toastify";
+import { setDarkMode } from "../../Redux/DarkMode";
+import Logo from "../../public/Assets/Logos/Header2.png";
 import styles from "../../styles/Home.module.css";
 
-const Header = (props) => {
+const Header = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-
+  
   const mode = useSelector((state) => state.mode.value);
   const  user  = useSelector((state) => state.auth.user);
   const  userStatus  = useSelector((state) => state.auth.loginStatus);
@@ -32,10 +34,6 @@ const Header = (props) => {
   const [subject, setSubjects] = useState(null);
   const [showSubjects, setShowSubjects] = useState(false);
   const [subOpen, setSubOpen] = useState(false);
-
-  const capitalizeFirst = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
 
   useEffect(() => {
     if (dark) {

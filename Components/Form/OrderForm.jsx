@@ -1,47 +1,53 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import Select from "react-select";
+import { FilePond, registerPlugin } from "react-filepond";
 import { useRouter } from "next/router";
 import { useSelector , useDispatch } from "react-redux";
-import useFetch from "../../hooks/useFetch";
-import toast from 'react-toastify'
-import useValid from "../../hooks/useValid";
-import { SAVE_ORDER } from "../../Redux/Order";
 import { CircularProgress } from "@mui/material";
-import { FilePond, File, registerPlugin } from "react-filepond";
-import "filepond/dist/filepond.min.css";
+
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import Select from "react-select";
+import toast from 'react-toastify'
+
+import { SAVE_ORDER } from "../../Redux/Order";
+import useFetch from "../../hooks/useFetch";
+import useValid from "../../hooks/useValid";
+
+import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
 const OrderForm = () => {
-  const { push } = useRouter()
-  const dispatch = useDispatch()
-   
   registerPlugin(
     FilePondPluginImageExifOrientation,
     FilePondPluginImagePreview
   );
+
+  const { push } = useRouter()
+  const dispatch = useDispatch()
+   
   let optionsServices = [];
   let optionsSubjects = [];
 
   const SSR = useSelector((state) => state.ssr.ssrData);
+  
   const { cat, subWithCat } = SSR;
+
   const [files, setFiles] = useState(null);
   const [deadline, setDeadline] = useState(new Date());
-  const [subjects, setSubjects] = useState([
-    {
-      value: "Select any service",
-      name: "Select any service",
-    },
-  ]);
   const [ formData , setFormData ] = useState({})
   const [selectedService, setSeletedService] = useState({});
   const [services, setServices] = useState(null);
   const [price, setprice] = useState(0);
   const [loading, setloading] = useState(false);
   const [showOrder, setShowOrder] = useState(false);
-
+  const [subjects, setSubjects] = useState([
+    {
+      value: "Select any service",
+      name: "Select any service",
+    },
+  ]);
+  
   const optionsPages = [
     { value: 10, label: 10 },
     { value: 20, label: 20 },
