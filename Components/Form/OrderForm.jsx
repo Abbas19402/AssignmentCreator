@@ -7,6 +7,7 @@ import useFetch from "../../hooks/useFetch";
 import toast from 'react-toastify'
 import useValid from "../../hooks/useValid";
 import { SAVE_ORDER } from "../../Redux/Order";
+import { CircularProgress } from "@mui/material";
 import { FilePond, File, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
@@ -76,6 +77,7 @@ const OrderForm = () => {
   };
 
   const CheckValidation = (e) => {
+    setloading(true)
     e.preventDefault()
     let uploads = [];
     files.map((fileItem) => {
@@ -114,6 +116,7 @@ const OrderForm = () => {
       header
     );
     if (response.data.success) {
+      setloading(false)
       setprice(response.data.data.total);
       setShowOrder(true)
       setloading(false);
@@ -121,6 +124,7 @@ const OrderForm = () => {
   };
 
   const CreateOrder = async(e) => {
+    setloading(true)
     e.preventDefault()
     let uploads = [];
     files.map((fileItem) => {
@@ -146,6 +150,7 @@ const OrderForm = () => {
     const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/Order-Create`,values,header)
     console.log(response);
     if(response.data.success) {
+      setloading(false)
       dispatch(SAVE_ORDER(response.data))
       push('/order/checkout')
     } else {
@@ -293,7 +298,7 @@ const OrderForm = () => {
                 className="bg-black hover:bg-neutral-700 w-[60%] rounded transition-all duration-300 p-2"
               >
                 <span className="text-white tracking-wider text-base ">
-                  Create Order
+                  {loading ? <CircularProgress size={20} color="inherit" /> : "Create Order"}
                 </span>
               </button>
             ) : (
@@ -302,7 +307,7 @@ const OrderForm = () => {
                 className="bg-black hover:bg-neutral-700 w-[60%] rounded transition-all duration-300 p-2"
               >
                 <span className="text-white tracking-wider text-base ">
-                  Submit
+                  {loading ? <CircularProgress size={20} color="inherit" /> : "Submit"}
                 </span>
               </button>
             )}
