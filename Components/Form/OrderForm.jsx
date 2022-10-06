@@ -8,11 +8,12 @@ import { CircularProgress } from "@mui/material";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import Select from "react-select";
-import toast from 'react-toastify'
+import { toast } from 'react-toastify'
 
 import { SAVE_ORDER } from "../../Redux/Order";
 import useFetch from "../../hooks/useFetch";
 import useValid from "../../hooks/useValid";
+import { Options } from '../../Constants/FormOptions'
 
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
@@ -30,8 +31,9 @@ const OrderForm = () => {
   let optionsSubjects = [];
 
   const SSR = useSelector((state) => state.ssr.ssrData);
-  
+
   const { cat, subWithCat } = SSR;
+  const { optionsDeadline , optionsPages , optionsSlides } = Options
 
   const [files, setFiles] = useState(null);
   const [deadline, setDeadline] = useState(new Date());
@@ -47,30 +49,6 @@ const OrderForm = () => {
       name: "Select any service",
     },
   ]);
-  
-  const optionsPages = [
-    { value: 10, label: 10 },
-    { value: 20, label: 20 },
-    { value: 30, label: 30 },
-    { value: 40, label: 40 },
-    { value: 50, label: 50 },
-    { value: 60, label: 60 },
-  ];
-
-  const optionsDeadline = [
-    { value: "3", label: "3 Days" },
-    { value: "5", label: "5 Days" },
-    { value: "10", label: "10 Days" },
-    { value: "15", label: "15 Days" },
-    { value: "20", label: "20 Days" },
-  ];
-
-  const optionsSlides = [
-    { value: "10", label: "10" },
-    { value: "20", label: "20" },
-    { value: "30", label: "30" },
-    { value: "40", label: "40" },
-  ];
 
   const dateFormatter = (date) => {
     var month = date.getMonth();

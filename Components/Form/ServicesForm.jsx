@@ -1,37 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useSelector } from "react-redux";
+
 import useFetch from "../../hooks/useFetch";
+import { Options } from '../../Constants/FormOptions'
 
 const ServiceForm = ({ prefill }) => {
   const [selectedService, setSeletedService] = useState({});
   const [price, setprice] = useState(0);
   const [loading, setloading] = useState(false);
 
-  const optionsPages = [
-    { value: 10, label: 10 },
-    { value: 20, label: 20 },
-    { value: 30, label: 30 },
-    { value: 40, label: 40 },
-    { value: 50, label: 50 },
-    { value: 60, label: 60 },
-  ];
-
-  const optionsDeadline = [
-    { value: "3", label: "3 Days" },
-    { value: "5", label: "5 Days" },
-    { value: "10", label: "10 Days" },
-    { value: "15", label: "15 Days" },
-    { value: "20", label: "20 Days" },
-  ];
-
-  const optionsSlides = [
-    { value: "10", label: "10" },
-    { value: "20", label: "20" },
-    { value: "30", label: "30" },
-    { value: "40", label: "40" },
-  ];
+  const { optionsDeadline , optionsPages , optionsSlides } = Options
 
   const HandleCalculate = async (e) => {
     setloading(true);
@@ -59,7 +38,7 @@ const ServiceForm = ({ prefill }) => {
         id="CostCalculator"
         className="w-[100vw] lg:w-fit flex justify-center h-full"
       >
-        <div className="transition-all duration-500 w-[90%] md:w-[60%] lg:w-[100%] h-fit flex flex-col gap-3 items-center justify-evenly p-8 shadow-xl rounded-lg bg-white dark:bg-white/20">
+        <div className="transition-all duration-500 w-[90%] md:w-[60%] lg:w-[100%] h-fit flex flex-col gap-3 items-center justify-evenly p-8 shadow-xl rounded-lg bg-white dark:bg-white/20 border">
           <div id="heading" className="w-full text-center">
             <span className="text-2xl tracking-wide text-gray-600 dark:text-white">
               Calculate your Order
@@ -142,7 +121,7 @@ const ServiceForm = ({ prefill }) => {
                 />
               </div>
             </div>
-            <div className="flex flex-col md:flex-row my-5 items-center">
+            <div className="flex flex-row my-5 justify-between items-center">
               <div className="w-[50%] ">
                 <button
                   type="submit"
@@ -157,7 +136,7 @@ const ServiceForm = ({ prefill }) => {
                   </span>
                 </button>
               </div>
-              <div className="w-[50%] text-center">
+              <div className="w-[50%] text-center flex justify-center items-center">
                 <span className="text-black text-2xl">${price}</span>
               </div>
             </div>

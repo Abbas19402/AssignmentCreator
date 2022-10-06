@@ -12,12 +12,12 @@ const Footer = () => {
 
             {/* Links */}
             <div className='w-full h-full'>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-around w-full  text-gray-300 py-5">
-                    <div className='flex flex-col justify-start gap-4'>
-                        <div className="w-full text-start">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-around w-full gap-5 lg:gap-0 text-gray-300 py-5">
+                    <div className='flex flex-col justify-start items-center gap-4'>
+                        <div className="w-full text-center md:text-start">
                             <span className="text-xl font-medium tracking-wide text-white">Top Assignment Searches</span>
                         </div>
-                        <ul className='w-full text-start'>
+                        <ul className='w-full text-center md:text-start'>
                             {cat.data.map(( item , index)=> (
                                 index < 8 &&
                                 <li>
@@ -27,10 +27,10 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div className='flex flex-col justify-start gap-4'>
-                        <div className="w-full text-start px-2">
+                        <div className="w-full text-center md:text-start px-2">
                             <span className="text-xl font-medium tracking-wide text-white">Assignment by countries</span>
                         </div>
-                        <ul className='w-full text-start px-2'>
+                        <ul className='w-full text-center md:text-start px-2'>
                             <li>
                                 <span className="text-sm text-center hover:text-primary hover:cursor-pointer tracking-wider leading-6">
                                     India
@@ -74,10 +74,10 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div className='flex flex-col justify-start gap-4'>
-                        <div className="w-full text-start px-2">
+                        <div className="w-full text-center md:text-start px-2">
                             <span className="text-xl font-medium tracking-wide text-white">Our Company</span>
                         </div>
-                        <ul className='w-full text-start px-2'>
+                        <ul className='w-full text-center md:text-start px-2'>
                             {company?.data.children.map((item, key) => (   
                                 <li
                                     key={key}
@@ -91,10 +91,10 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div className='flex flex-col justify-start gap-4'>
-                        <div className="w-full text-start px-2">
+                        <div className="w-full text-center md:text-start px-2">
                             <span className="text-xl font-medium tracking-wide text-white">Social Media</span>
                         </div>
-                        <div className="flex flex-row justify-start items-center gap-2">
+                        <div className="flex flex-row justify-center md:justify-start items-center gap-2">
                             <IconButton sx={{color: 'gray'}}>
                                 <Icon.Instagram />
                             </IconButton>
@@ -113,7 +113,7 @@ const Footer = () => {
             </div>
 
             {/* Policies */}
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center w-full h-full py-3">
+            <div className="flex flex-col md:flex-row justify-between  items-start lg:items-center w-full h-full py-3">
                 <div className="flex flex-row justify-start items-center divide-x">
                     {
                         [...Array(6)].map((_,key) => (
@@ -135,7 +135,7 @@ const Footer = () => {
             </div>
 
             {/* Copyright */}
-            <div className="flex flex-col justify-start items-end w-full h-full py-2">
+            <div className="flex flex-col justify-start text-center lg:text-start items-end w-full h-full py-2">
                 <div className="w-full text-gray-300 text-sm">
                     <span>
                         Disclaimer : Assignment Creator offers custom assignment writing help to the students along with proofreading and editing services. We provide references of reliable resources which are for knowledge purpose only and cannot be used for direct submission in university.</span>

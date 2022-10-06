@@ -3,12 +3,15 @@ import Select from "react-select";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSelector } from "react-redux";
 import useFetch from "../../hooks/useFetch";
+import { Options } from "../../Constants/FormOptions";
 
 const BannerForm = () => {
   let optionsServices = [];
   let optionsSubjects = [];
 
   const SSR = useSelector((state) => state.ssr.ssrData);
+
+  const { optionsDeadline , optionsPages , optionsSlides } = Options
   const { cat, subWithCat } = SSR;
 
   const [ selectedService , setSeletedService ] = useState({})
@@ -19,30 +22,6 @@ const BannerForm = () => {
   const [ services , setServices ] = useState(null)
   const [ price , setprice ] = useState(0)
   const [ loading , setloading ] = useState(false)
-
-  const optionsPages = [
-    { value: 10, label: 10 },
-    { value: 20, label: 20 },
-    { value: 30, label: 30 },
-    { value: 40, label: 40 },
-    { value: 50, label: 50 },
-    { value: 60, label: 60 },
-  ];
-
-  const optionsDeadline = [
-    { value: "3", label: "3 Days" },
-    { value: "5", label: "5 Days" },
-    { value: "10", label: "10 Days" },
-    { value: "15", label: "15 Days" },
-    { value: "20", label: "20 Days" },
-  ];
-
-  const optionsSlides = [
-    { value: "10", label: "10" },
-    { value: "20", label: "20" },
-    { value: "30", label: "30" },
-    { value: "40", label: "40" },
-  ];
 
   const HandleCalculate = async (e) => {
     setloading(true);
@@ -174,13 +153,13 @@ useEffect( () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-row items-center justify-between gap-2">
               <div className="w-[50%] ">
                 <button
                   type="submit"
                   className="bg-black hover:bg-neutral-700 w-full h-12 flex justify-center items-center rounded transition-all duration-300 p-2"
                 >
-                  <span className="text-white tracking-wider text-base ">
+                  <span className="text-white tracking-wider text-base">
                     {loading ? (
                       <CircularProgress size={20} color="inherit" />
                     ) : (

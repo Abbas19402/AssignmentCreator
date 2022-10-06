@@ -14,13 +14,13 @@ const Banner = () => {
       id="banner"
       className={`${mode === "dark" && "dark"} overflow-hidden`}>
       <div className="h-fit lg:h-fit w-full  transition-all duration-500 lg:py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 justify-center lg:justify-around px-8 items-center lg:items-start h-full ">
-          <div id="Animation" className="w-full h-full p-16">
-            <div id="Head">
-              <span className="text-6xl font-bold text-primary tracking-wider">{"Assignment Creator".toUpperCase()}</span>
+        <div className="grid grid-cols-1 lg:grid-cols-2 justify-center lg:justify-between lg:px-16 xl:px-16 items-center lg:items-start h-full ">
+          <div id="Animation" className="w-full h-full p-16 ">
+            <div id="Head" className="text-center lg:text-start w-full">
+              <span className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-primary tracking-wider">{"Assignment Creator".toUpperCase()}</span>
             </div>
           </div>
-          <div className="col-span-2 w-full h-full flex justify-end items-center scale-90 md:scale-100 mb-10">
+          <div className="w-full h-full flex 2xl:justify-end justify-center items-center scale-90 md:scale-100 mb-10">
             <Form.BannerForm />
           </div>
         </div>

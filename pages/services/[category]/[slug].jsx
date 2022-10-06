@@ -11,7 +11,7 @@ const PageType = (props) => {
   return (
     <div className='m-5'>
       <div id="wrapper" className='w-full lg:p-8 dark:bg-dark/80 bg-white'>
-        <div className="w-full h-fit border-4 border-black flex flex-col justify-center item-center">
+        <div className="w-full h-fit flex flex-col justify-center item-center">
           <SubjectDetails query={query} props={props}/>
         </div>
       </div>

@@ -11,8 +11,8 @@ import Nprogress from 'nprogress'
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react'
 import Head from 'next/head'
-import LoaderCSS from '../public/Assets/NProgress/nProgress.css'
-import LoaderJS from '../public/Assets/NProgress/nProgress'
+import '../public/Assets/NProgress/nProgress.css'
+import '../public/Assets/NProgress/nProgress'
 
 function MyApp({ Component, pageProps }) {
   let persistor = persistStore(Store)
@@ -29,10 +29,6 @@ function MyApp({ Component, pageProps }) {
   })
   return (
     <>
-      <Head>
-        <script src={LoaderJS}></script>
-        <link rel='stylesheet' href={LoaderCSS}/> 
-      </Head>
       <Provider store={Store}>
         <PersistGate persistor={persistor}>
           <div className='sticky top-0 left-0 z-50'>
@@ -40,7 +36,7 @@ function MyApp({ Component, pageProps }) {
           </div>
           <ToastContainer />
           <Component {...pageProps} />
-          <div className='sticky -bottom-[100%] left-0 z-10'>
+          <div className='sticky -bottom-[150%] lg:-bottom-[100%] left-0 z-10'>
             <Footer/>
           </div>
         </PersistGate>

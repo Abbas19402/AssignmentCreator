@@ -28,7 +28,7 @@ const SubjectDetails = (props, query) => {
   console.log(temp);
   return (
     <div className={`${mode == "dark" && "dark"}`}>
-      <div className="relative lg:p-5 h-full">
+      <div className="relative lg:p-5 h-fit">
         <div className="flex flex-col lg:flex-row gap-4 justify-around items-center">
           <div className="w-full h-full md:w-[60%]">
             <div className="flex flex-col justify-start items-center">
@@ -41,7 +41,7 @@ const SubjectDetails = (props, query) => {
               <p className="text-justify p-4">{parse(short_desc)}</p>
             </div>
           </div>
-          <div className="w-full h-fit flex justify-center md:w-[40%]">
+          <div className="w-full h-fit flex justify-center md:w-[40%] scale-95 md:scale-100">
             <Form.ServiceForm prefill={prefillData} />
           </div>
         </div>
