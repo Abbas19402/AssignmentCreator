@@ -293,7 +293,7 @@ const Header = () => {
                           router.push(`/${`company`}/${item.title}`)
                         }
                       >
-                        <span className="text-gray-600 text-sm text-center">
+                        <span className="text-gray-200 text-lg  tracking-wider text-center">
                           {item.title}
                         </span>
                       </li>
@@ -357,15 +357,6 @@ const Header = () => {
                 </div>
               </li>
             </ul>
-            <div className="w-full px-3 py-2">
-              {userStatus && <div className="relative -top-20 w-full py-2.5 rounded bg-slate-100 flex justify-center items-center" onClick={() => {
-                setOpen(false)
-                dispatch(DELETE_USER());
-                toast.success("Logged Out Succesfully!!");
-              }}>
-                <span className="font-medium tracking-wide text-lg">Logout</span>
-              </div>}
-            </div>
           </div>
         </div>
         {/*  <---- / of Drawer ----> */}
