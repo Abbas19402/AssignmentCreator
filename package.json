@@ -11,6 +11,8 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@headlessui/react": "^1.7.3",
+    "@heroicons/react": "^2.0.12",
     "@mui/icons-material": "^5.10.3",
     "@mui/lab": "^5.0.0-alpha.102",
     "@mui/material": "^5.10.5",
@@ -33,6 +35,7 @@
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
+    "use-detect-keyboard-open": "^0.2.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {

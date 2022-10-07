@@ -1,7 +1,7 @@
 import React, { useEffect , useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { SAVE_USER } from '../../Redux/User'
+import { SAVE_TOKEN, SAVE_USER } from '../../Redux/User'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import useFetch from '../../hooks/useFetch'
@@ -12,6 +12,10 @@ const LoginForm = () => {
     const dispatch = useDispatch()
     const router = useRouter()
     const mode = useSelector( state => state.mode.value )
+
+    const userData = useSelector(state => state.auth.user)
+
+    const { access_token } = userData
 
     const [ loading , setLoading ] = useState(false)
 
@@ -36,14 +40,15 @@ const LoginForm = () => {
         console.log(values);
         const header = {
             "Accept" : "application/json",
-            "Authorization" : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
+            "Authorization" : `Bearer ${access_token}`
         }
-        const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/login`,values, header)
+        const { response } = await useFetch('post',`auth/login`,values, header)
         console.log(response);
         if(response.status == 200) {
             toast.success("Login Successfull!!")
             router.push('/')
             dispatch(SAVE_USER(response.data.data))
+            dispatch(SAVE_TOKEN(response.data.data.access_token))
             setLoading(false)
         } else if(response.response.status != 200 ) {
             toast.error("Login Failed!!")

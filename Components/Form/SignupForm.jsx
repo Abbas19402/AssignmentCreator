@@ -10,6 +10,10 @@ const SignupForm = () => {
   const router = useRouter()
   const mode = useSelector((state) => state.mode.value);
 
+  const userData = useSelector(state => state.auth.user)
+
+    const { access_token } = userData
+
   const [ user,setUser ] = useState(null)
   const [ loading , setLoading ] = useState(false)
   const [ otpStatus , setOtpStatus ] = useState(false)
@@ -39,9 +43,9 @@ const SignupForm = () => {
   const HandleSignup = async values => {
     const header = {
       "Accept" : "application/json",
-      "Authorization" : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
+      "Authorization" : `Bearer ${access_token}`
     }
-    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/customer/signup`,values, header)
+    const { response } = await useFetch('post',`customer/signup`,values, header)
     console.log(response);
     if(response.status == 200 || response.status == 201) {
       CreateOtp(values , response.data.data.access_token)
@@ -56,9 +60,9 @@ const SignupForm = () => {
     form.append('dialing_code',val.dialing_code)
     form.append('phone',val.phone)
     let headers = {
-      'Authorization' : `Bearer ${at}` 
+      'Authorization' : `Bearer ${access_token}` 
     }
-    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/create/otp`,form , headers)
+    const { response } = await useFetch('post',`auth/create/otp`,form , headers)
     if(response.data.success) {
       console.log(response)
       setUser(response.data.data.user_id)
@@ -75,7 +79,7 @@ const SignupForm = () => {
     const form = new FormData();
     form.append('user_id',user)
     form.append('otp',otp)
-    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/auth/otp/login`,form)
+    const { response } = await useFetch('post',`auth/otp/login`,form)
     if(response.data.success ) {
       toast.success('Signup Successfull!!')
       router.push('/auth/login')

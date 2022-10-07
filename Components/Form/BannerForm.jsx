@@ -39,7 +39,7 @@ const BannerForm = () => {
     };
     const { response } = await useFetch(
       "post",
-      `${process.env.NEXT_PUBLIC_API_URL}/Check-Price`,
+      `Check-Price`,
       "",
       header
     );

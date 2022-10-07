@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Select from "react-select";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -6,6 +7,10 @@ import useFetch from "../../hooks/useFetch";
 import { Options } from '../../Constants/FormOptions'
 
 const ServiceForm = ({ prefill }) => {
+  const userData = useSelector(state => state.auth.user)
+
+  const { access_token } = userData
+
   const [selectedService, setSeletedService] = useState({});
   const [price, setprice] = useState(0);
   const [loading, setloading] = useState(false);
@@ -23,9 +28,9 @@ const ServiceForm = ({ prefill }) => {
     e.target.reset();
     const header = {
       Accept: "application/json",
-      Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
+      Authorization: `Bearer ${access_token}`,
     };
-    const { response } = await useFetch("post",`${process.env.NEXT_PUBLIC_API_URL}/Check-Price`,"",header);
+    const { response } = await useFetch("post",`Check-Price`,"",header);
     if (response.data.success) {
       setprice(response.data.data.total);
       setloading(false);

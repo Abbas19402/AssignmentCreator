@@ -2,30 +2,38 @@ import axios from "axios";
 
 const useFetch = async(method , url ,values ,header ) => {
     let response
+    let code
     if(header) {
-        await axios(`${url}`,{
-            method: `${method}`.toUpperCase(),
-            data: values,
-            headers: header
-        }) .then( res => {
-            response = res
-        } ) .catch( err => {
-            response = err
-        })
-        return {
-            response
+
+        try {
+            const data =  await axios(`${process.env.NEXT_PUBLIC_API_URL}/${url}`,{
+                method: `${method}`.toUpperCase(),
+                data: values,
+                headers: header
+            })
+            return {
+                response:data,
+                code
+            }
+        } catch (error) {
+            console.log(error)
         }
+    
+       
     } else {
-        await axios(`${url}`,{
+        await axios(`${process.env.NEXT_PUBLIC_API_URL}/${url}`,{
             method: `${method}`.toUpperCase(),
             data: values
         }) .then( res => {
             response = res
+            code = res.code
         } ) .catch( err => {
             response = err
+            code = ''
         })
         return {
-            response
+            response,
+            code
         }
     }
 }

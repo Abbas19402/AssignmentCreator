@@ -10,7 +10,7 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import Select from "react-select";
 import { toast } from 'react-toastify'
 
-import { SAVE_ORDER } from "../../Redux/Order";
+import { SAVE_FILES, SAVE_ORDER } from "../../Redux/Order";
 import useFetch from "../../hooks/useFetch";
 import useValid from "../../hooks/useValid";
 import { Options } from '../../Constants/FormOptions'
@@ -31,6 +31,9 @@ const OrderForm = () => {
   let optionsSubjects = [];
 
   const SSR = useSelector((state) => state.ssr.ssrData);
+  const userData = useSelector(state => state.auth.user)
+
+  const { access_token } = userData
 
   const { cat, subWithCat } = SSR;
   const { optionsDeadline , optionsPages , optionsSlides } = Options
@@ -58,6 +61,7 @@ const OrderForm = () => {
     var year = date.getFullYear();
     var formattedDate = dateOfMonth + "-" + month + "-" + year;
     setDeadline(formattedDate);
+    console.log(formattedDate);
   };
 
   const CheckValidation = (e) => {
@@ -91,11 +95,11 @@ const OrderForm = () => {
   const HandleSubmit = async (values) => {
     const header = {
       Accept: "application/json",
-      Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
+      Authorization: `Bearer ${access_token}`,
     };
     const { response } = await useFetch(
       "post",
-      `${process.env.NEXT_PUBLIC_API_URL}/Check-Price`,
+      `Check-Price`,
       "",
       header
     );
@@ -116,7 +120,7 @@ const OrderForm = () => {
     });
     const form = new FormData(e.currentTarget);
     let values = {};
-    form.append('total', price)
+    form.append('total', Number(price)*100)
     form.append('payment_method' , 'Online')
     for (var pair of form.entries()) {
       if (pair[0] == "file") {
@@ -129,13 +133,14 @@ const OrderForm = () => {
     }
     const header = {
       Accept: "application/json",
-      Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
+      Authorization: `Bearer ${access_token}`,
     };
-    const { response } = await useFetch('post',`${process.env.NEXT_PUBLIC_API_URL}/Order-Create`,values,header)
+    const { response } = await useFetch('post',`Order-Create`,values,header)
     console.log(response);
     if(response.data.success) {
       setloading(false)
       dispatch(SAVE_ORDER(response.data))
+      dispatch(SAVE_FILES(uploads))
       push('/order/checkout')
     } else {
       toast.error('Error')
@@ -151,7 +156,10 @@ const OrderForm = () => {
 
   return (
     <div className="">
-      <div id="form" className="p-5 py-8 shadow-xl rounded bg-white">
+      <div id="form" className="p-5 pb-8 pt-4 shadow-xl rounded bg-white">
+        <div className="w-full h-20 flex justify-center items-center mb-4">
+          <span className="text-3xl tracking-wider font-medium">Create Order</span>
+        </div>
         <form onSubmit={showOrder ? CreateOrder : CheckValidation}>
           <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-y-6 lg:gap-x-3 gap-3">
             <div id="Type" className="flex flex-col gap-1">
@@ -291,7 +299,7 @@ const OrderForm = () => {
                 className="bg-black hover:bg-neutral-700 w-[60%] rounded transition-all duration-300 p-2"
               >
                 <span className="text-white tracking-wider text-base ">
-                  {loading ? <CircularProgress size={20} color="inherit" /> : "Submit"}
+                  {loading ? <CircularProgress size={20} color="inherit" /> : "Calculate Price"}
                 </span>
               </button>
             )}

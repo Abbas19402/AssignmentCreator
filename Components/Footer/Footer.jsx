@@ -1,13 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect , useState } from 'react'
 import { useSelector } from 'react-redux'
+
 import IconButton from '@mui/material/IconButton';
+import useDetectKeyboardOpen from "use-detect-keyboard-open";
+
 import Icon from '../Icons';
 
 const Footer = () => {
     const SSR = useSelector((state) => state.ssr.ssrData);
-    const { cat , subWithCat , company } = SSR
+
+    const isKeyboardOpen = useDetectKeyboardOpen();
+
+    const { cat , company } = SSR
+
   return (
-    <div className='relative bg-gray-800 w-full flex justify-center items-center py-3'>
+    <div className={`relative bg-gray-800 w-full ${isKeyboardOpen ? 'hidden ' : 'flex'} transition-all justify-center items-center py-3`}>
         <div className="flex flex-col justify-start items-center w-[90%] h-fit divide-y divide-gray-400">
 
             {/* Links */}
@@ -78,7 +85,7 @@ const Footer = () => {
                             <span className="text-xl font-medium tracking-wide text-white">Our Company</span>
                         </div>
                         <ul className='w-full text-center md:text-start px-2'>
-                            {company?.data.children.map((item, key) => (   
+                            {company?.data.map((item, key) => (   
                                 <li
                                     key={key}
                                     onClick={() => router.push(`/${`company`}/${item.title}`)}
