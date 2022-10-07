@@ -36,12 +36,12 @@ const SubjectDetails = (props, query) => {
                 <img src={`${ImageSrc}`} alt={name} width={240} />
               </div>
               <div id="Heading" className="w-full my-3 px-4">
-                <span className="text-4xl text-start">{name}</span>
+                <span className="text-2xl md:text-3xl lg:text-4xl text-start">{name}</span>
               </div>
               <p className="text-justify p-4">{parse(short_desc)}</p>
             </div>
           </div>
-          <div className="w-full h-fit flex justify-center md:w-[40%] scale-95 md:scale-100">
+          <div className="w-full h-fit flex justify-center md:w-[40%] scale-95 md:scale-100 mb-16">
             <Form.ServiceForm prefill={prefillData} />
           </div>
         </div>

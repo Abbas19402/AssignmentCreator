@@ -64,7 +64,7 @@ const LoginForm = () => {
                 <div id="heading" className='text-center py-3'>
                     <span className="text-start text-4xl tracking-tighter">Login</span>
                 </div>
-                <div className="flex flex-col gap-1 m-1 w-[60%]">
+                <div className="flex flex-col gap-1 m-1 w-[80%] md:w-[60%]">
                     <label htmlFor="email" className='text-sm font-medium text-gray-600 my-1'>Email</label>
                     <input 
                         type="text" 
@@ -75,7 +75,7 @@ const LoginForm = () => {
                         autoComplete='off'
                     />
                 </div>
-                <div className="flex flex-col gap-1 m-1 w-[60%]">
+                <div className="flex flex-col gap-1 m-1 w-[80%] md:w-[60%]">
                     <label htmlFor="password" className='text-sm font-medium text-gray-600 my-1'>Password</label>
                     <input 
                         className='bg-gray-100 w-full h-10 rounded-3xl focus:outline-4 transition-all duration-500 focus:outline-teal-200 focus:bg-white px-4 font-light text-sm text-gray-400 placeholder:text-gray-400 my-2'

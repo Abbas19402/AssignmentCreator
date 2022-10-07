@@ -4,7 +4,6 @@ const useFetch = async(method , url ,values ,header ) => {
     let response
     let code
     if(header) {
-
         try {
             const data =  await axios(`${process.env.NEXT_PUBLIC_API_URL}/${url}`,{
                 method: `${method}`.toUpperCase(),
@@ -13,27 +12,25 @@ const useFetch = async(method , url ,values ,header ) => {
             })
             return {
                 response:data,
-                code
             }
         } catch (error) {
-            console.log(error)
+            return {
+                response: data
+            }
         }
-    
-       
     } else {
-        await axios(`${process.env.NEXT_PUBLIC_API_URL}/${url}`,{
-            method: `${method}`.toUpperCase(),
-            data: values
-        }) .then( res => {
-            response = res
-            code = res.code
-        } ) .catch( err => {
-            response = err
-            code = ''
-        })
-        return {
-            response,
-            code
+        try {
+            const data =  await axios(`${process.env.NEXT_PUBLIC_API_URL}/${url}`,{
+                method: `${method}`.toUpperCase(),
+                data: values
+            })
+            return {
+                response:data,
+            }
+        } catch (error) {
+            return {
+                response: data
+            }
         }
     }
 }

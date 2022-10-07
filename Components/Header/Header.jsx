@@ -13,6 +13,7 @@ import { DELETE_USER } from "../../Redux/User";
 import { setDarkMode } from "../../Redux/DarkMode";
 import Logo from "../../public/Assets/Logos/Header2.png";
 import styles from "../../styles/Home.module.css";
+import { Fullscreen } from "@mui/icons-material";
 
 const Header = () => {
   const router = useRouter();
@@ -112,42 +113,46 @@ const Header = () => {
           } transition-all duration-700 fixed w-screen h-screen top-20 left-0 z-50 overflow-x-hidden lg:hidden xl:hidden`}
         >
           <div
-            className={`w-full h-full transition-all duration-300 flex flex-col justify-start items-center ${
+            className={`w-full h-full transition-all duration-300 flex flex-col justify-between items-center ${
               isOpen && "bg-primary-dark dark:bg-gray-700 w-full"
             } z-0`}
           >
             <ul className="flex flex-col justify-start items-center px-4 py-2 gap-4 z-10  w-full">
-              <div className="w-full h-fit rounded border-white bg-white flex justify-center items-center py-1">
-                <div className="mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40 w-full h-full">
-                  <div
-                    id="dropdown"
-                    className="flex flex-row justify-around items-center w-full h-full"
-                  >
-                    <div className="scale-100 w-full h-full flex justify-center items-center">
-                      {userStatus ? (
-                        <div className="flex flex-row justify-start items-center gap-2 w-full h-full">
-                          <div className="scale-90">
-                            <Avatar>
-                              <span className="text-sm font-bold tracking-widest ">
-                                {user.user.name.match(/\b(\w)/g).join("")}
-                              </span>
-                            </Avatar>
-                          </div>
-                          <span className="text-gray-600 text-sm font-medium text-center tracking-wider">
-                            {user.user.name}
+              <div className="w-full h-fit rounded border-white bg-white flex justify-center items-center py-1.5 px-3">
+                <div className="scale-100 w-full h-full flex justify-center items-center">
+                  {userStatus ? (
+                    <div className="flex flex-row justify-between items-center gap-2 w-full h-full">
+                      <div className="flex flex-row justify-start items-center gap-3">
+                      <div className="scale-90">
+                        <Avatar>
+                          <span className="text-sm font-bold tracking-widest ">
+                            {user.user.name.match(/\b(\w)/g).join("")}
+                          </span>
+                        </Avatar>
+                      </div>
+                      <span className="text-gray-600 font-medium text-center tracking-wider">
+                        {user.user.name}
+                      </span>
+                      </div>
+                      {userStatus && <div className="relative w-fit py-1 px-2 rounded bg-slate-100 flex justify-center items-center" onClick={() => {
+                        setOpen(false)
+                        dispatch(DELETE_USER());
+                        toast.success("Logged Out Succesfully!!");
+                      }}>
+                        <span className="font-medium tracking-wide text-lg">Logout</span>
+                      </div>}
+                    </div>
+                  ) : (
+                    <div className="w-full h-full flex justify-center items-center" onClick={()=>setOpen(false)}>
+                      <Link href={"/auth/login"}  className="w-full h-full border-4 border-black">
+                        <div className="flex flex-row justify-start items-center gap-2 border-2 border-white p-1  ">
+                          <span className="text-md font-medium tracking-widest text-center text-black">
+                            Login
                           </span>
                         </div>
-                      ) : (
-                        <Link href={"/auth/login"} onClick={()=>setOpen(false)}>
-                          <div className="flex flex-row justify-start items-center gap-2 border-2 border-white p-1  ">
-                            <span className="text-md font-medium tracking-widest text-center text-white">
-                              Login
-                            </span>
-                          </div>
-                        </Link>
-                      )}
+                      </Link>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
               <li className="w-full group rounded-lg overflow-hidden">
@@ -317,6 +322,25 @@ const Header = () => {
               <li
                 className="w-full group rounded-lg"
                 onClick={() => {
+                  setFocusedItem("samples");
+                  setOpen(!isOpen);
+                }}
+              >
+                <Link href={'/samples'}>
+                <div
+                  className={`${
+                    focusedItem == "samples" ? "bg-primary" : "bg-inherit"
+                  } flex flex-row justify-between items-center px-2 py-2`}
+                >
+                  <span className="text-white tracking-wide text-lg">
+                    Samples
+                  </span>
+                </div>
+                </Link>
+              </li>
+              <li
+                className="w-full group rounded-lg"
+                onClick={() => {
                   setFocusedItem("order");
                   router.push("/order");
                   setOpen(!isOpen);
@@ -333,6 +357,15 @@ const Header = () => {
                 </div>
               </li>
             </ul>
+            <div className="w-full px-3 py-2">
+              {userStatus && <div className="relative -top-20 w-full py-2.5 rounded bg-slate-100 flex justify-center items-center" onClick={() => {
+                setOpen(false)
+                dispatch(DELETE_USER());
+                toast.success("Logged Out Succesfully!!");
+              }}>
+                <span className="font-medium tracking-wide text-lg">Logout</span>
+              </div>}
+            </div>
           </div>
         </div>
         {/*  <---- / of Drawer ----> */}

@@ -10,7 +10,7 @@ function SampleList() {
       {[...Array(10)].map((_, index) => (
         <>
           <div className="w-full bg-white mt-8 flex justify-center" key={index}>
-            <div className="border-2 bg-gray-100 rounded-md w-[70%] divide-y">
+            <div className="border shadow-lg bg-slate-50 rounded-md w-[80%] md:w-[70%] divide-y">
               <div className="font-medium text-2xl text-slate-700 cursor-pointer p-4 capitalize">
                 <Link href="/samples/sample-list/sample-details">
                   UGB163 Understanding of Fundamental Concepts, Techniques, and

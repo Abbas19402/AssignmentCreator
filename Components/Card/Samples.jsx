@@ -7,7 +7,7 @@ const Samples = ({ mode }) => {
 
   return (
     <div className={`${mode == "dark" ? "dark" : "light"}`}>
-      <div className="w-[100%]  dark:border-white rounded-md bg-white dark:bg-dark">
+      <div className="w-[100%] dark:border-white rounded-md bg-white dark:bg-dark">
         <div className="flex flex-col">
           <Card>
             <CardContent className="bg-gray-100 divide-y">
