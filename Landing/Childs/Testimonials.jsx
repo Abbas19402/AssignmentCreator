@@ -5,7 +5,7 @@ import "react-slideshow-image/dist/styles.css";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-const Testimonials = () => {
+const Testimonials = ({data}) => {
   return (
     <div className="relative bg-gray-50 flex flex-col justify-center items-center py-10">
       <div className="p-5 flex flex-row justify-center items-center gap-5 md:pl-16 my-4 lg:my-0 lg:pl-10">
@@ -35,13 +35,13 @@ const Testimonials = () => {
             </div>
           }
         >
-          {[...Array(10)].map((_, key) => (
+          {data.map((item, key) => (
             <div
               key={key}
               className="h-64 rounded-md px-5 flex justify-center items-center"
             >
               <div className="w-[100%] h-full">
-                <Card.TestimonialsCard />
+                <Card.TestimonialsCard testimonials={item}/>
               </div>
             </div>
           ))}
@@ -69,13 +69,13 @@ const Testimonials = () => {
             </div>
           }
         >
-          {[...Array(10)].map((_, key) => (
+          {data.map((item, key) => (
             <div
               key={key}
               className="h-64 rounded-md px-5 flex justify-center items-center"
             >
               <div className="w-[100%] h-full">
-                <Card.TestimonialsCard />
+                <Card.TestimonialsCard testimonials={item}/>
               </div>
             </div>
           ))}
@@ -103,13 +103,13 @@ const Testimonials = () => {
             </div>
           }
         >
-          {[...Array(10)].map((_, key) => (
+          {data.map((item, key) => (
             <div
               key={key}
               className="h-64 rounded-md px-5 flex justify-center items-center"
             >
               <div className="w-[100%] h-full">
-                <Card.TestimonialsCard />
+                <Card.TestimonialsCard testimonials={item}/>
               </div>
             </div>
           ))}

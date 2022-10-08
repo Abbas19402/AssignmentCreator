@@ -20,14 +20,8 @@ const PageType = (props) => {
 export default PageType
 
 export async function getServerSideProps(context) {
-  const company = await fetch(`/cms/Company`,{
-    headers: {
-      "Accept" : "application/json",
-      "Authorization" : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
-    }
-  })
+  const company = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms/Company`)
   const cms = await company.json()
-
   return {
     props: {
       content: cms

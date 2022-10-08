@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Samples from "../../PageComponents/Samples/Samples";
+import axios from "axios";
 
-const SamplesContent = () => {
+const SamplesContent = (props) => {
   const mode = useSelector((state) => state.mode.value);
 
   useEffect(() => { }, [mode]);
+
+  console.log(props);
 
   return (
     <div className={`relative ${mode == "dark" ? "dark" : "light"} mb-5 mt-6`}>
@@ -16,9 +19,20 @@ const SamplesContent = () => {
           </div>
         </div>
       </div>
-      <Samples />
+      <Samples {...props}/>
     </div>
   );
 };
 
 export default SamplesContent;
+
+export async function getServerSideProps(context) {
+  const { data:samplesData } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cms/Samples`)
+  const { data:allSubjects } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/customer/Get-All-subject`)
+  return {
+    props: {
+      samples: samplesData,
+      subjects: allSubjects
+    }
+  }
+}

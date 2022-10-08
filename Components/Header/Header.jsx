@@ -480,7 +480,7 @@ const Header = () => {
               </div>
               <div
                 id="dropdownComponent"
-                className="absolute transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded-b"
+                className="absolute transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded"
               >
                 <ul className="flex flex-col justify-evenly  items-center">
                   {company?.data.map((item, key) => (

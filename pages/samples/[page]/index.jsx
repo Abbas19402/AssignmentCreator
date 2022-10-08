@@ -1,10 +1,12 @@
 import React from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 import Link from "next/link";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
-function SampleList() {
-  const { query } = useRouter();
+function SampleList(props) {
+  console.log(props)
+
   return (
     <div>
       {[...Array(10)].map((_, index) => (
@@ -53,3 +55,13 @@ function SampleList() {
 }
 
 export default SampleList;
+
+export async function getServerSideProps (context) {
+  const { query } = context
+  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cms/Samples/${query.page}`)
+  return {
+    props: {
+      samples: data
+    }
+  }
+}
