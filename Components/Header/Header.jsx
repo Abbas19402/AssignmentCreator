@@ -387,8 +387,10 @@ const Header = () => {
                   <ul className="flex flex-col justify-evenly items-center">
                     <li
                       className="py-2 px-4 hover:bg-sky-200 w-full"
-                      onClick={() =>
+                      onClick={() =>{
                         router.push(`/order/my-orders`)
+                        setOpen(!isOpen)
+                      }
                       }
                     >
                       <span className="text-gray-200 text-lg  tracking-wider text-center">
@@ -397,8 +399,10 @@ const Header = () => {
                     </li>
                     <li
                       className="py-2 px-4 hover:bg-sky-200 w-full"
-                      onClick={() =>
-                        router.push(`/order/create-order`)
+                      onClick={() =>{
+                          router.push(`/order/create-order`)
+                          setOpen(!isOpen);
+                        }
                       }
                     >
                       <span className="text-gray-200 text-lg  tracking-wider text-center">
