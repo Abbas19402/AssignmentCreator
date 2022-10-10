@@ -106,8 +106,6 @@ const Header = () => {
           setHovered(false);
         }}
       >
-
-
         {/*  <---- Drawer ----> */}
         <div
           className={`${
@@ -125,28 +123,41 @@ const Header = () => {
                   {userStatus ? (
                     <div className="flex flex-row justify-between items-center gap-2 w-full h-full">
                       <div className="flex flex-row justify-start items-center gap-3">
-                      <div className="scale-90">
-                        <Avatar>
-                          <span className="text-sm font-bold tracking-widest ">
-                            {user.user.name.match(/\b(\w)/g).join("")}
+                        <div className="scale-90">
+                          <Avatar>
+                            <span className="text-sm font-bold tracking-widest ">
+                              {user.user.name.match(/\b(\w)/g).join("")}
+                            </span>
+                          </Avatar>
+                        </div>
+                        <span className="text-gray-600 font-medium text-center tracking-wider">
+                          {user.user.name}
+                        </span>
+                      </div>
+                      {userStatus && (
+                        <div
+                          className="relative w-fit py-1 px-2 rounded bg-slate-100 flex justify-center items-center"
+                          onClick={() => {
+                            setOpen(false);
+                            dispatch(DELETE_USER());
+                            toast.success("Logged Out Succesfully!!");
+                          }}
+                        >
+                          <span className="font-medium tracking-wide text-lg">
+                            Logout
                           </span>
-                        </Avatar>
-                      </div>
-                      <span className="text-gray-600 font-medium text-center tracking-wider">
-                        {user.user.name}
-                      </span>
-                      </div>
-                      {userStatus && <div className="relative w-fit py-1 px-2 rounded bg-slate-100 flex justify-center items-center" onClick={() => {
-                        setOpen(false)
-                        dispatch(DELETE_USER());
-                        toast.success("Logged Out Succesfully!!");
-                      }}>
-                        <span className="font-medium tracking-wide text-lg">Logout</span>
-                      </div>}
+                        </div>
+                      )}
                     </div>
                   ) : (
-                    <div className="w-full h-full flex justify-center items-center" onClick={()=>setOpen(false)}>
-                      <Link href={"/auth/login"}  className="w-full h-full border-4 border-black">
+                    <div
+                      className="w-full h-full flex justify-center items-center"
+                      onClick={() => setOpen(false)}
+                    >
+                      <Link
+                        href={"/auth/login"}
+                        className="w-full h-full border-4 border-black"
+                      >
                         <div className="flex flex-row justify-start items-center gap-2 border-2 border-white p-1  ">
                           <span className="text-md font-medium tracking-widest text-center text-black">
                             Login
@@ -328,34 +339,73 @@ const Header = () => {
                   setOpen(!isOpen);
                 }}
               >
-                <Link href={'/samples'}>
-                <div
-                  className={`${
-                    focusedItem == "samples" ? "bg-primary" : "bg-inherit"
-                  } flex flex-row justify-between items-center px-2 py-2`}
-                >
-                  <span className="text-white tracking-wide text-lg">
-                    Samples
-                  </span>
-                </div>
+                <Link href={"/samples"}>
+                  <div
+                    className={`${
+                      focusedItem == "samples" ? "bg-primary" : "bg-inherit"
+                    } flex flex-row justify-between items-center px-2 py-2`}
+                  >
+                    <span className="text-white tracking-wide text-lg">
+                      Samples
+                    </span>
+                  </div>
                 </Link>
               </li>
               <li
-                className="w-full group rounded-lg"
+                className="w-full group rounded-lg overflow-hidden"
                 onClick={() => {
                   setFocusedItem("order");
-                  router.push("/order");
-                  setOpen(!isOpen);
+                  setFocus(!focus);
                 }}
               >
                 <div
                   className={`${
-                    focusedItem == "order" ? "bg-primary" : "bg-inherit"
+                    focusedItem == "order" && focus
+                      ? "bg-primary"
+                      : "bg-inherit"
                   } flex flex-row justify-between items-center px-2 py-2`}
                 >
                   <span className="text-white tracking-wide text-lg">
                     Order
                   </span>
+                  <div
+                    id="dropdownIndicator"
+                    className={`mx-2 ${
+                      focusedItem == "order" && focus
+                        ? "rotate-90"
+                        : "rotate-0"
+                    } justify-center items-end transition-all duration-300 text-white dark:text-white`}
+                  >
+                    <span>&#10095;</span>
+                  </div>
+                </div>
+                <div
+                  className={`w-full transition-all duration-300 ${
+                    focusedItem == "order" && focus ? "h-fit" : "h-0"
+                  }  overflow-hidden bg-primary/20`}
+                >
+                  <ul className="flex flex-col justify-evenly items-center">
+                    <li
+                      className="py-2 px-4 hover:bg-sky-200 w-full"
+                      onClick={() =>
+                        router.push(`/order/my-orders`)
+                      }
+                    >
+                      <span className="text-gray-200 text-lg  tracking-wider text-center">
+                        My Orders
+                      </span>
+                    </li>
+                    <li
+                      className="py-2 px-4 hover:bg-sky-200 w-full"
+                      onClick={() =>
+                        router.push(`/order/create-order`)
+                      }
+                    >
+                      <span className="text-gray-200 text-lg  tracking-wider text-center">
+                        Create Order
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </li>
             </ul>
@@ -363,20 +413,32 @@ const Header = () => {
         </div>
         {/*  <---- / of Drawer ----> */}
 
-
         <div id="logo" className="rounded-md overflow-hidden hidden md:block">
           <Link href={"/"}>
-            <Image src={Logo} priority alt="Assignment Help" className="scale-y-125 scale-x-125" width="300" height="460"/>
+            <Image
+              src={Logo}
+              priority
+              alt="Assignment Help"
+              className="scale-y-125 scale-x-125"
+              width="300"
+              height="460"
+            />
           </Link>
         </div>
         <div id="logo" className="rounded-md overflow-hidden md:hidden block">
           <Link href={"/"}>
-            <Image src={Logo} priority alt="Assignment Help" className="scale-y-125 scale-x-125" width="200" height="360" /> 
+            <Image
+              src={Logo}
+              priority
+              alt="Assignment Help"
+              className="scale-y-125 scale-x-125"
+              width="200"
+              height="360"
+            />
           </Link>
         </div>
 
         <div className="flex flex-row items-center justify-end gap-2 ">
-
           <div id="switch" className="lg:hidden">
             <MaterialUISwitch
               sx={{ m: 1 }}
@@ -420,10 +482,13 @@ const Header = () => {
           </div>
         </div>
 
-        <nav className="w-full hidden lg:block" onMouseLeave={() => {
+        <nav
+          className="w-full hidden lg:block"
+          onMouseLeave={() => {
             setHoveredItem("");
             setHovered(false);
-        }}>
+          }}
+        >
           <ul className="flex flex-row justify-end items-center">
             <li>
               <MaterialUISwitch
@@ -504,20 +569,19 @@ const Header = () => {
                 </div>
               </li>
             </Link>
-            <Link href={"/order"}>
-              <li className="w-[8vw] md:w-[10vw] group hover:cursor-pointer">
-                <div className="mx-2 my-1 py-2 px-2 bg-white group-hover:bg-cyan-200 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded-md text-center scale-105 dark:group-hover:shadow-lg dark:group-hover:shadow-sky-500">
-                  <span className="text-black  group-hover:text-black/60 font-medium w-full h-full transition-all duration-300 ">
-                    Orders
-                  </span>
-                </div>
-                <div
+            <li className="w-[8vw] md:w-[10vw] group hover:cursor-pointer">
+              <div className="mx-2 my-1 py-2 px-2 bg-white group-hover:bg-cyan-200 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded-md text-center scale-105 dark:group-hover:shadow-lg dark:group-hover:shadow-sky-500">
+                <span className="text-black  group-hover:text-black/60 font-medium w-full h-full transition-all duration-300 ">
+                  Orders
+                </span>
+              </div>
+              <div
                 id="dropdownComponent"
-                className="absolute transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded"
+                className="absolute transition-all h-0 group-hover:h-fit w-36 dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded"
               >
                 <ul className="flex flex-col justify-evenly  items-center">
-                  <li onClick={() => router.push(`/order`)}>
-                    <Link href={`/order/my-orders`}>
+                  <li className="w-full">
+                    <Link href={`/order/my-orders`} className="w-full border">
                       <div className="py-2 px-4 hover:bg-sky-200 w-full">
                         <span className="text-gray-600 text-sm text-center capitalize">
                           My Orders
@@ -525,8 +589,8 @@ const Header = () => {
                       </div>
                     </Link>
                   </li>
-                  <li onClick={() => router.push(`/order`)}>
-                    <Link href={`/order/my-orders`}>
+                  <li className="w-full">
+                    <Link href={`/order/create-order`} className="w-full">
                       <div className="py-2 px-4 hover:bg-sky-200 w-full">
                         <span className="text-gray-600 text-sm text-center capitalize">
                           Create Order
@@ -536,8 +600,7 @@ const Header = () => {
                   </li>
                 </ul>
               </div>
-              </li>
-            </Link>
+            </li>
             <li className="group md:mx-2 lg:mx-0 hover:cursor-pointer">
               <div className="mx-1 my-1 py-2 px-2 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40">
                 <div

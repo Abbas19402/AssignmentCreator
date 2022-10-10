@@ -1,19 +1,15 @@
-import React from 'react'
-import useFetch from '../../../hooks/useFetch'
+import React, { useEffect, useState } from "react";
+import useFetch from "../../../hooks/useFetch";
+import MyOrders from "../../../PageComponents/Order/MyOrders";
+import { useSelector } from "react-redux";
 
 const OrderList = () => {
-  const getMyOrders = async() => {
-    const header = {
-      "Accept" : "application/json",
-      "Authorization" : `Bearer ${access_token}`
-    }
-    await useFetch('get','My-Orders','',header).then( res => {
-      console.log(response)
-    } )
-  }
-  return (
-    <div> OrderList </div>
-  )
-}
 
-export default OrderList
+  return (
+    <div className="relative p-5">
+      <MyOrders />
+    </div>
+  );
+};
+
+export default OrderList;
