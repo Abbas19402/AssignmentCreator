@@ -1,8 +1,6 @@
 import axios from "axios";
 
 const useFetch = async(method , url ,values ,header ) => {
-    let response
-    let code
     if(header) {
         try {
             const data =  await axios(`${process.env.NEXT_PUBLIC_API_URL}/${url}`,{
@@ -15,7 +13,7 @@ const useFetch = async(method , url ,values ,header ) => {
             }
         } catch (error) {
             return {
-                response: data
+                response: error
             }
         }
     } else {
@@ -29,7 +27,7 @@ const useFetch = async(method , url ,values ,header ) => {
             }
         } catch (error) {
             return {
-                response: data
+                response: error
             }
         }
     }

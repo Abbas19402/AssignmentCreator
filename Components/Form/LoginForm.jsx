@@ -42,18 +42,16 @@ const LoginForm = () => {
             "Accept" : "application/json",
             "Authorization" : `Bearer ${access_token}`
         }
-        const { response } = await useFetch('post',`auth/login`,values, header)
-        console.log(response);
-        if(response.status == 200) {
+        await useFetch('post',`auth/login`,values, header)
+        .then((res)=> {
             toast.success("Login Successfull!!")
             router.push('/')
-            dispatch(SAVE_USER(response.data.data))
-            dispatch(SAVE_TOKEN(response.data.data.access_token))
+            dispatch(SAVE_USER(res.response.data.data))
+            dispatch(SAVE_TOKEN(res.response.data.data.access_token))
             setLoading(false)
-        } else if(response.response.status != 200 ) {
-            toast.error("Login Failed!!")
-            setLoading(false)
-        }
+        }).catch( err => {
+            toast.error('Incorrect Email/Password!!')
+        })
     }
 
     useEffect(()=> {}, [loading])

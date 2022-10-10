@@ -40,12 +40,11 @@ const CheckoutComponent = () => {
         "Accept" : "application/json",
         "Authorization" : `Bearer ${access_token}`
       }
-      const { response  } = await useFetch('post' , 'order/generate-order-id' , form , header)
-      if(response.data.success) {
-        displayRazorpay(response.data.data)
-      } else {
+      await useFetch('post' , 'order/generate-order-id' , form , header).then((res)=> {
+        displayRazorpay(res.response.data.data)
+      }).catch(err => {
         alert('Failed to generate orderid')
-      }
+      })
     }
 
     const loadScript = (src)=> {
@@ -75,6 +74,8 @@ const CheckoutComponent = () => {
         order_id: order.payment_order_id, 
         handler: function (response){
           OrderCheckout(response)
+          toast.success('Payment Successfull!!')
+          router.push('/')
         }
       };
       var paymentObject = new window.Razorpay(options);
@@ -92,11 +93,7 @@ const CheckoutComponent = () => {
         "Accept" : "application/json",
         "Authorization" : `Bearer ${access_token}`
       }
-      useFetch('post' , 'Order-Checkout' , data , header).then((res)=>{
-      toast.success('Payment Successfull!!')
-      router.push('/')
-      })
-      
+      await useFetch('post' , 'Order-Checkout' , data , header)
     }
 
   return (

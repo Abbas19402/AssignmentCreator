@@ -1,12 +1,13 @@
 import { Instagram , Facebook ,LinkedIn , Pinterest } from './mui'
-import {Coupon} from "./general"
+import { Coupon , Download} from "./general"
 
 const Icon = {
     Instagram ,
     Facebook , 
     LinkedIn , 
     Pinterest,
-    Coupon
+    Coupon,
+    Download
 }
 
 export default Icon

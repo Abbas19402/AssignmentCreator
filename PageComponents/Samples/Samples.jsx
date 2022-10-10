@@ -34,7 +34,6 @@ const Samples = ({samples , subjects}) => {
           <Masonry columns={{xs:1, sm:2 , md:2 , lg:4}} sx={{width: '100%'}} spacing={2}>
             {sortedSubjects.map((item, index) => (
               item.subjects.length > 0 && <div key={index} className="w-full">
-                {console.log(item)}
                 <Card.Samples data={item}/>
               </div>
             ))}

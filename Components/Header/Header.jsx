@@ -106,6 +106,8 @@ const Header = () => {
           setHovered(false);
         }}
       >
+
+
         {/*  <---- Drawer ----> */}
         <div
           className={`${
@@ -361,32 +363,20 @@ const Header = () => {
         </div>
         {/*  <---- / of Drawer ----> */}
 
+
         <div id="logo" className="rounded-md overflow-hidden hidden md:block">
           <Link href={"/"}>
-            <Image
-              src={Logo}
-              priority
-              alt="Assignment Help"
-              className="scale-y-125 scale-x-125"
-              width="300"
-              height="460"
-              onClick={() => router.push("/")}
-            />
+            <Image src={Logo} priority alt="Assignment Help" className="scale-y-125 scale-x-125" width="300" height="460"/>
           </Link>
         </div>
         <div id="logo" className="rounded-md overflow-hidden md:hidden block">
           <Link href={"/"}>
-            <Image
-              src={Logo}
-              priority
-              alt="Assignment Help"
-              className="scale-y-125 scale-x-125"
-              width="200"
-              height="360"
-            />
+            <Image src={Logo} priority alt="Assignment Help" className="scale-y-125 scale-x-125" width="200" height="360" /> 
           </Link>
         </div>
+
         <div className="flex flex-row items-center justify-end gap-2 ">
+
           <div id="switch" className="lg:hidden">
             <MaterialUISwitch
               sx={{ m: 1 }}
@@ -394,6 +384,7 @@ const Header = () => {
               onChange={() => setDark(!dark)}
             />
           </div>
+
           <div
             id="ham"
             className="lg:hidden z-50"
@@ -428,13 +419,11 @@ const Header = () => {
             )}
           </div>
         </div>
-        <nav
-          className="w-full hidden lg:block"
-          onMouseLeave={() => {
+
+        <nav className="w-full hidden lg:block" onMouseLeave={() => {
             setHoveredItem("");
             setHovered(false);
-          }}
-        >
+        }}>
           <ul className="flex flex-row justify-end items-center">
             <li>
               <MaterialUISwitch
@@ -444,7 +433,7 @@ const Header = () => {
               />
             </li>
             <li
-              className="group w-[8vw] md:w-[12vw] lg:w-[10vw] mx-2 hover:cursor-pointer"
+              className="group w-fit mx-2 hover:cursor-pointer"
               onMouseEnter={() => {
                 setHoveredItem("services");
                 setHovered(true);
@@ -462,7 +451,7 @@ const Header = () => {
               </div>
             </li>
             <li
-              className="group md:w-[15.5vw] lg:w-[10vw] md:mx-2 lg:mx-0 hover:cursor-pointer"
+              className="group w-fit md:mx-2 lg:mx-0 hover:cursor-pointer"
               onMouseEnter={() => {
                 setHoveredItem("");
                 setHovered(false);
@@ -498,7 +487,7 @@ const Header = () => {
               </div>
             </li>
             <Link href={"/writers"}>
-              <li className="group w-[8vw] md:w-[15vw] lg:w-[10vw]">
+              <li className="group w-fit">
                 <div className="mx-2 my-1 py-2 px-2 transition-all duration-500 hover:scale-110 hover:shadow-lg rounded  dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40  hover:cursor-pointer text-center">
                   <span className="text-white font-medium dark:text-white transition-all duration-300">
                     Our Writers
@@ -507,7 +496,7 @@ const Header = () => {
               </li>
             </Link>
             <Link href={"/samples"}>
-              <li className="group w-[8vw] md:w-[15vw] lg:w-[10vw]">
+              <li className="group w-fit">
                 <div className="mx-2 my-1 py-2 px-2 transition-all duration-500 hover:scale-110 hover:shadow-lg rounded  dark:group-hover:bg-sky-400/40 group-hover:bg-sky-900/40  hover:cursor-pointer text-center">
                   <span className="text-white font-medium dark:text-white transition-all duration-300">
                     Samples
@@ -517,11 +506,36 @@ const Header = () => {
             </Link>
             <Link href={"/order"}>
               <li className="w-[8vw] md:w-[10vw] group hover:cursor-pointer">
-                <div className="mx-2 my-1 py-2 px-2 bg-white group-hover:bg-cyan-200 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded-md text-center scale-105  group-hover:shadow-white dark:group-hover:shadow-lg dark:group-hover:shadow-sky-500">
+                <div className="mx-2 my-1 py-2 px-2 bg-white group-hover:bg-cyan-200 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg rounded-md text-center scale-105 dark:group-hover:shadow-lg dark:group-hover:shadow-sky-500">
                   <span className="text-black  group-hover:text-black/60 font-medium w-full h-full transition-all duration-300 ">
                     Orders
                   </span>
                 </div>
+                <div
+                id="dropdownComponent"
+                className="absolute transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded"
+              >
+                <ul className="flex flex-col justify-evenly  items-center">
+                  <li onClick={() => router.push(`/order`)}>
+                    <Link href={`/order/my-orders`}>
+                      <div className="py-2 px-4 hover:bg-sky-200 w-full">
+                        <span className="text-gray-600 text-sm text-center capitalize">
+                          My Orders
+                        </span>
+                      </div>
+                    </Link>
+                  </li>
+                  <li onClick={() => router.push(`/order`)}>
+                    <Link href={`/order/my-orders`}>
+                      <div className="py-2 px-4 hover:bg-sky-200 w-full">
+                        <span className="text-gray-600 text-sm text-center capitalize">
+                          Create Order
+                        </span>
+                      </div>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
               </li>
             </Link>
             <li className="group md:mx-2 lg:mx-0 hover:cursor-pointer">

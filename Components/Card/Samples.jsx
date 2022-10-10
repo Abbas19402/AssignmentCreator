@@ -4,7 +4,6 @@ import { CardContent } from "@mui/material";
 import Link from "next/link";
 
 const Samples = ({ mode , data }) => {
-  console.log(data);
   return (
     <div className={`${mode == "dark" ? "dark" : "light"}`}>
       <div className="w-[100%] dark:border-white rounded-md bg-white dark:bg-dark">

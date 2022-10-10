@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../../Components/Card";
-import { Slide } from "react-slideshow-image";
+import { Slide , Fade } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -82,7 +82,7 @@ const Testimonials = ({data}) => {
         </Slide>
       </div>
       <div className="w-[80%] py-3 block md:hidden">
-        <Slide
+        <Fade
           slidesToScroll={1}
           canSwipe={false}
           slidesToShow={1}
@@ -113,7 +113,7 @@ const Testimonials = ({data}) => {
               </div>
             </div>
           ))}
-        </Slide>
+        </Fade>
       </div>
     </div>
   );
