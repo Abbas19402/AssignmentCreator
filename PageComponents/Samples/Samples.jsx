@@ -10,21 +10,12 @@ const Samples = ({samples , subjects}) => {
   const [ sortedSubjects , setSortedSubjects ] = useState([])
 
   const sortSubjects = () => {
-    const sorted = subjects.data.sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    });
     let orderedArray = [];
     let counter = 65;
     [...Array(26)].map((_,key) =>{
       const objects = {
         character: String.fromCharCode(counter),
-        subjects: sorted.filter( item => item.name.charCodeAt(0) == counter )
+        subjects: subjects.data.filter( item => item.name.charCodeAt(0) == counter )
       }
       orderedArray.push(objects)
       counter++
@@ -42,7 +33,8 @@ const Samples = ({samples , subjects}) => {
         <Box className="p-8 flex justify-center items-center w-full">
           <Masonry columns={{xs:1, sm:2 , md:2 , lg:4}} sx={{width: '100%'}} spacing={2}>
             {sortedSubjects.map((item, index) => (
-              item.subjects.length != 0 && <div key={index} className="w-full">
+              item.subjects.length > 0 && <div key={index} className="w-full">
+                {console.log(item)}
                 <Card.Samples data={item}/>
               </div>
             ))}

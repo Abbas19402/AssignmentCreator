@@ -38,7 +38,7 @@ export default function Coupon({ showModal, setShowModal , setSelectedCoupon , s
     }
     const header = {
       "Accept" : "application/json",
-      "Authorization" : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
+      "Authorization" : `Bearer ${access_token}`
     }
     const { response } = await useFetch('post','Apply-Coupon',data,header)
 
@@ -53,7 +53,6 @@ export default function Coupon({ showModal, setShowModal , setSelectedCoupon , s
       setShowModal(false)
     }
   }
-
 
   useEffect(() => {
     GetCoupons()

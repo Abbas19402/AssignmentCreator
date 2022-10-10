@@ -4,7 +4,7 @@ import { CardContent } from "@mui/material";
 import Link from "next/link";
 
 const Samples = ({ mode , data }) => {
-
+  console.log(data);
   return (
     <div className={`${mode == "dark" ? "dark" : "light"}`}>
       <div className="w-[100%] dark:border-white rounded-md bg-white dark:bg-dark">
@@ -16,8 +16,8 @@ const Samples = ({ mode , data }) => {
               </div>
 
               {data.subjects.map((item , key)=> (
-                <Link href={`/samples/${item.id}`}>
-                  <div key={key} className="flex cursor-pointer justify-between text-sm hover:text-primary hover:font-bold py-2">
+                <Link key={key} href={`/samples/${item.id}`}>
+                  <div className="flex cursor-pointer justify-between text-sm hover:text-primary hover:font-bold py-2">
                     <span>{item.name}</span>
                     <span>12</span>
                   </div>

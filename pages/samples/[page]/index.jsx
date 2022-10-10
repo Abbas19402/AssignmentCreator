@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 function SampleList(props) {
-  console.log(props)
-
+  const { query } = useRouter()
+  console.log(props);
   return (
     <div>
       {[...Array(10)].map((_, index) => (
