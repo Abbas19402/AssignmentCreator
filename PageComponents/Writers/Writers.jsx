@@ -6,7 +6,6 @@ const Writers = ({writers}) => {
   const dispatch = useDispatch()
 
   const mode = useSelector(state => state.mode.value)
-  console.log(writers);
 
   return (
     <div className={`w-screen h-auto ${mode == 'dark' ? 'dark' : 'light'}`}>

@@ -6,15 +6,10 @@ const Orders = () => {
 const orders = useSelector(state => state.order.myOrders)
 const SSR = useSelector((state) => state.ssr.ssrData);
 
-console.log(orders);
-
-
-
 const { cat, subWithCat, company } = SSR;
 const { data:PaginationData } = orders.data
 const { data:OrderList } = PaginationData
 
-console.log(orders);
   return (
     <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">

@@ -10,10 +10,7 @@ import parse from "html-react-parser";
 const SubjectDetails = (props, query) => {
   const router = useRouter();
 
-  console.log(router);
-
   const mode = useSelector((state) => state.mode.value);
-  console.log(props.props.content);
   const { ImageSrc, category, short_desc, name, slug } =
     props.props.content.data;
   const prefillData = {
@@ -21,12 +18,7 @@ const SubjectDetails = (props, query) => {
     subjectSlug: slug,
     subjectName: name,
   };
-  console.log(prefillData);
 
-  var temp = document.createElement("div");
-  temp.innerHTML = short_desc;
-  var htmlObject = temp.firstChild;
-  console.log(temp);
   return (
     <div className={`${mode == "dark" && "dark"}`}>
       <div className="relative lg:p-5 h-fit">

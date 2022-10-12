@@ -36,19 +36,21 @@ const BannerForm = () => {
     let values = {};
     for (var pair of form.entries()) {
       values[pair[0]] = pair[1];
-    }
-    console.log(values);  
+    } 
     e.target.reset();
     const header = {
       Accept: "application/json",
       Authorization: `Bearer ${access_token}`,
     };
-    await axios.post(`https://assignment.servepratham.com/api/Check-Price`).then(res => {
+    await axios.post(`https://assignment.servepratham.com/api/Check-Price`,null,{
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
+    }).then(res => {
       setprice(res.data.data.total);
       setloading(false);
     }).catch(err => {
-      console.log(err);
-      toast.error('Please check you network!!')
+      toast.error(err.message)
     })
   };
 

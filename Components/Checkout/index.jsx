@@ -7,7 +7,6 @@ import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 
 import axios from "axios";
-import { http } from '../../public/utils/Http'
 import Icon from "../Icons/index";
 import Modal from '../Modal'
 import { toast } from "react-toastify";
@@ -39,9 +38,7 @@ const CheckoutComponent = () => {
       form.append('payment_gateway_type',payMethod)
       form.append('amount',finalPrice)
       form.append('paymentable_id' , id)
-      console.log(payMethod , finalPrice , id);
-     
-      console.log(JSON.stringify(form))
+
       try {
         const res = await axios({
           method: 'post',
@@ -99,7 +96,14 @@ const CheckoutComponent = () => {
         order_id: id,
         file: files
       }
-      await http.post('Order-Checkout', data)
+      const res = await axios({
+        method: 'post',
+        url: 'https://assignment.servepratham.com/api/Order-Checkout',
+        data: data,
+        headers: {
+          'Authorization': `Bearer ${access_token}`
+        }
+      })
     }
 
   return (

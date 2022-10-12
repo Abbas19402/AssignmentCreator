@@ -24,7 +24,6 @@ const MyOrdersComponent = () => {
   const userData = useSelector(state => state.auth.user)
 
   const { access_token } = userData
-  console.log(loginStatus);
 
   const [page, setPage] = useState(1);
   const [ data , setData ] = useState(null)
@@ -38,7 +37,6 @@ const MyOrdersComponent = () => {
       .then((res) => {
         dispatch(GET_ALL_ORDERS(res));
         setData(res.data.data)
-        console.log("All orders = ",res.data.data);
       });
   };
 
@@ -77,7 +75,7 @@ const MyOrdersComponent = () => {
                 >
                   <Menu.Items className="absolute right-0 z-10 mt-2 w-fit h-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1 h-full overflow-y-auto">
-                      {[...Array(data.total)].map((_, index)=> (
+                      {data !== null && [...Array(data.total)].map((_, index)=> (
                         index < 10 && <Menu.Item>
                           {({ active }) => (
                             <button

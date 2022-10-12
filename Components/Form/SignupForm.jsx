@@ -1,11 +1,12 @@
 import React , { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Link from "next/link"; 
-import useFetch from "../../hooks/useFetch";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+
+import Link from "next/link"; 
+import axios from "axios";
+
 import useValid from "../../hooks/useValid";
-import { http } from "../../public/utils/Http";
 
 const SignupForm = () => {
   const router = useRouter()
@@ -13,7 +14,7 @@ const SignupForm = () => {
 
   const userData = useSelector(state => state.auth.user)
 
-    const { access_token } = userData
+  const { access_token } = userData
 
   const [ user,setUser ] = useState(null)
   const [ loading , setLoading ] = useState(false)
@@ -21,7 +22,6 @@ const SignupForm = () => {
   const [ otp , setOtp ] = useState(null)
 
   useEffect(()=>{
-    console.log("User = ", user);
   },[otpStatus , loading , user])
 
   const CheckValidation = (e) => {
@@ -42,41 +42,36 @@ const SignupForm = () => {
 }
 
   const HandleSignup = async values => {
-    // const header = {
-    //   "Accept" : "application/json",
-    //   "Authorization" : `Bearer ${access_token}`
-    // }
-    // const { response } = await useFetch('post',`customer/signup`,values, header)
-    // console.log(response);
-    // if(response.status == 200 || response.status == 201) {
-    //   CreateOtp(values , response.data.data.access_token)
-    // } else {
-    //   toast.error("Signup Failed!!")
-    //   setLoading(false)
-    // }
-    await http.post('customer/signup', values).then((res) => {
-      CreateOtp(values , res.data.data.access_token)
-    }).catch(err => {
+    try{
+      const res = await axios({
+        method: 'post',
+        url: 'https://assignment.servepratham.com/api/customer/signup',
+        data: values
+      })
+      CreateOtp(values)
+    } catch(error) {
       toast.error("Signup Failed!!")
       setLoading(false)
-    })
+    }
   }
 
-  const CreateOtp = async( val , at) => {
+  const CreateOtp = async( val ) => {
     const form = new FormData();
     form.append('dialing_code',val.dialing_code)
     form.append('phone',val.phone)
-    
-    await http.post('auth/create/otp', form).then((res) => {
-      console.log(res)
+    try{
+      const res = await axios({
+        method: 'post',
+        url: 'https://assignment.servepratham.com/api/auth/create/otp',
+        data: form
+      })
       setUser(res.data.data.user_id)
       setOtpStatus(true)
       setLoading(false)
-    }).catch(err => {
-      console.log(err);
+    } catch(error) {
       alert('Request Failed!!')
       setLoading(false)
-    })
+    }
   }
 
   const OtpVerification = async(e) => {
@@ -85,15 +80,19 @@ const SignupForm = () => {
     const form = new FormData();
     form.append('user_id',user)
     form.append('otp',otp)
-
-    await http.post('auth/otp/login', form).then((res) => {
+    try{
+      const res = await axios({
+        method: 'post',
+        url: 'https://assignment.servepratham.com/api/auth/otp/login',
+        data: form
+      })
       toast.success('Signup Successfull!!')
       router.push('/auth/login')
       setLoading(false)
-    }).catch(err => {
+    } catch(error) {
       toast.error('Incorrect Otp!!')
       setLoading(false)
-    })
+    }
   }
   return (
     <div className={`${mode == "dark" && "dark"} h-full`}>

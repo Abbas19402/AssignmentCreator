@@ -5,8 +5,6 @@ import { toast } from "react-toastify";
 
 import Divider from "@mui/material/Divider";
 
-import useFetch from "../../hooks/useFetch";
-import { http } from "../../public/utils/Http";
 import axios from "axios";
 import styles from "../../styles/Home.module.css";
 

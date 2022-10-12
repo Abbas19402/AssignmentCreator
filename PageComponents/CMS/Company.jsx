@@ -6,7 +6,7 @@ import parse from "html-react-parser";
 
 const Company = ({ content , query }) => {
   const mode = useSelector((state) => state.mode.value);
-  console.log(content);
+  
   return (
     <div className={`${mode == "dark" && "dark"}`}>
       <div className="relative lg:p-5 h-fit">

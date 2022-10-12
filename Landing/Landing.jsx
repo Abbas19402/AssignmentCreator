@@ -6,7 +6,6 @@ import {useSelector} from 'react-redux'
 import ServiceOffered from './Childs/ServiceOffered'
 import WorkProcess from './Childs/WorkProcess'
 import Testimonials from './Childs/Testimonials'
-import useFetch from '../hooks/useFetch'
 
 const Landing = ({home}) => {
   const mode = useSelector((state) => state.mode.value);

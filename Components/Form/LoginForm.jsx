@@ -1,13 +1,13 @@
 import React, { useEffect , useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-import { SAVE_TOKEN, SAVE_USER } from '../../Redux/User'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import useFetch from '../../hooks/useFetch'
-import { http } from '../../public/utils/Http'
-import useValid from '../../hooks/useValid'
+import { useSelector , useDispatch} from 'react-redux'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
+
+import Link from 'next/link'
+import axios from 'axios'
+
+import { SAVE_TOKEN, SAVE_USER } from '../../Redux/User'
+import useValid from '../../hooks/useValid'
 
 const LoginForm = () => {
     const dispatch = useDispatch()
@@ -35,8 +35,11 @@ const LoginForm = () => {
 
     const HandleLogin = async values => {
         try{
-            const res =  await http.post('auth/login',values)
-            console.log(res);
+            const res = await axios({
+                method: 'post',
+                url: 'https://assignment.servepratham.com/api/auth/login',
+                data: values
+              })
             toast.success("Login Successfull!!")
             router.push('/')
             dispatch(SAVE_USER(res.data.data))
@@ -44,8 +47,7 @@ const LoginForm = () => {
             localStorage.setItem('GET_AT',res.data.data.access_token )
             setLoading(false)
         } catch(error) {
-            console.log(error);
-            toast.error('Incorrect Email/Password!!')
+            toast.error(error.message)
         }
     }
 

@@ -4,7 +4,6 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import parse from "html-react-parser";
 
 const SamplePages = ({ item }) => {
-  console.log(item);
   return (
     <div className="w-full bg-white mt-8 flex justify-center">
       <div className="border shadow-lg bg-slate-50 rounded-md w-[80%] md:w-[70%] divide-y">

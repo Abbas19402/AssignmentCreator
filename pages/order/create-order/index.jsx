@@ -1,6 +1,5 @@
 import React , { useState , useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import useFetch from '../../../hooks/useFetch'
 
 import Order from '../../../PageComponents/Order/Order'
 

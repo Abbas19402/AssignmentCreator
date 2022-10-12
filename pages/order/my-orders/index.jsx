@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import useFetch from "../../../hooks/useFetch";
+import React from "react";
 import MyOrders from "../../../PageComponents/Order/MyOrders";
-import { useSelector } from "react-redux";
 
 const OrderList = () => {
 

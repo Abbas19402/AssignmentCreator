@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 
 import Form from '../Form';
 
-
 const OrderComponent = () => {
   const mode = useSelector((state) => state.mode.value);
 

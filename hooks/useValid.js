@@ -1,5 +1,4 @@
 const useValid = (form) => {
-    console.log('Function called');
     let formValues = Object.values(form)
     let formKeys = Object.keys(form)
     let EmptyFields = []

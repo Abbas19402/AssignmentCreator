@@ -11,7 +11,6 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import Select from "react-select";
 import axios from 'axios'
 
-import { http } from "../../public/utils/Http";
 import { Options } from '../../Constants/FormOptions'
 import { SAVE_FILES , SAVE_ORDER } from "../../Redux/Order";
 import useValid from "../../hooks/useValid";
@@ -62,7 +61,6 @@ const OrderForm = () => {
     var year = date.getFullYear();
     var formattedDate = dateOfMonth + "-" + month + "-" + year;
     setDeadline(formattedDate);
-    console.log(formattedDate);
   };
 
   const CheckValidation = (e) => {
@@ -94,7 +92,11 @@ const OrderForm = () => {
 }
 
   const HandleSubmit = async (values) => {
-    await axios.post('https://assignment.servepratham.com/api/Check-Price').then((res) => {
+    await axios.post('https://assignment.servepratham.com/api/Check-Price',null,{
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
+    }).then((res) => {
       setloading(false)
       setprice(res.data.data.total);
       setShowOrder(true)
@@ -106,7 +108,6 @@ const OrderForm = () => {
   };
 
   const CreateOrder = async(e) => {
-    console.log('called');
     setloading(true)
     e.preventDefault()
     let uploads = [];

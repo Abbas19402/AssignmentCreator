@@ -3,7 +3,6 @@ import Card from "../../Components/Card";
 
 
 const List = ({ samples }) => {
-    console.log(samples);
   return (
     <div className="pb-10">
       {samples.page.map((item, index) => (
