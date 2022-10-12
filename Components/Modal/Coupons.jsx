@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 
 import useFetch from "../../hooks/useFetch";
 import { http } from "../../public/utils/Http";
+import axios from "axios";
 import styles from "../../styles/Home.module.css";
 
 export default function Coupon({ showModal, setShowModal , setSelectedCoupon , setIsCouponApplied }) {
@@ -23,7 +24,11 @@ export default function Coupon({ showModal, setShowModal , setSelectedCoupon , s
   const [ appliedCoupon , setAppliedCoupon ] = useState(null)
 
   const GetCoupons = async() => {
-      await http.get('coupons').then(response => {
+      await axios.get('https://assignment.servepratham.com/api/coupons',{
+        headers:{
+          'Authorization': `Bearer ${access_token}`
+        }
+      }).then(response => {
         setCoupons(response.data)
       })
   }
@@ -35,7 +40,11 @@ export default function Coupon({ showModal, setShowModal , setSelectedCoupon , s
       order_id: id
     }
     try{
-      const res = await http.post('Apply-Coupon', data)
+      const res = await axios.post('https://assignment.servepratham.com/api/Apply-Coupon', data, {
+        headers:{
+          'Authorization': `Bearer ${access_token}`
+        }
+      })
       setIsCouponApplied(true)
       setIsLoading(false)
       setSelectedCoupon(res.data.data)

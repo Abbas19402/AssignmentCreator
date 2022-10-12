@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 
-import useFetch from "../../hooks/useFetch";
+import axios from "axios";
 import { http } from '../../public/utils/Http'
 import Icon from "../Icons/index";
 import Modal from '../Modal'
@@ -42,11 +42,19 @@ const CheckoutComponent = () => {
       console.log(payMethod , finalPrice , id);
      
       console.log(JSON.stringify(form))
-    
-      await http.post('order/generate-order-id',form)
-
-        .then(res => displayRazorpay(res.response.data.data))
-        .catch(err => alert('Failed to generate orderid'))
+      try {
+        const res = await axios({
+          method: 'post',
+          url: 'https://assignment.servepratham.com/api/order/generate-order-id',
+          data: form,
+          headers: {
+            'Authorization': `Bearer ${access_token}`
+          }
+        })
+        displayRazorpay(res.data.data)
+      } catch (error) {
+        toast.error(error.message)
+      } 
     }
 
     const loadScript = (src)=> {

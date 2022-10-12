@@ -8,6 +8,8 @@ const SSR = useSelector((state) => state.ssr.ssrData);
 
 console.log(orders);
 
+
+
 const { cat, subWithCat, company } = SSR;
 const { data:PaginationData } = orders.data
 const { data:OrderList } = PaginationData

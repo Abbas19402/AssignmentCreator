@@ -24,12 +24,7 @@ const WritersContent = (props) => {
 export default WritersContent;
 
 export async function getServerSideProps(context) {
-  const writers = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cms/Writers`,{
-    headers: {
-      "Accept" : "application/json",
-      "Authorization" : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
-    }
-  })
+  const writers = await fetch(`${process.env.NEXT_PUBLIC_API_URL}cms/Writers`)
   const ourWriters = await writers.json()
 
   return {

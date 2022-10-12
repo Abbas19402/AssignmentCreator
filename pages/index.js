@@ -16,17 +16,6 @@ export default function Home(props) {
   }
 
   const { access_token } = userData;
-
-  const GetMyOrders = async () => {
-    await axios.get("https://assignment.servepratham.com/api/My-Orders").then((res) => {
-      dispatch(GET_ALL_ORDERS(res));
-    });
-  };
-  useEffect(() => {
-    if(loginStatus) {
-      GetMyOrders();
-    }
-  }, []);
   return (
     <>
       <Head>

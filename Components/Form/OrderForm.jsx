@@ -4,17 +4,17 @@ import { FilePond, registerPlugin } from "react-filepond";
 import { useRouter } from "next/router";
 import { useSelector , useDispatch } from "react-redux";
 import { CircularProgress } from "@mui/material";
+import { toast } from 'react-toastify'
 
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import Select from "react-select";
-import { toast } from 'react-toastify'
+import axios from 'axios'
 
-import { SAVE_FILES, SAVE_ORDER } from "../../Redux/Order";
-import useFetch from "../../hooks/useFetch";
 import { http } from "../../public/utils/Http";
-import useValid from "../../hooks/useValid";
 import { Options } from '../../Constants/FormOptions'
+import { SAVE_FILES , SAVE_ORDER } from "../../Redux/Order";
+import useValid from "../../hooks/useValid";
 
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
@@ -94,7 +94,7 @@ const OrderForm = () => {
 }
 
   const HandleSubmit = async (values) => {
-    await http.post('Check-Price').then((res) => {
+    await axios.post('https://assignment.servepratham.com/api/Check-Price').then((res) => {
       setloading(false)
       setprice(res.data.data.total);
       setShowOrder(true)
@@ -106,6 +106,7 @@ const OrderForm = () => {
   };
 
   const CreateOrder = async(e) => {
+    console.log('called');
     setloading(true)
     e.preventDefault()
     let uploads = [];
@@ -125,8 +126,22 @@ const OrderForm = () => {
         values[pair[0]] = pair[1];
       }
     }
-
-    
+    try {
+      const response = await axios({
+        method: 'post',
+        url: 'https://assignment.servepratham.com/api/Order-Create',
+        data: values,
+        headers: {
+          Authorization: `Bearer ${access_token}`
+        }
+      })
+      setloading(false)
+      dispatch(SAVE_ORDER(response.data))
+      dispatch(SAVE_FILES(uploads))
+      push('/order/checkout')
+    } catch (error) {
+      toast.error(error.message)
+    }
   };
 
   useEffect(() => {

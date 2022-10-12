@@ -27,8 +27,8 @@ const SamplesContent = (props) => {
 export default SamplesContent;
 
 export async function getServerSideProps(context) {
-  const { data:samplesData } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cms/Samples`)
-  const { data:allSubjects } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/customer/Get-All-subject`)
+  const { data:samplesData } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}cms/Samples`)
+  const { data:allSubjects } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}customer/Get-All-subject`)
   return {
     props: {
       samples: samplesData,
