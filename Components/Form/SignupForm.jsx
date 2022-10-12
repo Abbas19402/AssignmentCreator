@@ -5,6 +5,7 @@ import useFetch from "../../hooks/useFetch";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import useValid from "../../hooks/useValid";
+import { http } from "../../public/utils/Http";
 
 const SignupForm = () => {
   const router = useRouter()
@@ -41,58 +42,63 @@ const SignupForm = () => {
 }
 
   const HandleSignup = async values => {
-    const header = {
-      "Accept" : "application/json",
-      "Authorization" : `Bearer ${access_token}`
-    }
-    const { response } = await useFetch('post',`customer/signup`,values, header)
-    console.log(response);
-    if(response.status == 200 || response.status == 201) {
-      CreateOtp(values , response.data.data.access_token)
-    } else {
+    // const header = {
+    //   "Accept" : "application/json",
+    //   "Authorization" : `Bearer ${access_token}`
+    // }
+    // const { response } = await useFetch('post',`customer/signup`,values, header)
+    // console.log(response);
+    // if(response.status == 200 || response.status == 201) {
+    //   CreateOtp(values , response.data.data.access_token)
+    // } else {
+    //   toast.error("Signup Failed!!")
+    //   setLoading(false)
+    // }
+    await http.post('customer/signup', values).then((res) => {
+      CreateOtp(values , res.data.data.access_token)
+    }).catch(err => {
       toast.error("Signup Failed!!")
       setLoading(false)
-    }
+    })
   }
 
   const CreateOtp = async( val , at) => {
     const form = new FormData();
     form.append('dialing_code',val.dialing_code)
     form.append('phone',val.phone)
-    let headers = {
-      'Authorization' : `Bearer ${access_token}` 
-    }
-    const { response } = await useFetch('post',`auth/create/otp`,form , headers)
-    if(response.data.success) {
-      console.log(response)
-      setUser(response.data.data.user_id)
+    
+    await http.post('auth/create/otp', form).then((res) => {
+      console.log(res)
+      setUser(res.data.data.user_id)
       setOtpStatus(true)
       setLoading(false)
-    } else {
+    }).catch(err => {
+      console.log(err);
       alert('Request Failed!!')
       setLoading(false)
-    }
+    })
   }
 
-  const OtpVerification = async() => {
+  const OtpVerification = async(e) => {
+    e.preventDefault()
     setLoading(true)
     const form = new FormData();
     form.append('user_id',user)
     form.append('otp',otp)
-    const { response } = await useFetch('post',`auth/otp/login`,form)
-    if(response.data.success ) {
+
+    await http.post('auth/otp/login', form).then((res) => {
       toast.success('Signup Successfull!!')
       router.push('/auth/login')
       setLoading(false)
-    } else {
+    }).catch(err => {
       toast.error('Incorrect Otp!!')
       setLoading(false)
-    }
+    })
   }
   return (
     <div className={`${mode == "dark" && "dark"} h-full`}>
       <div className="flex justify-center items-center h-full">
-        <form onSubmit={CheckValidation} className="w-[100%] h-[80%] flex flex-col justify-center items-center p-5 ">
+        <form onSubmit={otpStatus ? OtpVerification : CheckValidation} className="w-[100%] h-[80%] flex flex-col justify-center items-center p-5 ">
           <div className="flex flex-col w-[80%] px-4">
             <div id="heading" className='text-center py-3'>
               <span className="text-start text-4xl tracking-tighter">Sign Up</span>
@@ -226,7 +232,7 @@ const SignupForm = () => {
             >
                 {loading ? 'Loading...' : 'Sign Up'}
             </button> : <button
-                onClick={()=>OtpVerification()}
+                type="submit"
                 className="h-9 px-3.5 my-8 rounded bg-black text-white text-center transition-all duration-500 lg:hover:bg-neutral-700"
             >
                 {loading ? 'Loading...' : 'Verify'}

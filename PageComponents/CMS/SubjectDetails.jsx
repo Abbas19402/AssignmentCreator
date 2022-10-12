@@ -6,6 +6,7 @@ import Image from "next/image";
 import Form from "../../Components/Form";
 import parse from "html-react-parser";
 
+
 const SubjectDetails = (props, query) => {
   const router = useRouter();
 

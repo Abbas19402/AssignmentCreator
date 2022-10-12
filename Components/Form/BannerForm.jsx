@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
+import Creatable, { useCreatable } from 'react-select/creatable';
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSelector } from "react-redux";
-import useFetch from "../../hooks/useFetch";
+import { toast } from "react-toastify";
+import axios from "axios";
+
 import { Options } from "../../Constants/FormOptions";
 
 const BannerForm = () => {
@@ -10,9 +13,12 @@ const BannerForm = () => {
   let optionsSubjects = [];
 
   const SSR = useSelector((state) => state.ssr.ssrData);
+  const userData = useSelector((state) => state.auth.user)
 
   const { optionsDeadline , optionsPages , optionsSlides } = Options
   const { cat, subWithCat } = SSR;
+  const { access_token } = userData
+
 
   const [ selectedService , setSeletedService ] = useState({})
   const [ subjects , setSubjects ] = useState([{
@@ -31,23 +37,19 @@ const BannerForm = () => {
     for (var pair of form.entries()) {
       values[pair[0]] = pair[1];
     }
-    console.log(values);
+    console.log(values);  
     e.target.reset();
     const header = {
       Accept: "application/json",
-      Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
+      Authorization: `Bearer ${access_token}`,
     };
-    const { response } = await useFetch(
-      "post",
-      `Check-Price`,
-      "",
-      header
-    );
-    console.log("Price = ", response);
-    if (response.data.success) {
-      setprice(response.data.data.total);
+    await axios.post(`https://assignment.servepratham.com/api/Check-Price`).then(res => {
+      setprice(res.data.data.total);
       setloading(false);
-    }
+    }).catch(err => {
+      console.log(err);
+      toast.error('Please check you network!!')
+    })
   };
 
 useEffect( () => {
@@ -125,7 +127,7 @@ useEffect( () => {
                     ? "Select No. of Slides"
                     : "Choose No. of Pages"}
                 </label>
-                <Select
+                <Creatable
                   options={
                     selectedService.value == "powerpoint"
                       ? optionsSlides

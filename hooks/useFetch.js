@@ -3,7 +3,7 @@ import axios from "axios";
 const useFetch = async(method , url ,values ,header ) => {
     if(header) {
         try {
-            const data =  await axios(`${process.env.NEXT_PUBLIC_API_URL}/${url}`,{
+            const data = await axios(`${process.env.NEXT_PUBLIC_API_URL}/${url}`,{
                 method: `${method}`.toUpperCase(),
                 data: values,
                 headers: header

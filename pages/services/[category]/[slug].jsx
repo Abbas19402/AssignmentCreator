@@ -22,14 +22,8 @@ const PageType = (props) => {
 export default PageType
 
 export async function getServerSideProps(context) {
-  const sub = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/SubjectById/${context.query.slug}`,{
-    headers: {
-      "Accept" : "application/json",
-      "Authorization" : `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`
-    }
-  })
+  const sub = await fetch(`${process.env.NEXT_PUBLIC_API_URL}customer/SubjectById/${context.query.slug}`)
   const subject = await sub.json()
-
   return {
     props: {
       content: subject

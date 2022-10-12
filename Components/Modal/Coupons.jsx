@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import Divider from "@mui/material/Divider";
 
 import useFetch from "../../hooks/useFetch";
+import { http } from "../../public/utils/Http";
 import styles from "../../styles/Home.module.css";
 
 export default function Coupon({ showModal, setShowModal , setSelectedCoupon , setIsCouponApplied }) {
@@ -22,12 +23,9 @@ export default function Coupon({ showModal, setShowModal , setSelectedCoupon , s
   const [ appliedCoupon , setAppliedCoupon ] = useState(null)
 
   const GetCoupons = async() => {
-      const header = {
-          "Accept" : "application/json",
-          "Authorization" : `Bearer ${access_token}`
-      }
-      const { response } = await useFetch('get' , `coupons` , '' , header)
-      setCoupons(response.data)
+      await http.get('coupons').then(response => {
+        setCoupons(response.data)
+      })
   }
 
   const ApplyCoupon = async(coupon) => {
@@ -36,18 +34,13 @@ export default function Coupon({ showModal, setShowModal , setSelectedCoupon , s
       coupon_id: coupon.id,
       order_id: id
     }
-    const header = {
-      "Accept" : "application/json",
-      "Authorization" : `Bearer ${access_token}`
-    }
-    const { response } = await useFetch('post','Apply-Coupon',data,header)
-
-    if(response.data.success) {
+    try{
+      const res = await http.post('Apply-Coupon', data)
       setIsCouponApplied(true)
       setIsLoading(false)
-      setSelectedCoupon(response.data.data)
+      setSelectedCoupon(res.data.data)
       setShowModal(false)
-    } else {
+    } catch(error) {
       setIsLoading(false)
       toast.error('Coupon not applied')
       setShowModal(false)

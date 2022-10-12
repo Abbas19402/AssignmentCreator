@@ -4,27 +4,28 @@ import { useDispatch , useSelector } from "react-redux";
 import { getSSR } from "../Redux/StateManager/SSR";
 import { GET_ALL_ORDERS } from "../Redux/Order";
 import { useEffect } from "react";
-import useFetch from "../hooks/useFetch";
+import axios from "axios";
 
 export default function Home(props) {
   const userData = useSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
+  const loginStatus = useSelector((state) => state.auth.loginStatus)
 
-  dispatch(getSSR(props));
+  const dispatch = useDispatch();
+  if(props) {
+    dispatch(getSSR(props));
+  }
 
   const { access_token } = userData;
 
   const GetMyOrders = async () => {
-    const header = {
-      Accept: "application/json",
-      Authorization: `Bearer ${access_token}`,
-    };
-    await useFetch("get", "My-Orders", "", header).then((res) => {
+    await axios.get("https://assignment.servepratham.com/api/My-Orders").then((res) => {
       dispatch(GET_ALL_ORDERS(res));
     });
   };
   useEffect(() => {
-    GetMyOrders();
+    if(loginStatus) {
+      GetMyOrders();
+    }
   }, []);
   return (
     <>
@@ -39,53 +40,21 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps(context) {
-  const cat = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/customer/Get-All-Category`,
-    {
-      headers: {
-        Accept: "application/json",
-        Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
-      },
-    }
-  );
-  const category = await cat.json();
-
-  const sub = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/customer/SubjectWithCategory`,
-    {
-      headers: {
-        Accept: "application/json",
-        Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
-      },
-    }
-  );
-  const subWithCatagory = await sub.json();
-
-  const company = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/cms/Company`,
-    {
-      headers: {
-        Accept: "application/json",
-        Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
-      },
-    }
-  );
-  const cms = await company.json();
-
-  const home = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home`, {
-    headers: {
-      Accept: "application/json",
-      Authorization: `${process.env.NEXT_PUBLIC_ASSIGNMENT_TOKEN}`,
-    },
-  });
-  const homeData = await home.json();
+  const category = await fetch(`https://assignment.servepratham.com/api/customer/Get-All-Category`)
+  const cat = await category.json()
+  const subjects = await fetch(`https://assignment.servepratham.com/api/customer/SubjectWithCategory`)
+  const sub = await subjects.json()
+  const company = await fetch(`https://assignment.servepratham.com/api/cms/Company`)
+  const cms = await company.json()
+  const homeData = await fetch(`https://assignment.servepratham.com/api/home`)
+  const home = await homeData.json()
 
   return {
     props: {
-      cat: category,
-      subWithCat: subWithCatagory,
+      cat: cat,
+      subWithCat: sub,
       company: cms,
-      home: homeData,
+      home: home,
     },
   };
 }

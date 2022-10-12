@@ -303,7 +303,7 @@ const Header = () => {
                         key={key}
                         className="py-2 px-4 hover:bg-sky-200 w-full"
                         onClick={() =>
-                          router.push(`/${`company`}/${item.title}`)
+                          router.push(`/${`company`}/${item.slug}`)
                         }
                       >
                         <span className="text-gray-200 text-lg  tracking-wider text-center">
@@ -538,14 +538,14 @@ const Header = () => {
               </div>
               <div
                 id="dropdownComponent"
-                className="absolute transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded"
+                className="absolute transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-white shadow-xl shadow-gray-300 overflow-hidden z-10 rounded"
               >
                 <ul className="flex flex-col justify-evenly  items-center">
                   {company?.data.map((item, key) => (
                     <li
                       key={key}
                       className="py-2 px-4 hover:bg-sky-200 w-52"
-                      onClick={() => router.push(`/${`company`}/${item.title}`)}
+                      onClick={() => router.push(`/${`company`}/${item.slug}`)}
                     >
                       <span className="text-gray-600 text-sm text-center capitalize">
                         {item.title}
@@ -581,7 +581,7 @@ const Header = () => {
               </div>
               <div
                 id="dropdownComponent"
-                className="absolute transition-all h-0 group-hover:h-fit w-36 dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300 overflow-hidden z-10 rounded"
+                className="absolute transition-all h-0 group-hover:h-fit w-36 dark:bg-slate-200 bg-white shadow-xl shadow-gray-300 overflow-hidden z-10 rounded"
               >
                 <ul className="flex flex-col justify-evenly  items-center">
                   <li className="w-full">
@@ -633,12 +633,12 @@ const Header = () => {
               {userStatus && (
                 <div
                   id="dropdownComponent"
-                  className="absolute right-5 transition-all h-0 group-hover:h-fit w-fit dark:bg-slate-200 bg-slate-50 shadow-xl shadow-gray-300  overflow-hidden z-10 rounded"
+                  className="absolute right-5 transition-all h-0 group-hover:h-fit w-[13vw] dark:bg-slate-200 bg-white shadow-xl shadow-gray-300  overflow-hidden z-10 rounded"
                 >
                   <ul className="flex flex-col justify-evenly items-center">
                     <li className="py-2 px-4 hover:bg-sky-200 w-full">
                       {userStatus && (
-                        <div className="flex flex-row justify-start items-center gap-2">
+                        <div className="flex flex-row justify-around items-center gap-2 w-full">
                           <div className="scale-90">
                             <Avatar>
                               <span className="text-sm font-bold tracking-widest ">
@@ -646,9 +646,12 @@ const Header = () => {
                               </span>
                             </Avatar>
                           </div>
-                          <span className="text-gray-600 text-sm text-center tracking-tighter">
-                            {user.user.name}
-                          </span>
+                          <div className="flex flex-col justify-evenly items-center">
+                            <span className="text-gray-600 text-sm font-medium text-center tracking-wide">
+                              {user.user.name}
+                            </span>
+
+                          </div>
                         </div>
                       )}
                     </li>

@@ -30,11 +30,11 @@ const SamplePages = ({ item }) => {
             </p>
           </div>
           {parse(item.description)}
-          <div>
+          <Link href={`/samples/${item.category[0].slug}/${item.slug}`}>
             <button className=" mt-3 font-semibold text-slate-600 hover:text-slate-400 ">
               View or download <ArrowRightAltIcon />
             </button>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

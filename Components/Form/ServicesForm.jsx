@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import Creatable, { useCreatable } from 'react-select/creatable';
+
 import Select from "react-select";
 import CircularProgress from "@mui/material/CircularProgress";
+import axios from "axios";
 
-import useFetch from "../../hooks/useFetch";
 import { Options } from '../../Constants/FormOptions'
 
 const ServiceForm = ({ prefill }) => {
@@ -26,15 +29,14 @@ const ServiceForm = ({ prefill }) => {
       values[pair[0]] = pair[1];
     }
     e.target.reset();
-    const header = {
-      Accept: "application/json",
-      Authorization: `Bearer ${access_token}`,
-    };
-    const { response } = await useFetch("post",`Check-Price`,"",header);
-    if (response.data.success) {
-      setprice(response.data.data.total);
+    
+    await axios.post(`https://assignment.servepratham.com/api/Check-Price`).then(res => {
+      setprice(res.data.data.total);
       setloading(false);
-    }
+    }).catch(err => {
+      console.log(err);
+      toast.error('Please check you network!!')
+    })
   };
 
   return (
@@ -98,7 +100,7 @@ const ServiceForm = ({ prefill }) => {
                     ? "Select No. of Slides"
                     : "Choose No. of Pages"}
                 </label>
-                <Select
+                <Creatable
                   options={
                     selectedService.value == "powerpoint"
                       ? optionsSlides

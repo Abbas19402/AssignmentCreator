@@ -7,7 +7,6 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import Form from "../../Components/Form";
-import Styles from "../../styles/Home.module.css";
 import "react-slideshow-image/dist/styles.css";
 
 const Banner = ({ data, universities }) => {
@@ -54,6 +53,16 @@ const Banner = ({ data, universities }) => {
             </div>
           }
         >
+          {universities.map((item, key) => (
+            <div
+              key={key}
+              className="h-64 rounded-md px-5 flex justify-center items-center"
+            >
+              <div className="w-[100%] h-full flex justify-center items-center">
+                <Image loader={()=>item.logoSrc} src={item.logoSrc} width={300} height={150} layout="fixed"/>
+              </div>
+            </div>
+          ))}
           {universities.map((item, key) => (
             <div
               key={key}
@@ -132,6 +141,7 @@ const Banner = ({ data, universities }) => {
               </div>
             </div>
           ))}
+          
         </Fade>
       </div>
       </div>

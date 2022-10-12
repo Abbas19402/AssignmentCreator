@@ -6,8 +6,10 @@ const Orders = () => {
 const orders = useSelector(state => state.order.myOrders)
 const SSR = useSelector((state) => state.ssr.ssrData);
 
+console.log(orders);
+
 const { cat, subWithCat, company } = SSR;
-const { data:PaginationData } = orders.response.data
+const { data:PaginationData } = orders.data
 const { data:OrderList } = PaginationData
 
 console.log(orders);

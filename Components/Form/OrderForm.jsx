@@ -12,6 +12,7 @@ import { toast } from 'react-toastify'
 
 import { SAVE_FILES, SAVE_ORDER } from "../../Redux/Order";
 import useFetch from "../../hooks/useFetch";
+import { http } from "../../public/utils/Http";
 import useValid from "../../hooks/useValid";
 import { Options } from '../../Constants/FormOptions'
 
@@ -93,22 +94,15 @@ const OrderForm = () => {
 }
 
   const HandleSubmit = async (values) => {
-    const header = {
-      Accept: "application/json",
-      Authorization: `Bearer ${access_token}`,
-    };
-    const { response } = await useFetch(
-      "post",
-      `Check-Price`,
-      "",
-      header
-    );
-    if (response.data.success) {
+    await http.post('Check-Price').then((res) => {
       setloading(false)
-      setprice(response.data.data.total);
+      setprice(res.data.data.total);
       setShowOrder(true)
       setloading(false);
-    }
+    }).catch(err => {
+      toast.error(err.message)
+      setloading(false)
+    })
   };
 
   const CreateOrder = async(e) => {
@@ -131,20 +125,8 @@ const OrderForm = () => {
         values[pair[0]] = pair[1];
       }
     }
-    const header = {
-      Accept: "application/json",
-      Authorization: `Bearer ${access_token}`,
-    };
-    const { response } = await useFetch('post',`Order-Create`,values,header)
-    console.log(response);
-    if(response.data.success) {
-      setloading(false)
-      dispatch(SAVE_ORDER(response.data))
-      dispatch(SAVE_FILES(uploads))
-      push('/order/checkout')
-    } else {
-      toast.error('Error')
-    }
+
+    
   };
 
   useEffect(() => {

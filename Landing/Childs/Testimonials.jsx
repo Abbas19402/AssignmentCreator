@@ -8,10 +8,13 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 const Testimonials = ({data}) => {
   return (
     <div className="relative bg-gray-50 flex flex-col justify-center items-center py-10">
-      <div className="p-5 flex flex-row justify-center items-center gap-5 md:pl-16 my-4 lg:my-0 lg:pl-10">
+      <div className="p-5 flex flex-row justify-center relative items-center gap-5 md:pl-16 my-4 lg:my-0 lg:pl-10 w-full"> 
         <span className="text-2xl lg:text-4xl tracking-tight leading-relaxed font-thin whitespace-nowrap">
           Our Testimonials
         </span>
+        <div className="absolute right-0 my-auto px-2 hover:cursor-pointer">
+          <span className="text-primary font-medium tracking-wide hover:underline">View All</span>
+        </div>
       </div>
       <div className="w-[80%] py-3 hidden lg:block">
         <Slide
@@ -38,7 +41,16 @@ const Testimonials = ({data}) => {
           {data.map((item, key) => (
             <div
               key={key}
-              className="h-64 rounded-md px-5 flex justify-center items-center"
+              className="h-64 rounded-md px-5 flex justify-center items-center transition-all duration-300 ease-linear hover:scale-110"
+            >
+              <div className="w-[100%] h-full">
+                <Card.TestimonialsCard testimonials={item}/>
+              </div>
+            </div>
+          ))}{data.map((item, key) => (
+            <div
+              key={key}
+              className="h-64 rounded-md px-5 flex justify-center items-center transition-all duration-300 ease-linear hover:scale-110"
             >
               <div className="w-[100%] h-full">
                 <Card.TestimonialsCard testimonials={item}/>

@@ -16,7 +16,7 @@ const Landing = ({home}) => {
         {home && <div className='bg-slate-50 dark:bg-dark/80'>
           <Banner data={home.banners} universities={home.universities}/>  
           <TalkExpert data={home.whyAssignment}/>
-          <ServiceOffered data={home.topServices} />
+          <ServiceOffered />
           <WorkProcess />
           <Testimonials data={home.testimonial} />
         </div>}
