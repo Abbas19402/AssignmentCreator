@@ -39,8 +39,7 @@ const OrderForm = () => {
   const { optionsDeadline , optionsPages , optionsSlides } = Options
 
   const [files, setFiles] = useState(null);
-  const [deadline, setDeadline] = useState(new Date());
-  const [ formData , setFormData ] = useState({})
+  const [deadline, setDeadline] = useState(new Date())
   const [selectedService, setSeletedService] = useState({});
   const [services, setServices] = useState(null);
   const [price, setprice] = useState(0);

@@ -33,7 +33,6 @@ const CheckoutComponent = () => {
     const Checkout = async() => {
       let form = new FormData()
       let finalPrice = isCouponApplied ? total - selectedCoupon.discount_price : total
-    
       
       form.append('payment_gateway_type',payMethod)
       form.append('amount',finalPrice)

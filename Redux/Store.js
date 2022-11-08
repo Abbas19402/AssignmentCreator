@@ -8,6 +8,7 @@ import mode from './DarkMode/index'
 import authentication from './User'
 import GetSSRProps from './StateManager/SSR'
 import OrderData from './Order'
+import MyOrdersData from './Order/MyOrders'
 
 const persistConfig = {
   key: 'root',  
@@ -18,7 +19,8 @@ const reducer = combineReducers({
   mode: mode,
   auth: authentication,
   ssr: GetSSRProps,
-  order: OrderData
+  order: OrderData,
+  myOrders: MyOrdersData
 })
 const persistedReducer = persistReducer(persistConfig , reducer)
 

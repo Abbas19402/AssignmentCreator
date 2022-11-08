@@ -12,11 +12,11 @@ const TestimonialsCard = ({testimonials}) => {
             <div className="flex flex-row justify-between items-center w-full">
                 <div className="flex flex-col items-center justify-center w-full">
                     <span className="text-lg font-medium tracking-wide">{testimonials.title}</span>
-                    <span className="text-lg">Udaipur , India</span>
+                    <span className="text-lg">{testimonials.short_description}</span>
                 </div>
             </div>
             <div className="flex justify-center items-center text-sm text-gray-600">
-                {testimonials.short_description}
+                {parse(testimonials.description)}
             </div>
         </div>
     </div>

@@ -7,11 +7,9 @@ const PageType = (props) => {
   const mode = useSelector( state => state.mode.value )
   const { query } = useRouter()
   return (
-    <div className='m-5'>
-      <div id="wrapper" className='w-full lg:p-8 dark:bg-dark/80 bg-white'>
-        <div className="w-full flex flex-col justify-center item-center">
-          <Company {...props} query={query}/>
-        </div>
+    <div id="wrapper" className='w-full dark:bg-dark/80 bg-white'>
+      <div className="w-full flex flex-col justify-center item-center">
+        <Company {...props} query={query}/>
       </div>
     </div>
   )

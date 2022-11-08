@@ -2,8 +2,10 @@ import React from "react";
 import Card from "@mui/material/Card";
 import { CardContent } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Samples = ({ mode , data }) => {
+  const router = useRouter()
   return (
     <div className={`${mode == "dark" ? "dark" : "light"}`}>
       <div className="w-[100%] dark:border-white rounded-md bg-white dark:bg-dark">
@@ -15,12 +17,17 @@ const Samples = ({ mode , data }) => {
               </div>
 
               {data.subjects.map((item , key)=> (
-                <Link key={key} href={`/samples/${item.id}`}>
-                  <div className="flex cursor-pointer justify-between text-sm hover:text-primary hover:font-bold py-2">
-                    <span>{item.name}</span>
-                    <span>12</span>
-                  </div>
-                </Link>
+                <div className="flex cursor-pointer justify-between text-sm hover:text-primary hover:font-bold py-2" onClick={()=> {
+                    router.push({
+                    pathname:`/samples/${item.slug}`,
+                    query: {
+                      sample: item.id
+                    }
+                  },`/samples/${item.slug}`)
+                }}>
+                  <span>{item.name}</span>
+                  <span>12</span>
+                </div>
               ))}
 
             </CardContent>

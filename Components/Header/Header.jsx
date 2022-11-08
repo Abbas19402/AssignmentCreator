@@ -100,7 +100,7 @@ const Header = () => {
     >
       <div
         id="wrapper"
-        className="transition-all duration-500 w-full h-full dark:bg-primary-dark bg-primary flex flex-row justify-between lg:justify-evenly items-center px-8 border-b-0"
+        className="transition-all duration-500 w-full h-full dark:bg-primary-dark bg-primary flex flex-row justify-between lg:justify-evenly items-center px-8"
         onMouseEnter={() => {
           setHoveredItem("");
           setHovered(false);

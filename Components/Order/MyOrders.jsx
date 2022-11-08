@@ -18,34 +18,13 @@ const MyOrdersComponent = () => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
-  
-  const dispatch = useDispatch();
+
   const loginStatus = useSelector((state) => state.auth.loginStatus);
-  const userData = useSelector(state => state.auth.user)
-
-  const { access_token } = userData
-
-  const [page, setPage] = useState(1);
-  const [ data , setData ] = useState(null)
-
-  const GetMyOrders = async () => {
-    await axios.get(`https://assignment.servepratham.com/api/My-Orders?page=${page}`,{
-      headers: {
-        'Authorization': `Bearer ${access_token}`
-      }
-    })
-      .then((res) => {
-        dispatch(GET_ALL_ORDERS(res));
-        setData(res.data.data)
-      });
-  };
-
-  useEffect(() => {
-    GetMyOrders();
-  }, [page]);
+  const page = useSelector((state)=> state.myOrders.page)
+  const data = useSelector((state) => state.order.myOrders)
 
   return (
-    <div className="w-full h-full relative md:p-8">
+    data !== null && <div className="w-full h-full relative md:p-8">
       {loginStatus ? (
         <>
           <div className="w-full h-32 relative">
@@ -127,7 +106,8 @@ const MyOrdersComponent = () => {
           </div>
         </div>
       )}
-      <BottomPagination page={page} setPage={setPage} />
+      {console.log(data)}
+      <BottomPagination data={data}/>
     </div>
   );
 };

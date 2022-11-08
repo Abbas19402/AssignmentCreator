@@ -13,9 +13,6 @@ const WritersContent = (props) => {
 
   return (
     <div className={`relative ${mode == "dark" ? "dark" : "light"}`}>
-      <div className="text-center text-5xl dark:bg-dark bg-white  ">
-        <span className="dark:text-white text-gray-700">Our Writers</span>
-      </div>
       <Writers writers={writers}/>
     </div>
   );

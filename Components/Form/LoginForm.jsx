@@ -39,9 +39,9 @@ const LoginForm = () => {
                 method: 'post',
                 url: 'https://assignment.servepratham.com/api/auth/login',
                 data: values
-              })
+            })
             toast.success("Login Successfull!!")
-            router.push('/')
+            router.back()
             dispatch(SAVE_USER(res.data.data))
             dispatch(SAVE_TOKEN(res.data.data.access_token))
             localStorage.setItem('GET_AT',res.data.data.access_token )

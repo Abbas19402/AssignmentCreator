@@ -9,16 +9,18 @@ const Company = ({ content , query }) => {
   
   return (
     <div className={`${mode == "dark" && "dark"}`}>
-      <div className="relative lg:p-5 h-fit">
+      <div className="relative h-fit border">
         <div className="w-full h-full">
             {content.data.map(item => ( item.slug == query.slug && <div className="flex flex-col justify-center items-center">
-                <div className="flex justify-center my-5  w-full h-full">
-                    <img src={`${item.bannerImageSrc}`} alt={name} className="w-screen h-[50vh]"/>
+                <div className="relative flex justify-center w-screen h-[50vh]">
+                    <Image src={`${item.bannerImageSrc}`} alt={item.name} className="w-full h-full" layout="fill"/>
                 </div>
-                <div id="Heading" className="w-full my-3 px-4">
-                    <span className="text-2xl md:text-3xl lg:text-4xl text-start">{item.title}</span>
+                <div className="flex flex-col justify-center items-center p-8 lg:p-16">
+                  <div id="Heading" className="w-full my-3 px-4">
+                      <span className="text-2xl md:text-3xl lg:text-4xl text-start">{item.title}</span>
+                  </div>
+                  <p className="text-justify p-4 text-xl">{parse(item.description)}</p>
                 </div>
-                <p className="text-justify p-4 text-xl">{parse(item.description)}</p>
             </div>))}
         </div>
       </div>
